@@ -1,3 +1,4 @@
- Backlog (ordered, higher priority first)
+ Backlog (higher priority first)
  
+ - unit tests
  - persist user
