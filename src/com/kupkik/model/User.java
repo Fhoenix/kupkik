@@ -3,9 +3,10 @@ package com.kupkik.model;
 import java.io.Serializable;
 
 /**
- * a user
+ * a user; serializable because its also used a session
  */
-public class User implements Serializable
+public class User
+        implements Serializable
 {
     private String name;
 

@@ -2,6 +2,8 @@ package com.kupkik.html.view;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import com.kupkik.model.UserWithPassword;
 
 /**
@@ -14,6 +16,18 @@ public class ViewHelper
     public ViewHelper(final HttpSession pSession)
     {
         mSession = pSession;
+    }
+
+    /**
+     * Converts text, so that it can be displayd in a html-site.
+     * 
+     * @param pText
+     *            the text which should be shown inside a html-site
+     * @return a text converted for HTML
+     */
+    public String convertTextForHtml( final String pText )
+    {
+        return StringEscapeUtils.escapeHtml(pText);
     }
 
     /**
@@ -65,23 +79,70 @@ public class ViewHelper
     }
 
     /**
+     * @see #createHtmlBegin(boolean)
+     */
+    public String createHtmlBegin()
+    {
+        return createHtmlBegin("");
+    }
+
+    /**
+     * @see #createHtmlBegin(String, boolean)
+     */
+    public String createHtmlBegin( final String pTitle )
+    {
+        return createHtmlBegin(pTitle, true);
+    }
+
+    /**
      * Creates the beginning of a HTML-site.
      * 
+     * @param pTitle
+     *            the title of the page
+     * @param pDoShowMenubar
+     *            Should the menu-bar be shown?
      * @return The content of a HTML-site which contains the beginning of this
      *         site.
      */
-    public String createHtmlBegin()
+    public String createHtmlBegin( final String pTitle, final boolean pDoShowMenubar )
     {
         final StringBuilder htmlBegin = new StringBuilder();
         htmlBegin.append("<html>\n");
         htmlBegin.append("   <head>\n");
-        htmlBegin.append("      <title>kupkik</title>\n");
+
+        if( pTitle.equals("") )
+        {
+            htmlBegin.append("      <title>kupkik</title>\n");
+        }
+        else
+        {
+            htmlBegin.append("      <title>kupkik | " + pTitle + "</title>\n");
+        }
+
         htmlBegin.append("      <meta name=\"robots\" content=\"noindex\">\n");
         htmlBegin.append("   </head>\n");
-        htmlBegin.append("<body>\n");
+        htmlBegin.append("  <body>\n");
 
-        createMenuBar(htmlBegin);
+        if( pDoShowMenubar )
+        {
+            createMenuBar(htmlBegin);
+        }
 
         return htmlBegin.toString();
+    }
+
+    /**
+     * Creates the end of a HTML-site.
+     * 
+     * @return The content of a HTML-site which contains the end of this site.
+     */
+    public String createHtmlEnd()
+    {
+        final StringBuilder htmlEnd = new StringBuilder();
+
+        htmlEnd.append("  </body>\n");
+        htmlEnd.append("</html>\n");
+
+        return htmlEnd.toString();
     }
 }

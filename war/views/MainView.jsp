@@ -4,7 +4,6 @@
 <% ViewHelper viewHelper = (ViewHelper)request.getAttribute("viewHelper");  %> 
 <%= viewHelper.createHtmlBegin()  %> 
 
-	Hello 
+        <H1 ALIGN="CENTER">kupkik</H1>
 	
-  </body>
-</html>
+<%= viewHelper.createHtmlEnd()  %> 

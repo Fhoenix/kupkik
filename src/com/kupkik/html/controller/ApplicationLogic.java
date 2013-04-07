@@ -107,7 +107,7 @@ public class ApplicationLogic
     {
         // lets see who is logged in
         checkUserLogin();
-        
+
         makeViewHelperClassAvailableToViews();
 
         // this is the action which is to be performed
@@ -123,17 +123,17 @@ public class ApplicationLogic
         // show next
         if( businessLogicController != null )
         {
-            nextViewName = businessLogicController.performActionAndGetNextView(mRequest);
+            nextViewName = businessLogicController.performActionAndGetNextView(mRequest, mRequest.getSession());
         }
 
         // show the view
         showView(nextViewName);
     }
-    
+
     private void makeViewHelperClassAvailableToViews()
     {
         ViewHelper viewHelper = new ViewHelper(mRequest.getSession());
-        
+
         mRequest.setAttribute("viewHelper", viewHelper);
     }
 

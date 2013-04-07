@@ -3,7 +3,8 @@ package com.kupkik.model;
 import java.io.Serializable;
 
 /**
- * a user including the password (md5)
+ * a user including the password (md5); serializable because its also used a
+ * session
  */
 public class UserWithPassword
         extends User
