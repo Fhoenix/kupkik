@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.0">
+  <help_text>// Architecture for kupkik</help_text>
+  <zoom_level>11</zoom_level>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>253</x>
+      <y>561</y>
+      <w>54</w>
+      <h>175</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>33;154;33;33</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Component</type>
+    <coordinates>
+      <x>231</x>
+      <y>715</y>
+      <w>649</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes> 
+'Model</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>319</x>
+      <y>308</y>
+      <w>54</w>
+      <h>428</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>33;407;33;33</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>77</x>
+      <y>264</y>
+      <w>143</w>
+      <h>143</h>
+    </coordinates>
+    <panel_attributes>Aggregate the
+services offered
+by the persistence
+layer and present 
+them for a certain
+technology (like
+HTML or REST)
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Component</type>
+    <coordinates>
+      <x>561</x>
+      <y>275</y>
+      <w>154</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes> 
+'Rest</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>297</x>
+      <y>154</y>
+      <w>54</w>
+      <h>142</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>33;121;33;33</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>561</x>
+      <y>308</y>
+      <w>54</w>
+      <h>428</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>33;407;33;33</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>902</x>
+      <y>264</y>
+      <w>143</w>
+      <h>143</h>
+    </coordinates>
+    <panel_attributes>These components
+can also be 
+composed of 
+components. 
+See diagrams
+for HTML.
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Component</type>
+    <coordinates>
+      <x>726</x>
+      <y>275</y>
+      <w>154</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes> 
+'Other</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>627</x>
+      <y>308</y>
+      <w>54</w>
+      <h>252</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>33;231;33;33</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>594</x>
+      <y>154</y>
+      <w>54</w>
+      <h>142</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>33;121;33;33</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>803</x>
+      <y>308</y>
+      <w>54</w>
+      <h>252</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>33;231;33;33</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>748</x>
+      <y>154</y>
+      <w>54</w>
+      <h>142</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>33;121;33;33</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Component</type>
+    <coordinates>
+      <x>231</x>
+      <y>121</y>
+      <w>649</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes> 
+'Google App Engine</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>462</x>
+      <y>308</y>
+      <w>54</w>
+      <h>252</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>33;231;33;33</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>77</x>
+      <y>110</y>
+      <w>143</w>
+      <h>121</h>
+    </coordinates>
+    <panel_attributes>Inspect client-
+request and chose
+which technology-
+component should
+handle the 
+request
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>407</x>
+      <y>308</y>
+      <w>54</w>
+      <h>428</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>33;407;33;33</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Component</type>
+    <coordinates>
+      <x>231</x>
+      <y>275</y>
+      <w>154</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes> 
+'RSS</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Component</type>
+    <coordinates>
+      <x>231</x>
+      <y>539</y>
+      <w>649</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes> 
+'Persistence</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>77</x>
+      <y>528</y>
+      <w>143</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>Offers services for
+manipulating the
+data in the DB.
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>759</x>
+      <y>308</y>
+      <w>54</w>
+      <h>428</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>33;407;33;33</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>341</x>
+      <y>308</y>
+      <w>54</w>
+      <h>252</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>33;231;33;33</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>77</x>
+      <y>704</y>
+      <w>143</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>.ayer for the 
+commonly used
+data model
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Component</type>
+    <coordinates>
+      <x>396</x>
+      <y>275</y>
+      <w>154</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes> 
+'HTML</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>429</x>
+      <y>154</y>
+      <w>54</w>
+      <h>142</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>33;121;33;33</additional_attributes>
+  </element>
+</diagram>
