@@ -10,6 +10,9 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.kupkik.model.UserWithPassword;
 
 /**
  * This class handles the application-logic. This logic is independent from the
@@ -101,6 +104,9 @@ public class ApplicationLogic
      */
     private void doHandleClientRequest() throws Exception
     {
+        // lets see who is logged in
+        checkUserLogin();
+
         // this is the action which is to be performed
         String action = mRequest.getParameter("action");
 
@@ -119,6 +125,26 @@ public class ApplicationLogic
 
         // show the view
         showView(nextViewName);
+    }
+
+    /**
+     * Check if the user is logged in. If the user is not logged in, then he
+     * will be set to the guest-user.
+     */
+    private void checkUserLogin()
+    {
+        HttpSession session = mRequest.getSession();
+        UserWithPassword currentUser = (UserWithPassword) session.getAttribute("currentUser");
+
+        // user is not logged in => set him to guest
+        if( currentUser == null )
+        {
+            currentUser = new UserWithPassword("guest", "none");
+            session.setAttribute("currentUser", currentUser);
+        }
+
+        // make user known to view
+        mRequest.setAttribute("currentUser", currentUser);
     }
 
     /**
