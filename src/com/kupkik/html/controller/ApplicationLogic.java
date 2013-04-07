@@ -23,11 +23,12 @@ import com.kupkik.model.UserWithPassword;
  */
 public class ApplicationLogic
 {
-    private HttpServletRequest  mRequest;
-    private HttpServletResponse mResponse;
-    private ServletContext      mServletContext;
+    private HttpServletRequest           mRequest;
+    private HttpServletResponse          mResponse;
+    private ServletContext               mServletContext;
+    public final static UserWithPassword GUEST_USER = new UserWithPassword("guest", "none");
 
-    private static final Logger sLogger = Logger.getLogger(StarterServlet.class.getName());
+    private static final Logger          sLogger    = Logger.getLogger(StarterServlet.class.getName());
 
     public ApplicationLogic(final HttpServletRequest pRequest, final HttpServletResponse pResponse, final ServletContext pServletContext)
     {
@@ -149,7 +150,7 @@ public class ApplicationLogic
         // user is not logged in => set him to guest
         if( currentUser == null )
         {
-            currentUser = new UserWithPassword("guest", "none");
+            currentUser = GUEST_USER;
             session.setAttribute("currentUser", currentUser);
         }
 

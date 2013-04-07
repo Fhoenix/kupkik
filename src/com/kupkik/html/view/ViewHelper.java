@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
+import com.kupkik.html.controller.ApplicationLogic;
 import com.kupkik.model.UserWithPassword;
 
 /**
@@ -62,13 +63,13 @@ public class ViewHelper
         pHtmlContent.append("           </td>\n");
         pHtmlContent.append("           <td>\n");
 
-        if( currentUser.getPasswordMd5().equals("none") )
+        if( currentUser.getPasswordMd5().equals(ApplicationLogic.GUEST_USER.getPasswordMd5()) )
         {
             pHtmlContent.append("<a href=\"/?showView=LoginView\">Login</a>");
         }
         else
         {
-            pHtmlContent.append("<a href=\"/?showView=LogoffView\">Logoffn</a>");
+            pHtmlContent.append("<a href=\"/?action=Logoff\">Logoff</a>");
         }
 
         pHtmlContent.append("           </td>\n");

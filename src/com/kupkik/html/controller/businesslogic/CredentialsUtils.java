@@ -1,13 +1,45 @@
 package com.kupkik.html.controller.businesslogic;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 /**
- * For validating credentials.
+ * offers helper methods for credentials
  */
-public class CredentialsValidator
+public class CredentialsUtils
 {
     private static final int MIN_USER_NAME_SIZE = 3;
     private static final int MAX_USER_NAME_SIZE = 50;
     private static final int MIN_PASSWORD_SIZE  = 3;
+
+    /**
+     * Generates a md5 hash for a text
+     * 
+     * @param pText
+     *            the text for which the md5-hash is to be generated
+     * @return the md5-hash for the text
+     */
+    public static String getMd5HashForText( final String pText )
+    {
+        MessageDigest md;
+        try
+        {
+            md = MessageDigest.getInstance("MD5");
+            md.update(pText.getBytes());
+            byte[] digest = md.digest();
+            StringBuffer sb = new StringBuffer();
+            for( byte b : digest )
+            {
+                sb.append(Integer.toHexString((int) (b & 0xff)));
+            }
+        }
+        catch( NoSuchAlgorithmException e )
+        {
+            throw new RuntimeException(e);
+        }
+
+        return pText.toString();
+    }
 
     /**
      * Are the credentials valid?
