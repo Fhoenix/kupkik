@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.kupkik.html.view.ViewHelper;
 import com.kupkik.model.UserWithPassword;
 
 /**
@@ -106,6 +107,8 @@ public class ApplicationLogic
     {
         // lets see who is logged in
         checkUserLogin();
+        
+        makeViewHelperClassAvailableToViews();
 
         // this is the action which is to be performed
         String action = mRequest.getParameter("action");
@@ -125,6 +128,13 @@ public class ApplicationLogic
 
         // show the view
         showView(nextViewName);
+    }
+    
+    private void makeViewHelperClassAvailableToViews()
+    {
+        ViewHelper viewHelper = new ViewHelper(mRequest.getSession());
+        
+        mRequest.setAttribute("viewHelper", viewHelper);
     }
 
     /**

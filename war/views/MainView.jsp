@@ -1,10 +1,10 @@
 <%@ page import="com.kupkik.model.*" %>
+<%@ page import="com.kupkik.html.view.*" %>
 
-<html>
-  <body>
-  <h1>kupkik</h1> 
+<% ViewHelper viewHelper = (ViewHelper)request.getAttribute("viewHelper");  %> 
+<%= viewHelper.createHtmlBegin()  %> 
 
-	Hello <%= ((UserWithPassword)request.getAttribute("currentUser")).getName()  %> 
-
+	Hello 
+	
   </body>
 </html>
