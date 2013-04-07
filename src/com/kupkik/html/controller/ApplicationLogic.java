@@ -1,4 +1,4 @@
-package com.kupkik.controller;
+package com.kupkik.html.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,38 +8,40 @@ import java.util.logging.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * This servlet handles the application-logic. This logic is independent from
- * the business-logic. As a consequence it could be used for all kinds of
+ * This class handles the application-logic. This logic is independent from the
+ * business-logic. As a consequence it could be used for all kinds of
  * applications. So only the flow of data through the application is handled
  * here, not how the data is used.
  */
-@SuppressWarnings("serial")
-public class ApplicationLogicServlet
-        extends HttpServlet
+public class ApplicationLogic
 {
     private HttpServletRequest  mRequest;
     private HttpServletResponse mResponse;
+    private ServletContext      mServletContext;
 
-    private static final Logger sLogger = Logger.getLogger(ApplicationLogicServlet.class.getName());
+    private static final Logger sLogger = Logger.getLogger(StarterServlet.class.getName());
+
+    public ApplicationLogic(final HttpServletRequest pRequest, final HttpServletResponse pResponse, final ServletContext pServletContext)
+    {
+        mRequest = pRequest;
+        mResponse = pResponse;
+        mServletContext = pServletContext;
+    }
 
     /**
      * This methods handles every client request. It does the exception-handling
      * and leaves the actual application-logic to another method.
      */
-    public void doGet( final HttpServletRequest pRequest, final HttpServletResponse pResponse ) throws IOException
+    public void handleClientRequest() throws IOException
     {
-        mRequest = pRequest;
-        mResponse = pResponse;
-
         try
         {
             checkPreconditions();
-            handleUserRequest();
+            doHandleClientRequest();
         }
         catch( Exception e )
         {
@@ -50,7 +52,7 @@ public class ApplicationLogicServlet
 
             final String errorMsg = "An error occured: \n" + e.getMessage() + "\n\nStacktrace: \n" + stacktrace;
             sLogger.severe(errorMsg);
-            pResponse.getWriter().println(errorMsg.replace("\n", "<br>"));
+            mResponse.getWriter().println(errorMsg.replace("\n", "<br>"));
         }
     }
 
@@ -86,8 +88,7 @@ public class ApplicationLogicServlet
         sLogger.warning("Error view shown, because of error: " + pErrorMessage);
         mRequest.setAttribute("errorMsg", pErrorMessage);
 
-        ServletContext sc = getServletContext();
-        RequestDispatcher rd = sc.getRequestDispatcher("/views/ErrorView.jsp");
+        RequestDispatcher rd = mServletContext.getRequestDispatcher("/views/ErrorView.jsp");
         rd.forward(mRequest, mResponse);
 
         // after showing the error, stop
@@ -98,7 +99,7 @@ public class ApplicationLogicServlet
      * Here the application-logic is performed for handling a request from the
      * client.
      */
-    private void handleUserRequest() throws Exception
+    private void doHandleClientRequest() throws Exception
     {
         // this is the action which is to be performed
         String action = mRequest.getParameter("action");
@@ -156,14 +157,14 @@ public class ApplicationLogicServlet
         }
 
         final String pathToCodeBase = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-        final File businessLogicControllersDirectory = new File(pathToCodeBase + "com/kupkik/controller/businesslogic");
+        final File businessLogicControllersDirectory = new File(pathToCodeBase + "com/kupkik/html/controller/businesslogic");
 
-        final ClassLoader classLoader = ApplicationLogicServlet.class.getClassLoader();
+        final ClassLoader classLoader = StarterServlet.class.getClassLoader();
 
         for( File currentFile : businessLogicControllersDirectory.listFiles() )
         {
             String className = currentFile.getName().substring(0, currentFile.getName().length() - 6);
-            String fullClassName = "com.kupkik.controller.businesslogic." + className;
+            String fullClassName = "com.kupkik.html.controller.businesslogic." + className;
             String handledActionByThisController = className.replaceAll("Controller$", "");
 
             if( handledActionByThisController.equals(action) )
@@ -204,8 +205,7 @@ public class ApplicationLogicServlet
             showErrorView("View does not exist: " + pViewName);
         }
 
-        ServletContext sc = getServletContext();
-        RequestDispatcher rd = sc.getRequestDispatcher("/views/" + pViewName + ".jsp");
+        RequestDispatcher rd = mServletContext.getRequestDispatcher("/views/" + pViewName + ".jsp");
         rd.forward(mRequest, mResponse);
     }
 

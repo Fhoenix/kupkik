@@ -5,11 +5,11 @@ xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet>
-		<servlet-name>ApplicationLogic</servlet-name>
-		<servlet-class>com.kupkik.controller.ApplicationLogicServlet</servlet-class>
+		<servlet-name>StarterServlet</servlet-name>
+		<servlet-class>com.kupkik.html.controller.StarterServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>ApplicationLogic</servlet-name>
+		<servlet-name>StarterServlet</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 </web-app>

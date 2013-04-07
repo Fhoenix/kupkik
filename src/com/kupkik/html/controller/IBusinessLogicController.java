@@ -1,4 +1,4 @@
-package com.kupkik.controller;
+package com.kupkik.html.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
