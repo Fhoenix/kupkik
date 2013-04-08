@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
 
 import com.kupkik.html.view.ViewHelper;
 import com.kupkik.model.UserWithPassword;
+import com.kupkik.persistence.IPersistenceFacade;
+import com.kupkik.persistence.PersistenceFacade;
 
 /**
  * This class handles the application-logic. This logic is independent from the
@@ -23,6 +25,7 @@ import com.kupkik.model.UserWithPassword;
  */
 public class ApplicationLogic
 {
+    private IPersistenceFacade           mPersistenceFacade;
     private HttpServletRequest           mRequest;
     private HttpServletResponse          mResponse;
     private ServletContext               mServletContext;
@@ -30,11 +33,13 @@ public class ApplicationLogic
 
     private static final Logger          sLogger    = Logger.getLogger(StarterServlet.class.getName());
 
-    public ApplicationLogic(final HttpServletRequest pRequest, final HttpServletResponse pResponse, final ServletContext pServletContext)
+    public ApplicationLogic(final HttpServletRequest pRequest, final HttpServletResponse pResponse, final ServletContext pServletContext,
+            final IPersistenceFacade pPersistenceFacade)
     {
         mRequest = pRequest;
         mResponse = pResponse;
         mServletContext = pServletContext;
+        mPersistenceFacade = pPersistenceFacade;
     }
 
     /**
@@ -124,7 +129,7 @@ public class ApplicationLogic
         // show next
         if( businessLogicController != null )
         {
-            nextViewName = businessLogicController.performActionAndGetNextView(mRequest, mRequest.getSession());
+            nextViewName = businessLogicController.performActionAndGetNextView(mRequest, mRequest.getSession(), mPersistenceFacade);
         }
 
         // show the view

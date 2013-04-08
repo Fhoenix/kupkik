@@ -22,12 +22,12 @@ public class CredentialsUtils
     public static String getMd5HashForText( final String pText )
     {
         MessageDigest md;
+        StringBuffer sb = new StringBuffer();
         try
         {
             md = MessageDigest.getInstance("MD5");
             md.update(pText.getBytes());
             byte[] digest = md.digest();
-            StringBuffer sb = new StringBuffer();
             for( byte b : digest )
             {
                 sb.append(Integer.toHexString((int) (b & 0xff)));
@@ -38,7 +38,7 @@ public class CredentialsUtils
             throw new RuntimeException(e);
         }
 
-        return pText.toString();
+        return sb.toString();
     }
 
     /**

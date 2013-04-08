@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kupkik.persistence.PersistenceFacade;
+
 /**
  * This servlet handles requests for HTML sites. It instantiates the controller
  * for the application logic, which does the real work. So all this servlet does
@@ -43,7 +45,8 @@ public class StarterServlet
      */
     private void startRequestHandling( final HttpServletRequest pRequest, final HttpServletResponse pResponse ) throws IOException
     {
-        ApplicationLogic applicationLogic = new ApplicationLogic(pRequest, pResponse, getServletContext());
+        PersistenceFacade persistenceFacade = new PersistenceFacade();
+        ApplicationLogic applicationLogic = new ApplicationLogic(pRequest, pResponse, getServletContext(), persistenceFacade);
         applicationLogic.handleClientRequest();
     }
 }
