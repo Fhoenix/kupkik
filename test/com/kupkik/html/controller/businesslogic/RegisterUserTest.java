@@ -7,9 +7,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -19,9 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.kupkik.applicationcore.ApplicationCoreFacade;
+import com.kupkik.applicationcore.ApplicationCoreFacade.SaveUserAnswer;
 import com.kupkik.html.controller.ApplicationLogic;
 import com.kupkik.html.view.ViewHelper;
 import com.kupkik.model.UserWithPassword;
+import com.kupkik.utils.CredentialsUtils;
 
 public class RegisterUserTest
 {
@@ -53,13 +54,13 @@ public class RegisterUserTest
         RequestDispatcher requestDispatcherMock = mock(RequestDispatcher.class);
         when(servletContextMock.getRequestDispatcher(anyString())).thenReturn(requestDispatcherMock);
 
-        List<UserWithPassword> usersInDatabase = new ArrayList<>();
-        PersistenceFacadeMock persistenceFacadeMock = new PersistenceFacadeMock(usersInDatabase);
+        ApplicationCoreFacade applicationCoreFacadeFacadeMock = mock(ApplicationCoreFacade.class);
+        when(applicationCoreFacadeFacadeMock.saveNewUser(userName, password1)).thenReturn(SaveUserAnswer.OK);
 
         // run the test
 
         ApplicationLogic applicationLogic = new ApplicationLogic(httpServletRequestMock, httpServletResponseMock, servletContextMock,
-                persistenceFacadeMock);
+                applicationCoreFacadeFacadeMock);
         applicationLogic.handleClientRequest();
 
         // check the results
@@ -85,10 +86,10 @@ public class RegisterUserTest
         // check that the view-helper has been set in the http-request
         ViewHelper viewHelper = (ViewHelper) httpServletRequestMock.getAttributsSet().get("viewHelper");
         Assert.assertNotNull(viewHelper);
-        // check that user has been saved
-        Assert.assertEquals(1, usersInDatabase.size());
-        Assert.assertEquals(userName, usersInDatabase.get(0).getName());
-        Assert.assertEquals(md5Password, usersInDatabase.get(0).getPasswordMd5());
+        // only one user should have been saved
+        verify(applicationCoreFacadeFacadeMock, times(1)).saveNewUser(anyString(), anyString());
+        // only the user by the client should have been saved
+        verify(applicationCoreFacadeFacadeMock, times(1)).saveNewUser(userName, password1);
 
     }
 }

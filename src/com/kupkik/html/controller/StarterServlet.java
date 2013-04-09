@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kupkik.applicationcore.ApplicationCoreFacade;
 import com.kupkik.persistence.PersistenceFacade;
 
 /**
@@ -41,12 +42,13 @@ public class StarterServlet
     }
 
     /**
-     * Start the request-handling.
+     * Wire the componentse together and start the request-handling.
      */
     private void startRequestHandling( final HttpServletRequest pRequest, final HttpServletResponse pResponse ) throws IOException
     {
         PersistenceFacade persistenceFacade = new PersistenceFacade();
-        ApplicationLogic applicationLogic = new ApplicationLogic(pRequest, pResponse, getServletContext(), persistenceFacade);
+        ApplicationCoreFacade applicationCoreFacade = new ApplicationCoreFacade(persistenceFacade);
+        ApplicationLogic applicationLogic = new ApplicationLogic(pRequest, pResponse, getServletContext(), applicationCoreFacade);
         applicationLogic.handleClientRequest();
     }
 }
