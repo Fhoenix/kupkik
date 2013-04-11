@@ -1,4 +1,5 @@
  Backlog (higher priority first)
  
- - unit tests
- - persist user
+ - refactoring: ui
+ - update documentation
+ - unit tests: integration tests from ui to persistence, test per use-case
