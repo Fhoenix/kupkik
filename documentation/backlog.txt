@@ -2,4 +2,5 @@
  
  - refactoring: ui
  - update documentation
+ - maven, then remove eclipse-files
  - unit tests: integration tests from ui to persistence, test per use-case
