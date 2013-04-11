@@ -1,11 +1,11 @@
-package com.kupkik.html.view;
+package com.kupkik.ui.html.view;
 
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
-import com.kupkik.html.controller.ApplicationLogic;
 import com.kupkik.model.UserWithPassword;
+import com.kupkik.ui.html.HtmlRequestProcessor;
 
 /**
  * Offers helper methods for all views.
@@ -63,7 +63,7 @@ public class ViewHelper
         pHtmlContent.append("           </td>\n");
         pHtmlContent.append("           <td>\n");
 
-        if( currentUser.getPasswordMd5().equals(ApplicationLogic.GUEST_USER.getPasswordMd5()) )
+        if( currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) )
         {
             pHtmlContent.append("<a href=\"/?showView=LoginView\">Login</a>");
         }

@@ -1,4 +1,4 @@
-package com.kupkik.html.controller;
+package com.kupkik.ui.html;
 
 import java.io.IOException;
 
@@ -18,7 +18,7 @@ import com.kupkik.persistence.PersistenceFacade;
  * in the web.xml.
  */
 @SuppressWarnings("serial")
-public class StarterServlet
+public class HtmlStarterServlet
         extends HttpServlet
 {
     /**
@@ -48,7 +48,7 @@ public class StarterServlet
     {
         PersistenceFacade persistenceFacade = new PersistenceFacade();
         ApplicationCoreFacade applicationCoreFacade = new ApplicationCoreFacade(persistenceFacade);
-        ApplicationLogic applicationLogic = new ApplicationLogic(pRequest, pResponse, getServletContext(), applicationCoreFacade);
+        HtmlRequestProcessor applicationLogic = new HtmlRequestProcessor(pRequest, pResponse, getServletContext(), applicationCoreFacade);
         applicationLogic.handleClientRequest();
     }
 }

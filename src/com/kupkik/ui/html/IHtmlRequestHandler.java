@@ -1,4 +1,4 @@
-package com.kupkik.html.controller;
+package com.kupkik.ui.html;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -6,9 +6,9 @@ import javax.servlet.http.HttpSession;
 import com.kupkik.applicationcore.ApplicationCoreFacade;
 
 /**
- * A controller which handles business-logic.
+ * Handles a specific html-request.
  */
-public interface IBusinessLogicController
+public interface IHtmlRequestHandler
 {
     /**
      * Handle the action and determine which view to show.

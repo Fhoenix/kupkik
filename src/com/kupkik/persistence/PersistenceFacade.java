@@ -8,7 +8,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
-import com.kupkik.html.controller.StarterServlet;
+import com.kupkik.ui.html.HtmlStarterServlet;
 
 /**
  * Provides access to the database. Only performs stupid CRUD operations,
@@ -16,7 +16,7 @@ import com.kupkik.html.controller.StarterServlet;
  */
 public class PersistenceFacade
 {
-    private static final Logger sLogger = Logger.getLogger(StarterServlet.class.getName());
+    private static final Logger sLogger = Logger.getLogger(HtmlStarterServlet.class.getName());
 
     /**
      * Does the user exist?

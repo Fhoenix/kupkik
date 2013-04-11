@@ -19,9 +19,9 @@ import org.junit.Test;
 
 import com.kupkik.applicationcore.ApplicationCoreFacade;
 import com.kupkik.applicationcore.ApplicationCoreFacade.SaveUserAnswer;
-import com.kupkik.html.controller.ApplicationLogic;
-import com.kupkik.html.view.ViewHelper;
 import com.kupkik.model.UserWithPassword;
+import com.kupkik.ui.html.HtmlRequestProcessor;
+import com.kupkik.ui.html.view.ViewHelper;
 import com.kupkik.utils.CredentialsUtils;
 
 public class RegisterUserTest
@@ -59,7 +59,7 @@ public class RegisterUserTest
 
         // run the test
 
-        ApplicationLogic applicationLogic = new ApplicationLogic(httpServletRequestMock, httpServletResponseMock, servletContextMock,
+        HtmlRequestProcessor applicationLogic = new HtmlRequestProcessor(httpServletRequestMock, httpServletResponseMock, servletContextMock,
                 applicationCoreFacadeFacadeMock);
         applicationLogic.handleClientRequest();
 

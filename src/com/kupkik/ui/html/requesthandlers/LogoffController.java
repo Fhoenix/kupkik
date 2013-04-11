@@ -1,22 +1,22 @@
-package com.kupkik.html.controller.businesslogic;
+package com.kupkik.ui.html.requesthandlers;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.kupkik.applicationcore.ApplicationCoreFacade;
-import com.kupkik.html.controller.ApplicationLogic;
-import com.kupkik.html.controller.IBusinessLogicController;
 import com.kupkik.model.UserWithPassword;
+import com.kupkik.ui.html.HtmlRequestProcessor;
+import com.kupkik.ui.html.IHtmlRequestHandler;
 
 public class LogoffController
-        implements IBusinessLogicController
+        implements IHtmlRequestHandler
 {
 
     @Override
     public String performActionAndGetNextView( final HttpServletRequest pRequest, final HttpSession pSession,
             final ApplicationCoreFacade pApplicationCoreFacade )
     {
-        UserWithPassword guestUser = ApplicationLogic.GUEST_USER;
+        UserWithPassword guestUser = HtmlRequestProcessor.GUEST_USER;
         pSession.setAttribute("currentUser", guestUser);
         pRequest.setAttribute("currentUser", guestUser);
 

@@ -1,4 +1,4 @@
-package com.kupkik.html.controller;
+package com.kupkik.ui.html;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,16 +13,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.kupkik.applicationcore.ApplicationCoreFacade;
-import com.kupkik.html.view.ViewHelper;
 import com.kupkik.model.UserWithPassword;
+import com.kupkik.ui.html.view.ViewHelper;
 
 /**
- * This class handles the application-logic. This logic is independent from the
- * business-logic. As a consequence it could be used for all kinds of
- * applications. So only the flow of data through the application is handled
- * here, not how the data is used.
+ * This class handles the application-logic for processing a HTML-request. This
+ * logic is independent from the logic which handles a specific request (this is
+ * done by a HtmlRequestHandler). As a consequence it could be used for all
+ * kinds of HTML-applications. So only the flow of data through the application
+ * is handled here, not how the data is used.
  */
-public class ApplicationLogic
+public class HtmlRequestProcessor
 {
     private ApplicationCoreFacade        mApplicationCoreFacade;
     private HttpServletRequest           mRequest;
@@ -30,10 +31,10 @@ public class ApplicationLogic
     private ServletContext               mServletContext;
     public final static UserWithPassword GUEST_USER = new UserWithPassword("guest", "none");
 
-    private static final Logger          sLogger    = Logger.getLogger(StarterServlet.class.getName());
+    private static final Logger          sLogger    = Logger.getLogger(HtmlStarterServlet.class.getName());
 
-    public ApplicationLogic(final HttpServletRequest pRequest, final HttpServletResponse pResponse, final ServletContext pServletContext,
-            final ApplicationCoreFacade pApplicationCoreFacade)
+    public HtmlRequestProcessor(final HttpServletRequest pRequest, final HttpServletResponse pResponse,
+            final ServletContext pServletContext, final ApplicationCoreFacade pApplicationCoreFacade)
     {
         mRequest = pRequest;
         mResponse = pResponse;
@@ -119,16 +120,16 @@ public class ApplicationLogic
         String action = mRequest.getParameter("action");
 
         // first, load the business-controllers which handles the action
-        IBusinessLogicController businessLogicController = loadBusinessLogicControllerForAction(action);
+        IHtmlRequestHandler requestHandler = loadRequestHandlerForAction(action);
 
         // the view, which is to be shown
         String nextViewName = mRequest.getParameter("showView");
 
-        // now let the controller handle the action and determine which view to
-        // show next
-        if( businessLogicController != null )
+        // now let the request-handler handle the action and determine which
+        // view to show next
+        if( requestHandler != null )
         {
-            nextViewName = businessLogicController.performActionAndGetNextView(mRequest, mRequest.getSession(), mApplicationCoreFacade);
+            nextViewName = requestHandler.performActionAndGetNextView(mRequest, mRequest.getSession(), mApplicationCoreFacade);
         }
 
         // show the view
@@ -163,14 +164,15 @@ public class ApplicationLogic
     }
 
     /**
-     * Loads the business-controller which handles the action
+     * Loads the request-handler which handles the action
      * 
      * @param pAction
-     *            the action for which the controller should be loaded
-     * @return the business-controller which handles the action or null, if no
-     *         controller is needed (because only a view should be displayed)
+     *            the action for which the request-handler should be loaded
+     * @return the request-handler which handles the action or null, if no
+     *         request-handler is needed (because only a view should be
+     *         displayed)
      */
-    private IBusinessLogicController loadBusinessLogicControllerForAction( String pAction ) throws Exception
+    private IHtmlRequestHandler loadRequestHandlerForAction( final String pAction ) throws Exception
     {
         // the action to look for
         String action = pAction;
@@ -182,14 +184,15 @@ public class ApplicationLogic
             String nextView = mRequest.getParameter("showView");
 
             // no action or view has been given, show the main-view (by loading
-            // the controller which prepares the data for the main-view)
+            // the request-handler which prepares the data for the main-view)
             if( nextView == null )
             {
                 action = "ShowMainView";
             }
             // no action has been given, but there is a view to be shown => try
-            // to load a controller, which prepares data for this view
-            // (conventions: the names of these controllers are "Show" + name of
+            // to load a request-handler, which prepares data for this view
+            // (conventions: the names of these request-handlers are "Show" +
+            // name of
             // view)
             else
             {
@@ -198,24 +201,23 @@ public class ApplicationLogic
         }
 
         final String pathToCodeBase = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-        final File businessLogicControllersDirectory = new File(pathToCodeBase + "com/kupkik/html/controller/businesslogic");
+        final File requestHandlersDirectory = new File(pathToCodeBase + "com/kupkik/ui/html/requesthandlers");
 
-        final ClassLoader classLoader = StarterServlet.class.getClassLoader();
+        final ClassLoader classLoader = HtmlStarterServlet.class.getClassLoader();
 
-        for( File currentFile : businessLogicControllersDirectory.listFiles() )
+        for( File currentFile : requestHandlersDirectory.listFiles() )
         {
             String className = currentFile.getName().substring(0, currentFile.getName().length() - 6);
-            String fullClassName = "com.kupkik.html.controller.businesslogic." + className;
+            String fullClassName = "com.kupkik.ui.html.requesthandlers." + className;
             String handledActionByThisController = className.replaceAll("Controller$", "");
 
             if( handledActionByThisController.equals(action) )
             {
 
-                final Class businessLogicControllerClass = classLoader.loadClass(fullClassName);
-                final IBusinessLogicController businessLogicController = (IBusinessLogicController) businessLogicControllerClass
-                        .newInstance();
+                final Class htmlRequestHandlerClass = classLoader.loadClass(fullClassName);
+                final IHtmlRequestHandler htmlRequestHandler = (IHtmlRequestHandler) htmlRequestHandlerClass.newInstance();
                 sLogger.info("Found controller for action: " + action);
-                return businessLogicController;
+                return htmlRequestHandler;
             }
         }
 

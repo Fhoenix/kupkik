@@ -1,13 +1,13 @@
-package com.kupkik.html.controller.businesslogic;
+package com.kupkik.ui.html.requesthandlers;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.kupkik.applicationcore.ApplicationCoreFacade;
-import com.kupkik.html.controller.IBusinessLogicController;
+import com.kupkik.ui.html.IHtmlRequestHandler;
 
 public class ShowMainViewController
-        implements IBusinessLogicController
+        implements IHtmlRequestHandler
 {
 
     @Override

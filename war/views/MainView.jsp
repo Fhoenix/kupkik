@@ -1,5 +1,5 @@
 <%@ page import="com.kupkik.model.*" %>
-<%@ page import="com.kupkik.html.view.*" %>
+<%@ page import="com.kupkik.ui.html.view.*" %>
 
 <% ViewHelper viewHelper = (ViewHelper)request.getAttribute("viewHelper");  %> 
 <%= viewHelper.createHtmlBegin()  %> 
