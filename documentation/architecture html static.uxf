@@ -1,23 +1,94 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="12.0">
-  <help_text>// the HTML component</help_text>
+  <help_text>// the HTML-UI component</help_text>
   <zoom_level>10</zoom_level>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>340</x>
-      <y>360</y>
+      <x>300</x>
+      <y>270</y>
       <w>50</w>
-      <h>240</h>
+      <h>250</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>30;220;30;30</additional_attributes>
+    <additional_attributes>30;230;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>490</x>
+      <y>220</y>
+      <w>500</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>30;30;480;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.custom.Component</type>
     <coordinates>
-      <x>140</x>
-      <y>60</y>
+      <x>280</x>
+      <y>500</y>
+      <w>210</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes> 
+'Application Core</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>790</x>
+      <y>130</y>
+      <w>210</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>inspect the request and chose
+the right request-handler
+to handle it
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>340</x>
+      <y>520</y>
+      <w>50</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>30;60;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>620</x>
+      <y>140</y>
+      <w>190</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>30;30;170;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Component</type>
+    <coordinates>
+      <x>280</x>
+      <y>580</y>
+      <w>210</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes> 
+'Persistence</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Component</type>
+    <coordinates>
+      <x>280</x>
+      <y>70</y>
       <w>460</w>
       <h>380</h>
     </coordinates>
@@ -26,114 +97,69 @@
     <additional_attributes/>
   </element>
   <element>
-    <type>com.umlet.element.custom.Component</type>
+    <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>290</x>
-      <y>320</y>
-      <w>250</w>
-      <h>70</h>
-    </coordinates>
-    <panel_attributes> 
-'View</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.custom.Component</type>
-    <coordinates>
-      <x>140</x>
-      <y>580</y>
-      <w>460</w>
+      <x>460</x>
+      <y>570</y>
+      <w>390</w>
       <h>50</h>
     </coordinates>
-    <panel_attributes> 
-'Model</panel_attributes>
-    <additional_attributes/>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>370;30;30;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>340</x>
-      <y>160</y>
-      <w>50</w>
-      <h>80</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>30;60;30;30</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>260</x>
-      <y>510</y>
-      <w>50</w>
-      <h>90</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>30;70;30;30</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.custom.Component</type>
-    <coordinates>
-      <x>290</x>
-      <y>120</y>
-      <w>250</w>
-      <h>70</h>
-    </coordinates>
-    <panel_attributes> 
-'ApplicationLogic</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.custom.Component</type>
-    <coordinates>
-      <x>170</x>
-      <y>220</y>
-      <w>310</w>
-      <h>70</h>
-    </coordinates>
-    <panel_attributes> 
-'BusinessLogic</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.custom.Component</type>
-    <coordinates>
-      <x>140</x>
+      <x>460</x>
       <y>490</y>
-      <w>210</w>
+      <w>390</w>
       <h>50</h>
     </coordinates>
-    <panel_attributes> 
-'Persistence</panel_attributes>
-    <additional_attributes/>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>370;30;30;30</additional_attributes>
   </element>
   <element>
-    <type>com.umlet.element.Relation</type>
+    <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>340</x>
-      <y>260</y>
-      <w>50</w>
-      <h>80</h>
+      <x>30</x>
+      <y>320</y>
+      <w>210</w>
+      <h>70</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>30;60;30;30</additional_attributes>
+    <panel_attributes>The HTML-site which shows 
+the result of the request 
+to the user.
+bg=blue</panel_attributes>
+    <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>210</x>
-      <y>260</y>
-      <w>50</w>
-      <h>340</h>
+      <y>330</y>
+      <w>310</w>
+      <h>50</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>30;320;30;30</additional_attributes>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>290;30;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Component</type>
+    <coordinates>
+      <x>430</x>
+      <y>130</y>
+      <w>250</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes> 
+'Html Request Processor</panel_attributes>
+    <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>480</x>
-      <y>160</y>
+      <x>620</x>
+      <y>170</y>
       <w>50</w>
       <h>180</h>
     </coordinates>
@@ -143,12 +169,96 @@
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>160</x>
-      <y>260</y>
-      <w>50</w>
-      <h>250</h>
+      <x>650</x>
+      <y>350</y>
+      <w>200</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>30;230;30;30</additional_attributes>
+    <additional_attributes>180;30;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>970</x>
+      <y>230</y>
+      <w>210</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>handle the request, chose
+which HTML-view to show
+and prepare the data for 
+that view
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>590</x>
+      <y>250</y>
+      <w>260</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>240;30;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Component</type>
+    <coordinates>
+      <x>830</x>
+      <y>270</y>
+      <w>110</w>
+      <h>380</h>
+    </coordinates>
+    <panel_attributes> 
+'Model</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Component</type>
+    <coordinates>
+      <x>310</x>
+      <y>230</y>
+      <w>310</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes> 
+'Html Request Handler</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>480</x>
+      <y>170</y>
+      <w>50</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>30;60;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Component</type>
+    <coordinates>
+      <x>430</x>
+      <y>330</y>
+      <w>250</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes> 
+'View</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>480</x>
+      <y>270</y>
+      <w>50</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>30;60;30;30</additional_attributes>
   </element>
 </diagram>

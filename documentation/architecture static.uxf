@@ -1,224 +1,270 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="12.0">
   <help_text>// Architecture for kupkik</help_text>
-  <zoom_level>11</zoom_level>
+  <zoom_level>9</zoom_level>
   <element>
-    <type>com.umlet.element.Relation</type>
+    <type>com.umlet.element.custom.Component</type>
     <coordinates>
-      <x>253</x>
-      <y>561</y>
-      <w>54</w>
-      <h>175</h>
+      <x>324</x>
+      <y>567</y>
+      <w>531</w>
+      <h>108</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>33;154;33;33</additional_attributes>
+    <panel_attributes> 
+'Persistence</panel_attributes>
+    <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.custom.Component</type>
     <coordinates>
-      <x>231</x>
-      <y>715</y>
-      <w>649</w>
-      <h>55</h>
+      <x>324</x>
+      <y>333</y>
+      <w>531</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes> 
-'Model</panel_attributes>
+'UI</panel_attributes>
     <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>319</x>
-      <y>308</y>
-      <w>54</w>
-      <h>428</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>33;407;33;33</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>77</x>
-      <y>264</y>
-      <w>143</w>
-      <h>143</h>
+      <x>1017</x>
+      <y>405</y>
+      <w>288</w>
+      <h>36</h>
     </coordinates>
-    <panel_attributes>Aggregate the
-services offered
-by the persistence
-layer and present 
-them for a certain
-technology (like
-HTML or REST)
+    <panel_attributes>Every UI-component may itself be composed 
+of components.
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>0</x>
+      <y>333</y>
+      <w>234</w>
+      <h>81</h>
+    </coordinates>
+    <panel_attributes>Different UI components for different
+kinds of technology (HTML-UI,REST-UI, 
+RSS-UI,...). Aggregates the services 
+offered by the application-core.
 bg=blue</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.custom.Component</type>
     <coordinates>
-      <x>561</x>
-      <y>275</y>
-      <w>154</w>
-      <h>66</h>
-    </coordinates>
-    <panel_attributes> 
-'Rest</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>297</x>
-      <y>154</y>
-      <w>54</w>
-      <h>142</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>33;121;33;33</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>561</x>
-      <y>308</y>
-      <w>54</w>
-      <h>428</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>33;407;33;33</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Note</type>
-    <coordinates>
-      <x>902</x>
-      <y>264</y>
-      <w>143</w>
-      <h>143</h>
-    </coordinates>
-    <panel_attributes>These components
-can also be 
-composed of 
-components. 
-See diagrams
-for HTML.
-bg=blue</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.custom.Component</type>
-    <coordinates>
-      <x>726</x>
-      <y>275</y>
-      <w>154</w>
-      <h>66</h>
+      <x>711</x>
+      <y>396</y>
+      <w>126</w>
+      <h>54</h>
     </coordinates>
     <panel_attributes> 
 'Other</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <type>com.umlet.element.Relation</type>
+    <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>627</x>
-      <y>308</y>
-      <w>54</w>
-      <h>252</h>
+      <x>0</x>
+      <y>252</y>
+      <w>216</w>
+      <h>63</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>33;231;33;33</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>594</x>
-      <y>154</y>
-      <w>54</w>
-      <h>142</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>33;121;33;33</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>803</x>
-      <y>308</y>
-      <w>54</w>
-      <h>252</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>33;231;33;33</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>748</x>
-      <y>154</y>
-      <w>54</w>
-      <h>142</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>33;121;33;33</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.custom.Component</type>
-    <coordinates>
-      <x>231</x>
-      <y>121</y>
-      <w>649</w>
-      <h>66</h>
-    </coordinates>
-    <panel_attributes> 
-'Google App Engine</panel_attributes>
+    <panel_attributes>inspect the client-request and chose
+which ui-component should handle 
+the request
+bg=blue</panel_attributes>
     <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>462</x>
-      <y>308</y>
-      <w>54</w>
-      <h>252</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>33;231;33;33</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>77</x>
-      <y>110</y>
-      <w>143</w>
-      <h>121</h>
+      <x>0</x>
+      <y>666</y>
+      <w>243</w>
+      <h>54</h>
     </coordinates>
-    <panel_attributes>Inspect client-
-request and chose
-which technology-
-component should
-handle the 
-request
+    <panel_attributes>The Google App Engine may be used
+by everyone. For example the persistence
+uses its datastore.
 bg=blue</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>407</x>
-      <y>308</y>
-      <w>54</w>
-      <h>428</h>
+      <x>216</x>
+      <y>585</y>
+      <w>224</w>
+      <h>44</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>33;407;33;33</additional_attributes>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>207;27;162;27;27;27</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>450</x>
+      <y>126</y>
+      <w>198</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>the layered architecture of kupkik
+bg=green</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>216</x>
+      <y>666</y>
+      <w>170</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>153;27;27;27</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>846</x>
+      <y>324</y>
+      <w>188</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>27;27;171;27</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>1017</x>
+      <y>333</y>
+      <w>288</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>The data model, which may be used by everyone 
+and does not depend on anything.
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>0</x>
+      <y>567</y>
+      <w>243</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>Offeres acess to the database. 
+No logic, just dumb CRUD.
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>207</x>
+      <y>351</y>
+      <w>206</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>189;27;27;27</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>207</x>
+      <y>477</y>
+      <w>206</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>189;27;144;27;27;27</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>792</x>
+      <y>405</y>
+      <w>242</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>27;27;225;27</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>189</x>
+      <y>279</y>
+      <w>278</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>261;27;27;27</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.custom.Component</type>
     <coordinates>
-      <x>231</x>
-      <y>275</y>
-      <w>154</w>
-      <h>66</h>
+      <x>855</x>
+      <y>333</y>
+      <w>108</w>
+      <h>342</h>
+    </coordinates>
+    <panel_attributes> 
+'Model</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Component</type>
+    <coordinates>
+      <x>459</x>
+      <y>396</y>
+      <w>126</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes> 
+'HTML</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Component</type>
+    <coordinates>
+      <x>270</x>
+      <y>252</y>
+      <w>585</w>
+      <h>450</h>
+    </coordinates>
+    <panel_attributes> 
+'Google App Engine</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>0</x>
+      <y>468</y>
+      <w>234</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>Offeres services to access the 
+business-logic of kupkik.
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Component</type>
+    <coordinates>
+      <x>333</x>
+      <y>396</y>
+      <w>126</w>
+      <h>54</h>
     </coordinates>
     <panel_attributes> 
 'RSS</panel_attributes>
@@ -227,86 +273,25 @@ bg=blue</panel_attributes>
   <element>
     <type>com.umlet.element.custom.Component</type>
     <coordinates>
-      <x>231</x>
-      <y>539</y>
-      <w>649</w>
-      <h>55</h>
+      <x>324</x>
+      <y>459</y>
+      <w>531</w>
+      <h>108</h>
     </coordinates>
     <panel_attributes> 
-'Persistence</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Note</type>
-    <coordinates>
-      <x>77</x>
-      <y>528</y>
-      <w>143</w>
-      <h>77</h>
-    </coordinates>
-    <panel_attributes>Offers services for
-manipulating the
-data in the DB.
-bg=blue</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>759</x>
-      <y>308</y>
-      <w>54</w>
-      <h>428</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>33;407;33;33</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>341</x>
-      <y>308</y>
-      <w>54</w>
-      <h>252</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>33;231;33;33</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Note</type>
-    <coordinates>
-      <x>77</x>
-      <y>704</y>
-      <w>143</w>
-      <h>77</h>
-    </coordinates>
-    <panel_attributes>.ayer for the 
-commonly used
-data model
-bg=blue</panel_attributes>
+'Application Core</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.custom.Component</type>
     <coordinates>
-      <x>396</x>
-      <y>275</y>
-      <w>154</w>
-      <h>66</h>
+      <x>585</x>
+      <y>396</y>
+      <w>126</w>
+      <h>54</h>
     </coordinates>
     <panel_attributes> 
-'HTML</panel_attributes>
+'Rest</panel_attributes>
     <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>429</x>
-      <y>154</y>
-      <w>54</w>
-      <h>142</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>33;121;33;33</additional_attributes>
   </element>
 </diagram>
