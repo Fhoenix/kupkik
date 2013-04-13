@@ -1,4 +1,31 @@
- Backlog (higher priority first)
+    
+    =====  Backlog  =====
  
- - maven, then remove eclipse-files
+ 
+  == high priority ==
+  
+ 
  - unit tests: integration tests from ui to persistence, test per use-case
+ 
+ 
+ 
+  == lowest priority ==
+  
+ 
+ - maven build
+ 	- requirements:
+ 		- project must build
+ 		- must be able to build and deploy from eclipse 
+ 			- (either by using gae-plugin or by using maven-plugin or something else, but it should not be necessary to open a console for build/deployment)
+ 		- must be able to handle packages being in different projects
+ 	- recommended way of implementing maven build:
+ 		1) create a basic maven google app engine project which uses jsp and servlets
+ 		2) make it possible to deploy that project
+ 		3) find a way to save the credentials in a different file (which will not be committed to GIT) and possibly encrypt them
+ 		4) make it possible to create an eclipse project from that basic project
+ 		5) make it possible to build the project from eclipse without having to use the console
+ 		6) make it possible to deploy the project from eclipse without having to use the console
+ 		7) Create another project which defines a class. The basic project uses this class from the other project. It is also used in the JSP. Building and deployment should still work.
+ 		8) Now all challenges have been overcome. Migrate kupkik to that basic project.
+ 		9) Test that kupkik still builds and deploys.
+ 		10) check it in
