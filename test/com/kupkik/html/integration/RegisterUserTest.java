@@ -1,4 +1,4 @@
-package com.kupkik.html.controller.businesslogic;
+package com.kupkik.html.integration;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
@@ -18,8 +18,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.kupkik.applicationcore.ApplicationCoreFacade;
-import com.kupkik.applicationcore.ApplicationCoreFacade.SaveUserAnswer;
 import com.kupkik.model.UserWithPassword;
+import com.kupkik.persistence.PersistenceFacade;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.view.ViewHelper;
 import com.kupkik.utils.CredentialsUtils;
@@ -54,13 +54,15 @@ public class RegisterUserTest
         RequestDispatcher requestDispatcherMock = mock(RequestDispatcher.class);
         when(servletContextMock.getRequestDispatcher(anyString())).thenReturn(requestDispatcherMock);
 
-        ApplicationCoreFacade applicationCoreFacadeFacadeMock = mock(ApplicationCoreFacade.class);
-        when(applicationCoreFacadeFacadeMock.saveNewUser(userName, password1)).thenReturn(SaveUserAnswer.OK);
+        PersistenceFacade persistenceFacadeMock = mock(PersistenceFacade.class);
+        when(persistenceFacadeMock.doesUserExistWithName(anyString())).thenReturn(false);
+        
+        ApplicationCoreFacade applicationCoreFacadeFacade = new ApplicationCoreFacade(persistenceFacadeMock);
 
         // run the test
 
         HtmlRequestProcessor applicationLogic = new HtmlRequestProcessor(httpServletRequestMock, httpServletResponseMock, servletContextMock,
-                applicationCoreFacadeFacadeMock);
+                applicationCoreFacadeFacade);
         applicationLogic.handleClientRequest();
 
         // check the results
@@ -87,9 +89,9 @@ public class RegisterUserTest
         ViewHelper viewHelper = (ViewHelper) httpServletRequestMock.getAttributsSet().get("viewHelper");
         Assert.assertNotNull(viewHelper);
         // only one user should have been saved
-        verify(applicationCoreFacadeFacadeMock, times(1)).saveNewUser(anyString(), anyString());
+        verify(persistenceFacadeMock, times(1)).saveNewUser(anyString(), anyString());
         // only the user by the client should have been saved
-        verify(applicationCoreFacadeFacadeMock, times(1)).saveNewUser(userName, password1);
+        verify(persistenceFacadeMock, times(1)).saveNewUser(userName, md5Password);
 
     }
 }

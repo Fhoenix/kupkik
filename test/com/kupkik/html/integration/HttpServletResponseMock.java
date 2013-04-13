@@ -1,4 +1,4 @@
-package com.kupkik.html.controller.businesslogic;
+package com.kupkik.html.integration;
 
 import java.io.IOException;
 import java.io.PrintWriter;

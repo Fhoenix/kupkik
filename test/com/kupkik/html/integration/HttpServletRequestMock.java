@@ -1,4 +1,4 @@
-package com.kupkik.html.controller.businesslogic;
+package com.kupkik.html.integration;
 
 import java.io.BufferedReader;
 import java.io.IOException;
