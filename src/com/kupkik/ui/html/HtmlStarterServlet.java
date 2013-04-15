@@ -46,9 +46,14 @@ public class HtmlStarterServlet
      */
     private void startRequestHandling( final HttpServletRequest pRequest, final HttpServletResponse pResponse ) throws IOException
     {
+        // dependency injection
+
         PersistenceFacade persistenceFacade = new PersistenceFacade();
         ApplicationCoreFacade applicationCoreFacade = new ApplicationCoreFacade(persistenceFacade);
         HtmlRequestProcessor applicationLogic = new HtmlRequestProcessor(pRequest, pResponse, getServletContext(), applicationCoreFacade);
+
+        // handling request
+
         applicationLogic.handleClientRequest();
     }
 }

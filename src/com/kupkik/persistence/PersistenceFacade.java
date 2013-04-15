@@ -28,11 +28,11 @@ public class PersistenceFacade
     public boolean doesUserExistWithName( final String pUserName )
     {
         sLogger.info("doesUserExistWithName: " + pUserName);
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Key key = KeyFactory.createKey("User", pUserName);
 
         try
         {
+            DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
             datastore.get(key);
         }
         catch( EntityNotFoundException e )
