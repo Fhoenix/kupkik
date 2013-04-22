@@ -5,6 +5,7 @@
 <% 
 	ViewHelper viewHelper = (ViewHelper)request.getAttribute("viewHelper");  
 	List<User> users = (List<User>)request.getAttribute("users");  
+	List<Tournament> tournaments = (List<Tournament>)request.getAttribute("tournaments");  
 %> 
 <%= viewHelper.createHtmlBegin()  %> 
 
@@ -22,5 +23,13 @@
 	        </div>
 	        
 	    <a href="/?showView=NewTournamentView">Erstellung eines neues Turniers</a>
+		<br>
+		
+		<%        
+		for(Tournament currentTournament : tournaments)
+		{
+			out.println("<br>" + currentTournament.getName());
+		}
+		%>
         
 <%= viewHelper.createHtmlEnd()  %> 

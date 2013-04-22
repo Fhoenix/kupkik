@@ -88,6 +88,16 @@ public class UseCaseTestParent
         verify(mRequestDispatcherMock, times(1)).forward(any(HttpServletRequest.class), any(HttpServletResponse.class));
     }
     
+    protected void checkThatUserIsStillLoggedIn(final String pExpectedName, final String pExpectedMd5Password)
+    {
+        // no attribute of the session should have been set
+        Assert.assertEquals(0, mHttpSessionMock.getAttributsSet().size());
+        // check that the expected current user has been set in the http-request
+        UserWithPassword setCurrentUser = (UserWithPassword) mHttpServletRequestMock.getAttributsSet().get("currentUser");
+        Assert.assertEquals(pExpectedName, setCurrentUser.getName());
+        Assert.assertEquals(pExpectedMd5Password, setCurrentUser.getPasswordMd5());
+    }
+    
     protected void checkThatOnlyUserHasBeenSetInSessionAndSameUserHasBeenSetInHttpRequest(final String pExpectedName, final String pExpectedMd5Password)
     {
         // only one attribute of the session should have been set
@@ -106,5 +116,7 @@ public class UseCaseTestParent
     {
         // no user should have been saved
         verify(mPersistenceFacadeMock, times(0)).saveNewUser(anyString(), anyString());
+        // no tournament should have been saved
+        verify(mPersistenceFacadeMock, times(0)).saveNewTournament(anyString(), anyString());
     }
 }

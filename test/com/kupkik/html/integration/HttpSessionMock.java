@@ -25,13 +25,18 @@ public class HttpSessionMock
     }
 
     @Override
-    public Object getAttribute( String pArg0 )
+    public Object getAttribute( String pKey )
     {
-        if( !mAttributesGet.containsKey(pArg0))
+        if( mAttributsSet.containsKey(pKey))
         {
-            throw new RuntimeException("Attribute was not supposed to be used: " + pArg0);
+            return mAttributsSet.get(pKey);
         }
-        return mAttributesGet.get(pArg0);
+        
+        if( !mAttributesGet.containsKey(pKey))
+        {
+            throw new RuntimeException("Attribute was not supposed to be used: " + pKey);
+        }
+        return mAttributesGet.get(pKey);
     }
 
     @Override

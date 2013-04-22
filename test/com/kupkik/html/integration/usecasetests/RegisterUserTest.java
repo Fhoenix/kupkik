@@ -54,6 +54,9 @@ public class RegisterUserTest
         verify(mPersistenceFacadeMock, times(1)).saveNewUser(anyString(), anyString());
         // only the user by the client should have been saved
         verify(mPersistenceFacadeMock, times(1)).saveNewUser(userName, md5Password);
+        // check that no error message has been set in the http-request
+        String errorMessage = (String) mHttpServletRequestMock.getAttributsSet().get("errorMessage");
+        Assert.assertNull(errorMessage);
     }
     
     @Test

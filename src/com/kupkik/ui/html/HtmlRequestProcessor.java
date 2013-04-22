@@ -115,6 +115,9 @@ public class HtmlRequestProcessor
             nextViewName = requestHandler.performActionAndGetNextView(mRequest, mRequest.getSession(), mApplicationCoreFacade);
         }
 
+        // if there is a controller for preparing the view, load it and let
+        // prepare the data
+
         // show the view
         showView(nextViewName);
     }
@@ -175,8 +178,7 @@ public class HtmlRequestProcessor
             // no action has been given, but there is a view to be shown => try
             // to load a request-handler, which prepares data for this view
             // (conventions: the names of these request-handlers are "Show" +
-            // name of
-            // view)
+            // name of view)
             else
             {
                 action = "Show" + nextView;

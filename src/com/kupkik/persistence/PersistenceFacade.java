@@ -13,6 +13,7 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+import com.kupkik.model.Tournament;
 import com.kupkik.model.User;
 import com.kupkik.ui.html.HtmlStarterServlet;
 
@@ -24,6 +25,48 @@ public class PersistenceFacade
 {
     private static final Logger sLogger = Logger.getLogger(HtmlStarterServlet.class.getName());
 
+    /**
+     * Saves a new tournament to the database.
+     * 
+     * @param pTournamentName
+     *            the name of the new tournament
+     * @param pUserName
+     *            the name of the user, who creates the tournament
+     */
+    public void saveNewTournament( final String pTournamentName, final String pUserName )
+    {
+        Key userKey = KeyFactory.createKey("User", pUserName);
+        Entity user = new Entity("Tournament", pTournamentName, userKey);
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(user);
+    }
+
+    /**
+     * Does a tournament with a specific name exist?
+     * 
+     * @param pTournamentName
+     *            the name of the tournament in question
+     * @return 'true', if a tournament with this name does exist
+     */
+    public boolean doesTournamentExistWithName( final String pTournamentName )
+    {
+        sLogger.info("doesTournamentExistWithName: " + pTournamentName);
+        Key key = KeyFactory.createKey("Tournament", pTournamentName);
+
+        try
+        {
+            DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+            datastore.get(key);
+        }
+        catch( EntityNotFoundException e )
+        {
+            sLogger.info("tournament does NOT exist: " + pTournamentName);
+            return false;
+        }
+
+        sLogger.info("tournament does exist: " + pTournamentName);
+        return true;
+    }
 
     /**
      * Does the user exist?
@@ -38,7 +81,7 @@ public class PersistenceFacade
     {
         sLogger.info("doesUserExistWithNameAndMd5Password: " + pUserName + ", " + pPasswordMd5);
         Key key = KeyFactory.createKey("User", pUserName);
-        
+
         Entity user = null;
 
         try
@@ -51,15 +94,15 @@ public class PersistenceFacade
             sLogger.info("user does NOT exist: " + pUserName);
             return false;
         }
-        
+
         if( !user.getProperty("passwordMd5").equals(pPasswordMd5) )
         {
             return false;
         }
-        
+
         return true;
     }
-    
+
     /**
      * Does the user exist?
      * 
@@ -86,13 +129,35 @@ public class PersistenceFacade
         sLogger.info("user does exist: " + pUserName);
         return true;
     }
-    
+
+    /**
+     * get all tournaments in database
+     * 
+     * @return all tournaments, not ordered
+     */
+    public List<Tournament> getAllTournaments()
+    {
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        Query getAllTournamentsQuery = new Query("Tournament");
+        PreparedQuery getAllTournamentsPreparedQuery = datastore.prepare(getAllTournamentsQuery);
+
+        List<Entity> userEntities = getAllTournamentsPreparedQuery.asList(FetchOptions.Builder.withDefaults());
+        List<Tournament> tournaments = new ArrayList<Tournament>();
+        for( Entity currentTournamentEntity : userEntities )
+        {
+            Tournament currentTournament = new Tournament(currentTournamentEntity.getKey().getName());
+            tournaments.add(currentTournament);
+        }
+
+        return tournaments;
+    }
+
     public List<User> getAllUsers()
     {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Query getAllUsersQuery = new Query("User");
         PreparedQuery getAllUsersPreparedQuery = datastore.prepare(getAllUsersQuery);
-        
+
         List<Entity> userEntities = getAllUsersPreparedQuery.asList(FetchOptions.Builder.withDefaults());
         List<User> users = new ArrayList<User>();
         for( Entity currentUserEntity : userEntities )
@@ -100,7 +165,7 @@ public class PersistenceFacade
             User currentUser = new User(currentUserEntity.getKey().getName());
             users.add(currentUser);
         }
-        
+
         return users;
     }
 

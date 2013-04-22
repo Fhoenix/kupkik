@@ -2,6 +2,7 @@ package com.kupkik.applicationcore;
 
 import java.util.List;
 
+import com.kupkik.model.Tournament;
 import com.kupkik.model.User;
 import com.kupkik.persistence.PersistenceFacade;
 import com.kupkik.utils.CredentialsUtils;
@@ -14,9 +15,12 @@ import com.kupkik.utils.CredentialsUtils;
  */
 public class ApplicationCoreFacade
 {
-    public static final int   MIN_USER_NAME_SIZE = 3;
-    public static final int   MAX_USER_NAME_SIZE = 50;
-    public static final int   MIN_PASSWORD_SIZE  = 3;
+    public static final int   MIN_USER_NAME_SIZE       = 3;
+    public static final int   MAX_USER_NAME_SIZE       = 50;
+    public static final int   MIN_PASSWORD_SIZE        = 3;
+
+    public static final int   MAX_TOURNAMENT_NAME_SIZE = 50;
+    public static final int   MIN_TOURNAMENT_NAME_SIZE = 5;
 
     private PersistenceFacade mPersistenceFacade;
 
@@ -26,7 +30,7 @@ public class ApplicationCoreFacade
     }
 
     /**
-     * The result of trying to save a user in the database.
+     * The result of trying to create a new user.
      */
     public enum SaveUserAnswer
     {
@@ -34,6 +38,54 @@ public class ApplicationCoreFacade
         USER_ALREADY_EXISTS,
         USER_NAME_INVALID,
         PASSWORD_INVALID
+    }
+
+    /**
+     * The result of trying to create a new tournament.
+     */
+    public enum CreateTournamentAnswer
+    {
+        OK,
+        NAME_INVALID,
+        TOURNAMENT_ALREADY_EXISTS,
+        USER_CREDENTIALS_INVALID
+    }
+
+    /**
+     * create a new tournament
+     * 
+     * @param pTournamentName
+     *            the name of the new tournament
+     * @return the result of trying to create a tournament
+     */
+    public CreateTournamentAnswer createTournament( final String pTournamentName, final String pUserName, final String pUserPasswordMd5 )
+    {
+        if( pTournamentName.length() > MAX_TOURNAMENT_NAME_SIZE )
+        {
+            return CreateTournamentAnswer.NAME_INVALID;
+        }
+        if( pTournamentName.length() < MIN_TOURNAMENT_NAME_SIZE )
+        {
+            return CreateTournamentAnswer.NAME_INVALID;
+        }
+        if( !pTournamentName.matches("[0-9a-zA-Z_ ]*") )
+        {
+            return CreateTournamentAnswer.NAME_INVALID;
+        }
+
+        if( mPersistenceFacade.doesTournamentExistWithName(pTournamentName) )
+        {
+            return CreateTournamentAnswer.TOURNAMENT_ALREADY_EXISTS;
+        }
+        
+        if( !doesUserExistWithNameAndMd5Password(pUserName, pUserPasswordMd5))
+        {
+            return CreateTournamentAnswer.USER_CREDENTIALS_INVALID;
+        }
+
+        mPersistenceFacade.saveNewTournament(pTournamentName, pUserName);
+
+        return CreateTournamentAnswer.OK;
     }
 
     /**
@@ -60,6 +112,16 @@ public class ApplicationCoreFacade
     public boolean doesUserExistWithName( final String pUserName )
     {
         return mPersistenceFacade.doesUserExistWithName(pUserName);
+    }
+
+    /**
+     * get all tournaments in database
+     * 
+     * @return all tournaments, not ordered
+     */
+    public List<Tournament> getAllTournaments()
+    {
+        return mPersistenceFacade.getAllTournaments();
     }
 
     /**
