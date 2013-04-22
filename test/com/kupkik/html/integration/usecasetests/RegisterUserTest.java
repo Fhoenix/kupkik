@@ -48,8 +48,6 @@ public class RegisterUserTest
         checkThatViewWasShown("/views/MainView.jsp");
         // check that only our user has been set in session
         checkThatOnlyUserHasBeenSetInSessionAndSameUserHasBeenSetInHttpRequest(userName, md5Password);
-        // only two attributes of the http-request should have been set
-        Assert.assertEquals(2, mHttpServletRequestMock.getAttributsSet().size());
         // only one user should have been saved
         verify(mPersistenceFacadeMock, times(1)).saveNewUser(anyString(), anyString());
         // only the user by the client should have been saved

@@ -102,11 +102,17 @@ public class HtmlRequestProcessor
         // this is the action which is to be performed
         String action = mRequest.getParameter("action");
 
-        // first, load the business-controllers which handles the action
+        // first, load the request-handler which handles the action
         IHtmlRequestHandler requestHandler = loadRequestHandlerForAction(action);
 
         // the view, which is to be shown
         String nextViewName = mRequest.getParameter("showView");
+
+        // if there is neither action nor showView, then show the main view
+        if( (action == null) && (nextViewName == null) )
+        {
+            nextViewName = "MainView";
+        }
 
         // now let the request-handler handle the action and determine which
         // view to show next
@@ -115,8 +121,13 @@ public class HtmlRequestProcessor
             nextViewName = requestHandler.performActionAndGetNextView(mRequest, mRequest.getSession(), mApplicationCoreFacade);
         }
 
-        // if there is a controller for preparing the view, load it and let
+        // if there is a handler for preparing the view, load it and let
         // prepare the data
+        IHtmlRequestHandler viewPreparationHandler = loadHandlerForPreparingView(nextViewName);
+        if( viewPreparationHandler != null )
+        {
+            viewPreparationHandler.performActionAndGetNextView(mRequest, mRequest.getSession(), mApplicationCoreFacade);
+        }
 
         // show the view
         showView(nextViewName);
@@ -150,7 +161,26 @@ public class HtmlRequestProcessor
     }
 
     /**
-     * Loads the request-handler which handles the action
+     * Looks for a handler which prepares the data for a view. Such handlers are
+     * optional. They follow this naming convention: name = "Show" + name of
+     * view.
+     * 
+     * @param pNextViewName
+     *            the name of the view, for which a handler is to be found
+     * @return the handler, which prepares data for a view or 'null', if no such
+     *         handler exists
+     */
+    private IHtmlRequestHandler loadHandlerForPreparingView( final String pNextViewName ) throws Exception
+    {
+        final String nameForHandlerWhichPreparesView = "Show" + pNextViewName;
+
+        IHtmlRequestHandler requestHandler = loadRequestHandlerByName(nameForHandlerWhichPreparesView);
+
+        return requestHandler;
+    }
+
+    /**
+     * loads the request-handler which handles the action
      * 
      * @param pAction
      *            the action for which the request-handler should be loaded
@@ -160,31 +190,34 @@ public class HtmlRequestProcessor
      */
     private IHtmlRequestHandler loadRequestHandlerForAction( final String pAction ) throws Exception
     {
-        // the action to look for
-        String action = pAction;
-
         // no action has been given
-        if( action == null )
+        if( pAction == null )
         {
-            // this is the view which is to be shown
-            String nextView = mRequest.getParameter("showView");
-
-            // no action or view has been given, show the main-view (by loading
-            // the request-handler which prepares the data for the main-view)
-            if( nextView == null )
-            {
-                action = "ShowMainView";
-            }
-            // no action has been given, but there is a view to be shown => try
-            // to load a request-handler, which prepares data for this view
-            // (conventions: the names of these request-handlers are "Show" +
-            // name of view)
-            else
-            {
-                action = "Show" + nextView;
-            }
+            return null;
         }
 
+        IHtmlRequestHandler requestHandler = loadRequestHandlerByName(pAction);
+
+        if( requestHandler != null )
+        {
+            return requestHandler;
+        }
+
+        // an action was specified, but no request-handler has been found which
+        // handles this action => show error
+        throw new RuntimeException("No request-handler found for action: " + pAction);
+    }
+
+    /**
+     * loads a request-handler by its name
+     * 
+     * @param pNameOfRequestHandler
+     *            the name of the request-handler, which is to be loaded
+     * @return the request-handler or 'null', if no request-handler with that
+     *         name exists
+     */
+    private IHtmlRequestHandler loadRequestHandlerByName( final String pNameOfRequestHandler ) throws Exception
+    {
         final String pathToCodeBase = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
         final File requestHandlersDirectory = new File(pathToCodeBase + "com/kupkik/ui/html/requesthandlers");
 
@@ -194,26 +227,19 @@ public class HtmlRequestProcessor
         {
             String className = currentFile.getName().substring(0, currentFile.getName().length() - 6);
             String fullClassName = "com.kupkik.ui.html.requesthandlers." + className;
-            String handledActionByThisController = className.replaceAll("Controller$", "");
+            String nameOfRequestHandler = className.replaceAll("Handler$", "");
 
-            if( handledActionByThisController.equals(action) )
+            if( nameOfRequestHandler.equals(pNameOfRequestHandler) )
             {
 
                 final Class htmlRequestHandlerClass = classLoader.loadClass(fullClassName);
                 final IHtmlRequestHandler htmlRequestHandler = (IHtmlRequestHandler) htmlRequestHandlerClass.newInstance();
-                sLogger.info("Found controller for action: " + action);
+                sLogger.info("Found request-handler with name: " + pNameOfRequestHandler);
                 return htmlRequestHandler;
             }
         }
 
-        sLogger.info("No controller found for action: " + action);
-
-        // an action was specified, but no controller has been found which
-        // handles this action => show error
-        if( pAction != null )
-        {
-            throw new RuntimeException("No controller found for action: " + pAction);
-        }
+        sLogger.info("Found no request-handler with name: " + pNameOfRequestHandler);
         return null;
     }
 

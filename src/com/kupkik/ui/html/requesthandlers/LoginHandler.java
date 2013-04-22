@@ -8,7 +8,7 @@ import com.kupkik.model.UserWithPassword;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 import com.kupkik.utils.CredentialsUtils;
 
-public class LoginController
+public class LoginHandler
         implements IHtmlRequestHandler
 {
 

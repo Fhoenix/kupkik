@@ -8,7 +8,7 @@ import com.kupkik.model.UserWithPassword;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 
-public class LogoffController
+public class LogoffHandler
         implements IHtmlRequestHandler
 {
 

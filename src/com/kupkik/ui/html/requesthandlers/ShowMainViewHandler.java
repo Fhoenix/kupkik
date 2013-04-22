@@ -12,7 +12,7 @@ import com.kupkik.model.Tournament;
 import com.kupkik.model.User;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 
-public class ShowMainViewController
+public class ShowMainViewHandler
         implements IHtmlRequestHandler
 {
 
@@ -28,7 +28,7 @@ public class ShowMainViewController
         Collections.sort(tournaments, new TournamentComparator());
         pRequest.setAttribute("tournaments", tournaments);
 
-        return "MainView";
+        return null;
     }
 
     private class TournamentComparator

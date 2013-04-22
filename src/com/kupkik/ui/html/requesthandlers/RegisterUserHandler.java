@@ -9,7 +9,7 @@ import com.kupkik.model.UserWithPassword;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 import com.kupkik.utils.CredentialsUtils;
 
-public class RegisterUserController
+public class RegisterUserHandler
         implements IHtmlRequestHandler
 {
 
