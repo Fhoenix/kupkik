@@ -1,5 +1,8 @@
 package com.kupkik.applicationcore;
 
+import java.util.List;
+
+import com.kupkik.model.User;
 import com.kupkik.persistence.PersistenceFacade;
 import com.kupkik.utils.CredentialsUtils;
 
@@ -57,6 +60,16 @@ public class ApplicationCoreFacade
     public boolean doesUserExistWithName( final String pUserName )
     {
         return mPersistenceFacade.doesUserExistWithName(pUserName);
+    }
+
+    /**
+     * get all users in database
+     * 
+     * @return all users, not ordered
+     */
+    public List<User> getAllUsers()
+    {
+        return mPersistenceFacade.getAllUsers();
     }
 
     /**

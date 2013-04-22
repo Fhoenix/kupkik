@@ -1,13 +1,19 @@
 package com.kupkik.persistence;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.kupkik.model.User;
 import com.kupkik.ui.html.HtmlStarterServlet;
 
 /**
@@ -79,6 +85,23 @@ public class PersistenceFacade
 
         sLogger.info("user does exist: " + pUserName);
         return true;
+    }
+    
+    public List<User> getAllUsers()
+    {
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        Query getAllUsersQuery = new Query("User");
+        PreparedQuery getAllUsersPreparedQuery = datastore.prepare(getAllUsersQuery);
+        
+        List<Entity> userEntities = getAllUsersPreparedQuery.asList(FetchOptions.Builder.withDefaults());
+        List<User> users = new ArrayList<User>();
+        for( Entity currentUserEntity : userEntities )
+        {
+            User currentUser = new User(currentUserEntity.getKey().getName());
+            users.add(currentUser);
+        }
+        
+        return users;
     }
 
     /**
