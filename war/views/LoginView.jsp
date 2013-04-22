@@ -7,7 +7,7 @@
         <H1 ALIGN="CENTER">Login</H1>
         
         <form action="/" method="post">
-            <input type="hidden" name="action" value="login_user">
+            <input type="hidden" name="action" value="Login">
             Name:
             <br>
             <input name="user_name" type="text" size="50" maxlength="50">

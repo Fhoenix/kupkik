@@ -30,7 +30,7 @@ public class LoginController
         {
             // user does not exist
 
-            pRequest.setAttribute("errorMessage", "There is no user with this name and password.");
+            pRequest.setAttribute("errorMessage", "Es existiert kein Nutzer mit diesem Namen und Passwort.");
             return "LoginView";
         }
 
