@@ -24,7 +24,7 @@ public class GeneralRequestHandlingTest
     {
         // prepare the test
 
-        HashMap<String, String> attributesForSession = new HashMap<>();
+        HashMap<String, Object> attributesForSession = new HashMap<>();
         attributesForSession.put("currentUser", null);
 
         HashMap<String, String> parametersForRequest = new HashMap<>();
@@ -50,7 +50,7 @@ public class GeneralRequestHandlingTest
     {
         // prepare the test
 
-        HashMap<String, String> attributesForSession = new HashMap<>();
+        HashMap<String, Object> attributesForSession = new HashMap<>();
         attributesForSession.put("currentUser", null);
 
         HashMap<String, String> parametersForRequest = new HashMap<>();
@@ -80,7 +80,7 @@ public class GeneralRequestHandlingTest
     {
         // prepare the test
 
-        HashMap<String, String> attributesForSession = new HashMap<>();
+        HashMap<String, Object> attributesForSession = new HashMap<>();
         attributesForSession.put("currentUser", null);
 
         HashMap<String, String> parametersForRequest = new HashMap<>();
@@ -106,7 +106,7 @@ public class GeneralRequestHandlingTest
     {
         // prepare the test
 
-        HashMap<String, String> attributesForSession = new HashMap<>();
+        HashMap<String, Object> attributesForSession = new HashMap<>();
         attributesForSession.put("currentUser", null);
 
         HashMap<String, String> parametersForRequest = new HashMap<>();

@@ -62,7 +62,7 @@ public class UseCaseTestParent
      *            asked.
      * @throws Exception
      */
-    protected void simulateUserRequest( final HashMap<String, String> pAttributesForSession,
+    protected void simulateUserRequest( final HashMap<String, Object> pAttributesForSession,
             final HashMap<String, String> pParametersForRequest ) throws Exception
     {
         mHttpSessionMock = new HttpSessionMock(pAttributesForSession);

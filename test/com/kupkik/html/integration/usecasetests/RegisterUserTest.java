@@ -27,7 +27,7 @@ public class RegisterUserTest
         final String password2 = "qwert";
         final String md5Password = CredentialsUtils.getMd5HashForText(password1);
 
-        HashMap<String, String> attributesForSession = new HashMap<>();
+        HashMap<String, Object> attributesForSession = new HashMap<>();
         attributesForSession.put("currentUser", null);
 
         HashMap<String, String> parametersForRequest = new HashMap<>();
@@ -65,7 +65,7 @@ public class RegisterUserTest
         final String password1 = "qwert";
         final String password2 = "qwert";
 
-        HashMap<String, String> attributesForSession = new HashMap<>();
+        HashMap<String, Object> attributesForSession = new HashMap<>();
         attributesForSession.put("currentUser", null);
 
         HashMap<String, String> parametersForRequest = new HashMap<>();
@@ -105,7 +105,7 @@ public class RegisterUserTest
         final String password1 = "qwert";
         final String password2 = "qwert";
 
-        HashMap<String, String> attributesForSession = new HashMap<>();
+        HashMap<String, Object> attributesForSession = new HashMap<>();
         attributesForSession.put("currentUser", null);
 
         HashMap<String, String> parametersForRequest = new HashMap<>();
@@ -145,7 +145,7 @@ public class RegisterUserTest
         final String password1 = "a";
         final String password2 = "a";
 
-        HashMap<String, String> attributesForSession = new HashMap<>();
+        HashMap<String, Object> attributesForSession = new HashMap<>();
         attributesForSession.put("currentUser", null);
 
         HashMap<String, String> parametersForRequest = new HashMap<>();
@@ -185,7 +185,7 @@ public class RegisterUserTest
         final String password1 = "qwert";
         final String password2 = "dwert";
 
-        HashMap<String, String> attributesForSession = new HashMap<>();
+        HashMap<String, Object> attributesForSession = new HashMap<>();
         attributesForSession.put("currentUser", null);
 
         HashMap<String, String> parametersForRequest = new HashMap<>();

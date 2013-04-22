@@ -11,10 +11,10 @@ import javax.servlet.http.HttpSessionContext;
 public class HttpSessionMock
         implements HttpSession
 {
-    private Map<String, String> mAttributesGet;
+    private Map<String, Object> mAttributesGet;
     private HashMap<String, Object> mAttributsSet = new HashMap<String, Object>();
 
-    public HttpSessionMock(final Map<String, String> pAttributesGet)
+    public HttpSessionMock(final Map<String, Object> pAttributesGet)
     {
         mAttributesGet = pAttributesGet;
     }
