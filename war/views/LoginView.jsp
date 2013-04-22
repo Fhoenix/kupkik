@@ -1,7 +1,16 @@
 <%@ page import="com.kupkik.model.*" %>
 <%@ page import="com.kupkik.ui.html.view.*" %>
 
-<% ViewHelper viewHelper = (ViewHelper)request.getAttribute("viewHelper");  %> 
+<% 
+    ViewHelper viewHelper = (ViewHelper)request.getAttribute("viewHelper");  
+
+    String initializeUserName = "";
+    if(request.getParameter("user_name") != null)
+    {
+	    initializeUserName = (String)request.getParameter("user_name");
+    }
+%> 
+
 <%= viewHelper.createHtmlBegin("Login", false)  %> 
 
         <H1 ALIGN="CENTER">Login</H1>
@@ -10,15 +19,13 @@
             <input type="hidden" name="action" value="Login">
             Name:
             <br>
-            <input name="user_name" type="text" size="50" maxlength="50">
+            <input name="user_name" type="text" size="50" maxlength="50" value="<%=initializeUserName%>">
             <br>
             Passwort:
             <br>
             <input name="password" type="password" size="12" maxlength="12">
             <br>
             <input type="submit" value=" Absenden ">
-            <br>
-            Hinweis: Das Passwort wird nicht im Klartext in der Datenbank gespeichert.
         </form>
         
         <br>

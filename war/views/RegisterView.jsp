@@ -2,13 +2,13 @@
 <%@ page import="com.kupkik.ui.html.view.*" %>
 
 <% 
-ViewHelper viewHelper = (ViewHelper)request.getAttribute("viewHelper");  
+    ViewHelper viewHelper = (ViewHelper)request.getAttribute("viewHelper");  
 
-String initializeUserName = "";
-if(request.getParameter("user_name") != null)
-{
-	initializeUserName = (String)request.getParameter("user_name");
-}
+    String initializeUserName = "";
+    if(request.getParameter("user_name") != null)
+    {
+	    initializeUserName = (String)request.getParameter("user_name");
+    }
 %> 
 
 <%= viewHelper.createHtmlBegin("Registrieren", false)  %> 
