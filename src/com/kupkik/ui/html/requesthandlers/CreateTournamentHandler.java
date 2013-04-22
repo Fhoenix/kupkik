@@ -37,7 +37,9 @@ public class CreateTournamentHandler
 
         if( createTournamentAnswer == CreateTournamentAnswer.NAME_INVALID )
         {
-            pRequest.setAttribute("errorMessage", "Der Name des Turniers ist falsch!");
+            pRequest.setAttribute("errorMessage", "Der Name des Turniers muss zwischen " + ApplicationCoreFacade.MIN_TOURNAMENT_NAME_SIZE
+                    + " und " + ApplicationCoreFacade.MAX_TOURNAMENT_NAME_SIZE
+                    + " Zeichen lang sein und darf nur Buchstaben, Zahlen, Leerzeichen " + " oder Unterstriche enthalten!");
             return "NewTournamentView";
         }
         if( createTournamentAnswer == CreateTournamentAnswer.TOURNAMENT_ALREADY_EXISTS )
