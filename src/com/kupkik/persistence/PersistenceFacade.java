@@ -18,6 +18,42 @@ public class PersistenceFacade
 {
     private static final Logger sLogger = Logger.getLogger(HtmlStarterServlet.class.getName());
 
+
+    /**
+     * Does the user exist?
+     * 
+     * @param pUserName
+     *            the name of the user
+     * @param pPasswordMd5
+     *            the password (md5) of the user
+     * @return 'true', if the user exists, otherwise 'false'
+     */
+    public boolean doesUserExistWithNameAndMd5Password( final String pUserName, final String pPasswordMd5 )
+    {
+        sLogger.info("doesUserExistWithNameAndMd5Password: " + pUserName + ", " + pPasswordMd5);
+        Key key = KeyFactory.createKey("User", pUserName);
+        
+        Entity user = null;
+
+        try
+        {
+            DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+            user = datastore.get(key);
+        }
+        catch( EntityNotFoundException e )
+        {
+            sLogger.info("user does NOT exist: " + pUserName);
+            return false;
+        }
+        
+        if( !user.getProperty("passwordMd5").equals(pPasswordMd5) )
+        {
+            return false;
+        }
+        
+        return true;
+    }
+    
     /**
      * Does the user exist?
      * 

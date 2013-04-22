@@ -37,7 +37,21 @@ public class ApplicationCoreFacade
      * Does the user exist?
      * 
      * @param pUserName
-     *            The name of the user.
+     *            the name of the user
+     * @param pPasswordMd5
+     *            the password (md5) of the user
+     * @return 'true', if the user exists, otherwise 'false'
+     */
+    public boolean doesUserExistWithNameAndMd5Password( final String pUserName, final String pPasswordMd5 )
+    {
+        return mPersistenceFacade.doesUserExistWithNameAndMd5Password(pUserName, pPasswordMd5);
+    }
+
+    /**
+     * Does the user exist?
+     * 
+     * @param pUserName
+     *            the name of the user
      * @return 'true', if the user exists, otherwise 'false'
      */
     public boolean doesUserExistWithName( final String pUserName )

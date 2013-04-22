@@ -31,4 +31,13 @@
         <a href="/?showView=RegisterView">Hier registrieren!</a>
         <br>
 
+<% 
+	if(request.getAttribute("errorMessage") != null)
+	{
+ %> 
+    	<b>Fehler: </b><%= viewHelper.convertTextForHtml((String)request.getAttribute("errorMessage")) %>
+<% 
+	}
+ %> 
+
 <%= viewHelper.createHtmlEnd()  %> 
