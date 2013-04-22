@@ -84,7 +84,7 @@ public class RegisterUserTest
         // check the results
         
         checkThatViewWasShown("/views/RegisterView.jsp");
-        // check that only our user has been set in session
+        // check that only the guest-user has been set in session
         checkThatOnlyUserHasBeenSetInSessionAndSameUserHasBeenSetInHttpRequest(HtmlRequestProcessor.GUEST_USER.getName(), 
                 HtmlRequestProcessor.GUEST_USER.getPasswordMd5());
         // only three attributes of the http-request should have been set
@@ -124,7 +124,7 @@ public class RegisterUserTest
         // check the results
         
         checkThatViewWasShown("/views/RegisterView.jsp");
-        // check that only our user has been set in session
+        // check that only the guest-user has been set in session
         checkThatOnlyUserHasBeenSetInSessionAndSameUserHasBeenSetInHttpRequest(HtmlRequestProcessor.GUEST_USER.getName(), 
                 HtmlRequestProcessor.GUEST_USER.getPasswordMd5());
         // only three attributes of the http-request should have been set
@@ -164,7 +164,7 @@ public class RegisterUserTest
         // check the results
         
         checkThatViewWasShown("/views/RegisterView.jsp");
-        // check that only our user has been set in session
+        // check that only the guest-user has been set in session
         checkThatOnlyUserHasBeenSetInSessionAndSameUserHasBeenSetInHttpRequest(HtmlRequestProcessor.GUEST_USER.getName(), 
                 HtmlRequestProcessor.GUEST_USER.getPasswordMd5());
         // only three attributes of the http-request should have been set
@@ -204,7 +204,7 @@ public class RegisterUserTest
         // check the results
         
         checkThatViewWasShown("/views/RegisterView.jsp");
-        // check that only our user has been set in session
+        // check that only the guest-user has been set in session
         checkThatOnlyUserHasBeenSetInSessionAndSameUserHasBeenSetInHttpRequest(HtmlRequestProcessor.GUEST_USER.getName(), 
                 HtmlRequestProcessor.GUEST_USER.getPasswordMd5());
         // only three attributes of the http-request should have been set

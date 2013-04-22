@@ -14,10 +14,37 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import com.kupkik.html.integration.UseCaseTestParent;
+import com.kupkik.ui.html.HtmlRequestProcessor;
 
 public class GeneralRequestHandlingTest
         extends UseCaseTestParent
 {
+    @Test
+    public void showMainViewIfNoParameters() throws Exception
+    {
+        // prepare the test
+
+        HashMap<String, String> attributesForSession = new HashMap<>();
+        attributesForSession.put("currentUser", null);
+
+        HashMap<String, String> parametersForRequest = new HashMap<>();
+        parametersForRequest.put("action", null);
+        parametersForRequest.put("showView", null);
+
+        // run the test
+
+        simulateUserRequest(attributesForSession, parametersForRequest);
+
+        // check the results
+
+        checkThatViewWasShown("/views/MainView.jsp");
+        // check that only the guest-user has been set in session
+        checkThatOnlyUserHasBeenSetInSessionAndSameUserHasBeenSetInHttpRequest(HtmlRequestProcessor.GUEST_USER.getName(), 
+                HtmlRequestProcessor.GUEST_USER.getPasswordMd5());
+        // nothing should have been saved
+        checkForNoPersistanceToDatabase();
+    }
+    
     @Test
     public void invalidRequestBecauseBothActionAndShowviewParameterSent() throws Exception
     {
