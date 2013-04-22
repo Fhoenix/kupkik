@@ -1,5 +1,7 @@
 package com.kupkik.html.integration;
 
+import static org.mockito.Mockito.mock;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Locale;
@@ -11,6 +13,25 @@ import javax.servlet.http.HttpServletResponse;
 public class HttpServletResponseMock
         implements HttpServletResponse
 {
+    private PrintWriter mPrintWriterMock;
+    private boolean     mHasBeenWritten = false;
+
+    public HttpServletResponseMock()
+    {
+        mPrintWriterMock = mock(PrintWriter.class);
+    }
+
+    public boolean hasBeenWritten()
+    {
+        return mHasBeenWritten;
+    }
+
+    @Override
+    public PrintWriter getWriter() throws IOException
+    {
+        mHasBeenWritten = true;
+        return mPrintWriterMock;
+    }
 
     @Override
     public void flushBuffer() throws IOException
@@ -44,12 +65,6 @@ public class HttpServletResponseMock
 
     @Override
     public ServletOutputStream getOutputStream() throws IOException
-    {
-        throw new RuntimeException("This mock method was not supposed to be used");
-    }
-
-    @Override
-    public PrintWriter getWriter() throws IOException
     {
         throw new RuntimeException("This mock method was not supposed to be used");
     }

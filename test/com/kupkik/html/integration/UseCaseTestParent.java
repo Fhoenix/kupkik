@@ -19,6 +19,7 @@ import org.junit.Before;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.kupkik.applicationcore.ApplicationCoreFacade;
+import com.kupkik.model.UserWithPassword;
 import com.kupkik.persistence.PersistenceFacade;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.view.ViewHelper;
@@ -85,5 +86,25 @@ public class UseCaseTestParent
         verify(mRequestDispatcherMock, times(1)).forward(mHttpServletRequestMock, mHttpServletResponseMock);
         // a view should only have been showed once with any parameters
         verify(mRequestDispatcherMock, times(1)).forward(any(HttpServletRequest.class), any(HttpServletResponse.class));
+    }
+    
+    protected void checkThatOnlyUserHasBeenSetInSessionAndSameUserHasBeenSetInHttpRequest(final String pExpectedName, final String pExpectedMd5Password)
+    {
+        // only one attribute of the session should have been set
+        Assert.assertEquals(1, mHttpSessionMock.getAttributsSet().size());
+        // check that the expected current user has been set in the session
+        UserWithPassword setCurrentUser = (UserWithPassword) mHttpSessionMock.getAttributsSet().get("currentUser");
+        Assert.assertEquals(pExpectedName, setCurrentUser.getName());
+        Assert.assertEquals(pExpectedMd5Password, setCurrentUser.getPasswordMd5());
+        // check that the expected current user has been set in the http-request
+        setCurrentUser = (UserWithPassword) mHttpServletRequestMock.getAttributsSet().get("currentUser");
+        Assert.assertEquals(pExpectedName, setCurrentUser.getName());
+        Assert.assertEquals(pExpectedMd5Password, setCurrentUser.getPasswordMd5());
+    }
+    
+    protected void checkForNoPersistanceToDatabase()
+    {
+        // no user should have been saved
+        verify(mPersistenceFacadeMock, times(0)).saveNewUser(anyString(), anyString());
     }
 }

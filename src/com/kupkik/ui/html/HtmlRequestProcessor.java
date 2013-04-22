@@ -83,26 +83,9 @@ public class HtmlRequestProcessor
         // the appropriate business-controller should determine the next view
         if( (action != null) && (nextView != null) )
         {
-            showErrorView("Its not allowed to have 'action' and 'showView' parameters. action: " + action + ", showView: " + nextView);
+            throw new RuntimeException("Its not allowed to have 'action' and 'showView' parameters. action: " + action + ", showView: "
+                    + nextView);
         }
-    }
-
-    /**
-     * Shows the error view.
-     * 
-     * @param pErrorMessage
-     *            The error-message to be displayed.
-     */
-    private void showErrorView( final String pErrorMessage ) throws Exception
-    {
-        sLogger.warning("Error view shown, because of error: " + pErrorMessage);
-        mRequest.setAttribute("errorMsg", pErrorMessage);
-
-        RequestDispatcher rd = mServletContext.getRequestDispatcher("/views/ErrorView.jsp");
-        rd.forward(mRequest, mResponse);
-
-        // after showing the error, stop
-        System.exit(0);
     }
 
     /**
@@ -227,7 +210,7 @@ public class HtmlRequestProcessor
         // handles this action => show error
         if( pAction != null )
         {
-            showErrorView("No controller found for action: " + pAction);
+            throw new RuntimeException("No controller found for action: " + pAction);
         }
         return null;
     }
@@ -245,7 +228,7 @@ public class HtmlRequestProcessor
         // view does not exist => show error
         if( !doesViewExist(pViewName) )
         {
-            showErrorView("View does not exist: " + pViewName);
+            throw new RuntimeException("View does not exist: " + pViewName);
         }
 
         RequestDispatcher rd = mServletContext.getRequestDispatcher("/views/" + pViewName + ".jsp");
