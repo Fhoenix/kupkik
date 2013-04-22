@@ -77,7 +77,7 @@ public class HtmlRequestProcessor
 
         // this is the view which is to be shown
         String nextView = mRequest.getParameter("showView");
-        sLogger.info("showView: " + action);
+        sLogger.info("showView: " + nextView);
 
         // there can not be an action and a view, because if there is an action,
         // the appropriate business-controller should determine the next view
@@ -179,7 +179,7 @@ public class HtmlRequestProcessor
             // view)
             else
             {
-                action = "Show" + action;
+                action = "Show" + nextView;
             }
         }
 

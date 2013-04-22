@@ -20,5 +20,7 @@
 		        %>
 		        <br>
 	        </div>
+	        
+	    <a href="/?showView=NewTournamentView">Erstellung eines neues Turniers</a>
         
 <%= viewHelper.createHtmlEnd()  %> 

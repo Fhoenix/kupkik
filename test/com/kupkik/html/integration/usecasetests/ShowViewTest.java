@@ -28,6 +28,12 @@ public class ShowViewTest
         runTest("RegisterView");
     }
 
+    @Test
+    public void showNewTournamentView() throws Exception
+    {
+        runTest("NewTournamentView");
+    }
+
     public void runTest( final String pViewName ) throws Exception
     {
         // prepare the test
