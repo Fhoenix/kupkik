@@ -7,3 +7,5 @@
 
 # classes #
 /war/WEB-INF/classes
+
+appengine-web.xml
