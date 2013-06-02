@@ -9,6 +9,13 @@
  
  
  
+  == medium priority ==
+
+
+ - inluce appengine-web.xml but read value for <application> from other file (which is not included in repository, because its different for each user)
+
+
+ 
   == lowest priority ==
   
  
