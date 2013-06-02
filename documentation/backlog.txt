@@ -4,10 +4,9 @@
  
   == high priority ==
   
- 
+ - Test Repository Actions
  - unit tests: integration tests from ui to persistence, test per use-case
  
- das ist ein test
  
   == medium priority ==
 
