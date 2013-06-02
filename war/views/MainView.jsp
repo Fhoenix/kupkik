@@ -31,5 +31,8 @@
 			out.println("<br>" + currentTournament.getName());
 		}
 		%>
+		<h1>Test Componenten</h1>
+		
+		<% out.println(viewHelper.createSuccessBar(44.5)); %>
         
 <%= viewHelper.createHtmlEnd()  %> 

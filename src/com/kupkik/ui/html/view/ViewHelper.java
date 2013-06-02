@@ -47,21 +47,11 @@ public class ViewHelper
 
 		UserWithPassword currentUser = (UserWithPassword) mSession.getAttribute("currentUser");
 		pHtmlContent.append(currentUser.getName());
-		
+
 		pHtmlContent.append(" </a>");
 		pHtmlContent.append(" 		<ul class=\"nav\">");
 		pHtmlContent.append(" 	      <li class=\"active\"><a href=\"#\">Home</a></li>");
-		
 
-						/**if( currentUser.getPasswordMd5().equals("none") )
-        {
-            pHtmlContent.append("<i>");
-        }
-        if( currentUser.getPasswordMd5().equals("none") )
-        {
-            pHtmlContent.append("</i>");
-        }
-						 */
 
 		if( currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) )
 		{
@@ -152,5 +142,24 @@ public class ViewHelper
 		htmlEnd.append("</html>\n");
 
 		return htmlEnd.toString();
+	}
+
+	/**
+	 * Creates a SuccessBar showing the percentage a user won in green, and the percentage lost in red.
+	 * Percentage lost is calculated.
+	 * 
+	 * @param percentageWon Hand in the percentage a user won (e.g. 54.34).
+	 * @return Returns the entire bar with bootstrap classes.
+	 */
+	public String createSuccessBar(double percentageWon){
+		final StringBuilder htmlSuccessBar = new StringBuilder();
+		double percentageLost = 100.00 - percentageWon;
+
+		htmlSuccessBar.append("<div class=\"progress\">");
+		htmlSuccessBar.append("		<div class=\"bar bar-success\" style=\"width:"+ percentageWon +"%\">"+ percentageWon +"</div>");
+		htmlSuccessBar.append("		<div class=\"bar bar-danger\" style=\"width:"+ percentageLost +"%\">"+ percentageLost +"</div>");
+		htmlSuccessBar.append("</div>");
+
+		return htmlSuccessBar.toString();
 	}
 }

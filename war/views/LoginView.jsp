@@ -42,7 +42,7 @@
 	if(request.getAttribute("errorMessage") != null)
 	{
  %> 
-    	<b>Fehler: </b><%= viewHelper.convertTextForHtml((String)request.getAttribute("errorMessage")) %>
+    	<p class="text-error">Fehler: <%= viewHelper.convertTextForHtml((String)request.getAttribute("errorMessage")) %></p>
 <% 
 	}
  %> 
