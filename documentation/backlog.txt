@@ -12,7 +12,8 @@
 
 
  - inluce appengine-web.xml but read value for <application> from other file (which is not included in repository, because its different for each user)
-
+- OPTIMIZE FUNCTIONS IN VIEW HELPER
+- INTEGRATE THE LATEST TOURNAMENTS AND LATEST GAMES
 
  
   == lowest priority ==
