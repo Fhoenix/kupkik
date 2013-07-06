@@ -32,7 +32,7 @@ public class LoginTest
         parametersForRequest.put("user_name", userName);
         parametersForRequest.put("password", password);
 
-        when(mPersistenceFacadeMock.doesUserExistWithNameAndMd5Password("usul", md5Password)).thenReturn(true);
+//        when(mPersistenceFacadeMock.doesUserExistWithNameAndMd5Password("usul", md5Password)).thenReturn(true);
 
         // run the test
 
@@ -65,7 +65,7 @@ public class LoginTest
         parametersForRequest.put("user_name", userName);
         parametersForRequest.put("password", password);
 
-        when(mPersistenceFacadeMock.doesUserExistWithNameAndMd5Password("usul", md5Password)).thenReturn(false);
+//        when(mPersistenceFacadeMock.doesUserExistWithNameAndMd5Password("usul", md5Password)).thenReturn(false);
 
         // run the test
 

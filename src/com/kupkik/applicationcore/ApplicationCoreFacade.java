@@ -1,10 +1,18 @@
 package com.kupkik.applicationcore;
 
+import java.util.Date;
 import java.util.List;
 
+import com.google.appengine.api.datastore.Key;
+import com.kupkik.model.Season;
 import com.kupkik.model.Tournament;
-import com.kupkik.model.User;
-import com.kupkik.persistence.PersistenceFacade;
+import com.kupkik.model.UserWithPassword;
+import com.kupkik.model.game.BadmintonSingle;
+import com.kupkik.persistence.badminton.PFBadmintonGetters;
+import com.kupkik.persistence.badminton.PFBadmintonSaver;
+import com.kupkik.persistence.common.PFCommonGetter;
+import com.kupkik.persistence.common.PFCommonSaver;
+import com.kupkik.persistence.common.PFCommonTester;
 import com.kupkik.utils.CredentialsUtils;
 
 /**
@@ -21,12 +29,15 @@ public class ApplicationCoreFacade
 
     public static final int   MAX_TOURNAMENT_NAME_SIZE = 50;
     public static final int   MIN_TOURNAMENT_NAME_SIZE = 5;
+    
+    public static final int   MAX_SEASON_NAME_SIZE = 50;
+    public static final int   MIN_SEASON_NAME_SIZE = 5;
 
-    private PersistenceFacade mPersistenceFacade;
 
-    public ApplicationCoreFacade(final PersistenceFacade pPersistenceFacade)
+
+    public ApplicationCoreFacade()
     {
-        mPersistenceFacade = pPersistenceFacade;
+//TODO COS MAYBE INSTANCES OF THE FACADES
     }
 
     /**
@@ -48,9 +59,36 @@ public class ApplicationCoreFacade
         OK,
         NAME_INVALID,
         TOURNAMENT_ALREADY_EXISTS,
+        SEASON_DOES_NOT_EXIST, 
+        USER_CREDENTIALS_INVALID, TOURNAMENT_DOES_NOT_EXIST
+    }
+
+    
+    /**
+     * The result of trying to create a new tournament.
+     */
+    public enum CreateSeasonAnswer
+    {
+        OK,
+        NAME_INVALID,
+        SEASON_ALREADY_EXISTS,
         USER_CREDENTIALS_INVALID
     }
 
+    
+    public enum CreateGameAnswer{
+    	OK,
+    	NOK
+    }
+    
+    
+    
+   
+    public CreateGameAnswer createBadmintonSingleGame(final String pTournamentName, final String playerOne, final String playerTwo, final int resultOne, final int resultTwo, final Date date){
+    	PFBadmintonSaver.saveNewBadmintonSingleGame(pTournamentName, playerOne, playerTwo, resultOne, resultTwo, date);
+        return CreateGameAnswer.OK;
+    }
+    
     /**
      * create a new tournament
      * 
@@ -58,7 +96,45 @@ public class ApplicationCoreFacade
      *            the name of the new tournament
      * @return the result of trying to create a tournament
      */
-    public CreateTournamentAnswer createTournament( final String pTournamentName, final String pUserName, final String pUserPasswordMd5 )
+    public CreateSeasonAnswer createSeason( final String pSeasonName, final String pUserName, final String pUserPasswordMd5 )
+    {
+        if( pSeasonName.length() > MAX_TOURNAMENT_NAME_SIZE )
+        {
+            return CreateSeasonAnswer.NAME_INVALID;
+        }
+        if( pSeasonName.length() < MIN_TOURNAMENT_NAME_SIZE )
+        {
+            return CreateSeasonAnswer.NAME_INVALID;
+        }
+        if( !pSeasonName.matches("[0-9a-zA-Z_ ]*") )
+        {
+            return CreateSeasonAnswer.NAME_INVALID;
+        }
+
+        if( PFCommonTester.doesSeasonExist(pSeasonName) )
+        {
+            return CreateSeasonAnswer.SEASON_ALREADY_EXISTS;
+        }
+        
+        if( !doesUserExistWithNameAndMd5Password(pUserName, pUserPasswordMd5))
+        {
+            return CreateSeasonAnswer.USER_CREDENTIALS_INVALID;
+        }
+
+        PFCommonSaver.saveNewSeason(pSeasonName, pUserName);
+
+        return CreateSeasonAnswer.OK;
+    }
+    
+    
+    /**
+     * create a new tournament
+     * 
+     * @param pTournamentName
+     *            the name of the new tournament
+     * @return the result of trying to create a tournament
+     */
+    public CreateTournamentAnswer createTournament( final String pTournamentName, Key seasonKey )
     {
         if( pTournamentName.length() > MAX_TOURNAMENT_NAME_SIZE )
         {
@@ -73,22 +149,27 @@ public class ApplicationCoreFacade
             return CreateTournamentAnswer.NAME_INVALID;
         }
 
-        if( mPersistenceFacade.doesTournamentExistWithName(pTournamentName) )
+        if( PFCommonTester.doesTournamentExistWithName(pTournamentName) )
         {
             return CreateTournamentAnswer.TOURNAMENT_ALREADY_EXISTS;
         }
         
-        if( !doesUserExistWithNameAndMd5Password(pUserName, pUserPasswordMd5))
+        if( !doesSeasonExists(seasonKey.getName()))
         {
-            return CreateTournamentAnswer.USER_CREDENTIALS_INVALID;
+            return CreateTournamentAnswer.TOURNAMENT_DOES_NOT_EXIST;
         }
 
-        mPersistenceFacade.saveNewTournament(pTournamentName, pUserName);
+        PFCommonSaver.saveNewTournament(pTournamentName, seasonKey);
 
         return CreateTournamentAnswer.OK;
     }
 
-    /**
+    private boolean doesSeasonExists(String seasonName) {
+		// TODO COS IMPLEMENT METHOD
+		return true;
+	}
+
+	/**
      * Does the user exist?
      * 
      * @param pUserName
@@ -99,8 +180,24 @@ public class ApplicationCoreFacade
      */
     public boolean doesUserExistWithNameAndMd5Password( final String pUserName, final String pPasswordMd5 )
     {
-        return mPersistenceFacade.doesUserExistWithNameAndMd5Password(pUserName, pPasswordMd5);
+        return PFCommonTester.doesUserExistWithNameAndMd5Password(pUserName, pPasswordMd5);
     }
+    
+    
+	/**
+     * Does the user exist?
+     * 
+     * @param pUserName
+     *            the name of the user
+     * @param pPasswordMd5
+     *            the password (md5) of the user
+     * @return 'true', if the user exists, otherwise 'false'
+     */
+    public boolean doesSeasonExist( final String seasonName )
+    {
+        return PFCommonTester.doesSeasonExist(seasonName);
+    }
+    
 
     /**
      * Does the user exist?
@@ -111,27 +208,7 @@ public class ApplicationCoreFacade
      */
     public boolean doesUserExistWithName( final String pUserName )
     {
-        return mPersistenceFacade.doesUserExistWithName(pUserName);
-    }
-
-    /**
-     * get all tournaments in database
-     * 
-     * @return all tournaments, not ordered
-     */
-    public List<Tournament> getAllTournaments()
-    {
-        return mPersistenceFacade.getAllTournaments();
-    }
-
-    /**
-     * get all users in database
-     * 
-     * @return all users, not ordered
-     */
-    public List<User> getAllUsers()
-    {
-        return mPersistenceFacade.getAllUsers();
+        return PFCommonTester.doesUserExistWithName(pUserName);
     }
 
     /**
@@ -171,7 +248,7 @@ public class ApplicationCoreFacade
 
         String passwordMd5 = CredentialsUtils.getMd5HashForText(pUserPassword);
 
-        mPersistenceFacade.saveNewUser(pUserName, passwordMd5);
+        PFCommonSaver.saveNewUser(pUserName, passwordMd5);
 
         return SaveUserAnswer.OK;
     }
@@ -203,5 +280,42 @@ public class ApplicationCoreFacade
 
         return true;
     }
+
+	/**
+	 * get all users in database
+	 * 
+	 * @return all users, not ordered
+	 */
+	public List<UserWithPassword> getAllUsers()
+	{
+	    return PFCommonGetter.getAllUsers();
+	}
+
+	public List<BadmintonSingle> getLatestBadmintonSingleGames(int count){
+		return PFBadmintonGetters.getLatestBadmintonSingleGames(count);
+	}
+
+	/**
+	 * get all tournaments in database
+	 * 
+	 * @return all tournaments, not ordered
+	 */
+	public List<Tournament> getAllTournaments()
+	{
+	    return PFCommonGetter.getAllTournaments();
+	}
+
+	public List<Season> getAllSeasonsForUser(UserWithPassword currentUser) {
+		return PFCommonGetter.getAllSeasonsForUser(currentUser.getName());
+	}
+
+	public UserWithPassword getUserWithPasswordByName(String currentUser) {
+		return PFCommonGetter.getUserByName(currentUser);
+	}
+
+	public List<Tournament> getAllTournamentsOfUser(String userName) {
+
+		return PFCommonGetter.getAllTournamentsOfUser(userName);
+	}
 
 }

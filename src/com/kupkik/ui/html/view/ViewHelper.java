@@ -1,10 +1,14 @@
 package com.kupkik.ui.html.view;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
+import com.kupkik.model.Tournament;
 import com.kupkik.model.UserWithPassword;
+import com.kupkik.model.game.BadmintonSingle;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 
 /**
@@ -52,7 +56,7 @@ public class ViewHelper
 		
 		content.append(" <div class=\"navbar\">");
 		content.append("  <div class=\"navbar-inner\">");
-		content.append("    <a class=\"brand\" href=\"#\">KUPKIK - ");
+		content.append("    <a class=\"brand\" href=\"#\">scoreIT - ");
 
 		UserWithPassword currentUser = (UserWithPassword) mSession.getAttribute("currentUser");
 		content.append(currentUser.getName());
@@ -68,6 +72,9 @@ public class ViewHelper
 		else{
 			content.append(" <li><a href=\"/?action=Logoff\">Logoff</a> </li>");
 		}
+		content.append(" <li><a href=\"/?showView=NewGameView\">ScoreIT</a> </li>");
+		content.append(" <li><a href=\"/?showView=NewTournamentView\">Tournament</a> </li>");
+		content.append(" <li><a href=\"/?showView=NewSeasonView\">Create Season</a> </li>");
 		content.append(" </ul>");
 		content.append(" </div>");
 		content.append(" </div>");
@@ -108,7 +115,7 @@ public class ViewHelper
 	public String createHtmlBegin( final String pTitle, final boolean pDoShowMenubar )
 	{
 		final StringBuilder htmlBegin = new StringBuilder();
-		htmlBegin.append("<html>\n");
+		htmlBegin.append("<!DOCTYPE HTML><html>\n");
 		htmlBegin.append("   <head>\n");
 
 		if( pTitle.equals("") )
@@ -176,7 +183,7 @@ public class ViewHelper
 					mainSiteIntroArea.append(tournamentText);
 					mainSiteIntroArea.append("<div class=\"row-fluid\">");
 						mainSiteIntroArea.append("<div class=\"span6\">");
-							mainSiteIntroArea.append("<button class=\"btn btn-large btn-primary\" type=\"button\">Register</button>");
+							mainSiteIntroArea.append("<a href=\"?showView=RegisterView\"><button class=\"btn btn-large btn-primary\" type=\"button\">Register</button></a>");
 						mainSiteIntroArea.append("</div>");
 						mainSiteIntroArea.append("<div class=\"span6\">");
 							mainSiteIntroArea.append("<a href=\"/?showView=NewTournamentView\"><button class=\"btn btn-large\" type=\"button\">Create Tournament</button></a>");
@@ -189,8 +196,10 @@ public class ViewHelper
 	return mainSiteIntroArea.toString();
 	}
 	
-	/**Creates the three thumbnails at the MainPage	 */
-public String newsThumbnails(){
+	/**Creates the three thumbnails at the MainPage	
+	 * @param tournaments The List of Tournaments to be displayed
+	 */
+public String newsThumbnails(List<Tournament> tournaments, List<BadmintonSingle> badmintonSingle){
 		
 		
 		StringBuilder newsThumbnails = new StringBuilder();
@@ -209,9 +218,12 @@ public String newsThumbnails(){
 						newsThumbnails.append("<div class=\"caption\">");
 						newsThumbnails.append("<h3>Latest Tournaments</h3>");
 						newsThumbnails.append("<table class=\"table table-striped\">");
-						newsThumbnails.append("<tr> <td> Tournament 1</td> </tr>");
-						newsThumbnails.append("<tr> <td> Tournament 2</td> </tr>");
-						newsThumbnails.append("<tr> <td> Tournament 3</td> </tr>");
+						for (Tournament item : tournaments){
+							newsThumbnails.append("<tr> <td>");
+							newsThumbnails.append(item.getName());
+							newsThumbnails.append("</td> </tr>");							
+						}
+					
 						newsThumbnails.append("</table>");
 					newsThumbnails.append("</div>");
 				newsThumbnails.append("</div>");
@@ -227,9 +239,26 @@ public String newsThumbnails(){
 				newsThumbnails.append("<h3>Latest Games</h3>");
 				newsThumbnails.append("<table class=\"table table-striped\">");
 				newsThumbnails.append("<thead> <th> TEAM 1</th> <th> TEAM 2</th>  <th> RESULT</th> <th> RESULT</th>  </thead>");
-				newsThumbnails.append("<tr> <td> TEAM 1</td> <td> TEAM 2</td>  <td> RESULT</td> <td> RESULT</td>  </tr>");
-				newsThumbnails.append("<tr> <td> TEAM 1</td> <td> TEAM 2</td>  <td> RESULT</td> <td> RESULT</td>  </tr>");
-				newsThumbnails.append("<tr> <td> TEAM 1</td> <td> TEAM 2</td>  <td> RESULT</td> <td> RESULT</td>  </tr>");
+				for (BadmintonSingle item : badmintonSingle){
+					
+					newsThumbnails.append("<tr> <td>");
+					newsThumbnails.append(item.getPlayerOne());
+					
+					newsThumbnails.append("</td> <td>");
+					newsThumbnails.append(item.getPlayerTwo());
+					
+					newsThumbnails.append("</td> <td>");
+					newsThumbnails.append(item.getResultOne());
+					
+					newsThumbnails.append("</td> <td>");
+					newsThumbnails.append(item.getResultTwo());
+					
+				
+
+					newsThumbnails.append("</td> </tr>");							
+				}
+			
+
 				newsThumbnails.append("</table>");
 			newsThumbnails.append("</div>");
 		newsThumbnails.append("</div>");

@@ -11,7 +11,7 @@
     }
 %> 
 
-<%= viewHelper.createHtmlBegin("Login", false)  %> 
+<%= viewHelper.createHtmlBegin("Login")  %> 
 
         <H1 ALIGN="CENTER">Login</H1>
         

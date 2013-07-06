@@ -11,7 +11,7 @@
     }
 %> 
 
-<%= viewHelper.createHtmlBegin("Registrieren", false)  %> 
+<%= viewHelper.createHtmlBegin("Registrieren")  %> 
 
         <H1 ALIGN="CENTER">Registrieren</H1>
         

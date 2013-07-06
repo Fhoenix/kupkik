@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kupkik.applicationcore.ApplicationCoreFacade;
-import com.kupkik.persistence.PersistenceFacade;
+
 
 /**
  * This servlet handles requests for HTML sites. It instantiates the controller
@@ -48,8 +48,8 @@ public class HtmlStarterServlet
     {
         // dependency injection
 
-        PersistenceFacade persistenceFacade = new PersistenceFacade();
-        ApplicationCoreFacade applicationCoreFacade = new ApplicationCoreFacade(persistenceFacade);
+  
+        ApplicationCoreFacade applicationCoreFacade = new ApplicationCoreFacade();
         HtmlRequestProcessor applicationLogic = new HtmlRequestProcessor(pRequest, pResponse, getServletContext(), applicationCoreFacade);
 
         // handling request

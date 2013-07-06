@@ -38,9 +38,10 @@ public class LoginHandler
 
         // log the user in
 
-        UserWithPassword currentUser = new UserWithPassword(userName, md5HashForPassword);
-        pSession.setAttribute("currentUser", currentUser);
-        pRequest.setAttribute("currentUser", currentUser);
+        UserWithPassword userWithPasswordByName = pApplicationCoreFacade.getUserWithPasswordByName(userName);
+        
+        pSession.setAttribute("currentUser", userWithPasswordByName);
+        pRequest.setAttribute("currentUser", userWithPasswordByName);
 
         // show the main view
 

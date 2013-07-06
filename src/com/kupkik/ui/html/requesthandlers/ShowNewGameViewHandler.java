@@ -11,29 +11,35 @@ import com.kupkik.applicationcore.ApplicationCoreFacade;
 import com.kupkik.model.Tournament;
 import com.kupkik.model.User;
 import com.kupkik.model.UserWithPassword;
-import com.kupkik.model.game.BadmintonSingle;
+import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 
-public class ShowMainViewHandler
-        implements IHtmlRequestHandler
-{
+public class ShowNewGameViewHandler
+        implements IHtmlRequestHandler {
+
 
     @Override
     public String performActionAndGetNextView( final HttpServletRequest pRequest, final HttpSession pSession,
             final ApplicationCoreFacade pApplicationCoreFacade )
     {
+    	
+        UserWithPassword currentUser = (UserWithPassword) pSession.getAttribute("currentUser");
+
+        if( currentUser.getName().equals(HtmlRequestProcessor.GUEST_USER.getName()) )
+        {
+            pRequest.setAttribute("errorMessage", "Nur eingeloggte Nutzer können Ihre Saisons sehen!");
+            return "LoginView";
+        }
+        
+        
         List<UserWithPassword> users = pApplicationCoreFacade.getAllUsers();
         Collections.sort(users, new UserComparator());
         pRequest.setAttribute("users", users);
         
-        List<Tournament> tournaments = pApplicationCoreFacade.getAllTournaments();
+        List<Tournament> tournaments = pApplicationCoreFacade.getAllTournamentsOfUser(currentUser.getName());
         Collections.sort(tournaments, new TournamentComparator());
         pRequest.setAttribute("tournaments", tournaments);
 
-        List<BadmintonSingle> badmintonSingle = pApplicationCoreFacade.getLatestBadmintonSingleGames(5);
-       
-        pRequest.setAttribute("badmintonSingle", badmintonSingle);
-        
         return null;
     }
 

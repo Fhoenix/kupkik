@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.kupkik.applicationcore.ApplicationCoreFacade;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.ui.html.view.ViewHelper;
@@ -29,7 +31,7 @@ public class HtmlRequestProcessor
     private HttpServletRequest           mRequest;
     private HttpServletResponse          mResponse;
     private ServletContext               mServletContext;
-    public final static UserWithPassword GUEST_USER = new UserWithPassword("guest", "none");
+    public final static UserWithPassword GUEST_USER = new UserWithPassword("guest", "none",KeyFactory.createKey("User","guest" ));
 
     private static final Logger          sLogger    = Logger.getLogger(HtmlStarterServlet.class.getName());
 
@@ -122,7 +124,8 @@ public class HtmlRequestProcessor
         }
 
         // if there is a handler for preparing the view, load it and let
-        // prepare the data
+        // prepare the data IMPORTANT: For all data needed in the view, such a Handler
+        //must exist. See the naming convention.
         IHtmlRequestHandler viewPreparationHandler = loadHandlerForPreparingView(nextViewName);
         if( viewPreparationHandler != null )
         {

@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.kupkik.html.integration.UseCaseTestParent;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.ui.html.HtmlRequestProcessor;
@@ -20,7 +22,8 @@ public class LogoffTest
         final String userName = "usul";
         final String password = "qwert";
         final String md5Password = CredentialsUtils.getMd5HashForText(password);
-        UserWithPassword currentUser = new UserWithPassword(userName,md5Password);
+        final Key key = KeyFactory.createKey("User", userName);
+        UserWithPassword currentUser = new UserWithPassword(userName,md5Password,key);
 
         HashMap<String, Object> attributesForSession = new HashMap<>();
         attributesForSession.put("currentUser", currentUser);

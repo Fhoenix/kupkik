@@ -29,7 +29,7 @@ public class RegisterUserHandler
 
         if( !password1.equals(password2) )
         {
-            errorMessage = "Die Passwörter sind nicht gleich!";
+            errorMessage = "Die Passwï¿½rter sind nicht gleich!";
         }
 
         // try to save the user
@@ -66,7 +66,12 @@ public class RegisterUserHandler
         // log the user in
 
         String md5HashForPassword = CredentialsUtils.getMd5HashForText(password1);
-        UserWithPassword currentUser = new UserWithPassword(userName, md5HashForPassword);
+       
+        UserWithPassword userWithPasswordByName = pApplicationCoreFacade.getUserWithPasswordByName(userName);
+        UserWithPassword currentUser = new UserWithPassword(userWithPasswordByName.getName(), 
+        		userWithPasswordByName.getPasswordMd5(),
+        		userWithPasswordByName.getKey());
+        
         pSession.setAttribute("currentUser", currentUser);
         pRequest.setAttribute("currentUser", currentUser);
 
