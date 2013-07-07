@@ -17,7 +17,7 @@ import com.kupkik.ui.html.HtmlRequestProcessor;
 public class ViewHelper
 {
 	private HttpSession mSession;
-	
+
 	/**Text shown at the main Page */
 	private final String tournamentText ="<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus molestie ante id velit fermentum, id accumsan.</p>";
 
@@ -46,14 +46,14 @@ public class ViewHelper
 	 *            The content of the HTML-site, where the menu-bar should be
 	 *            added to.
 	 */
-	private void createMenuBar( final StringBuilder pHtmlContent )
+	private void createMenuBar( final StringBuilder pHtmlContent)
 	{
-		
+
 		//Start the LiveGridRow
 		pHtmlContent.append(" <div class=\"row\">");
-		
+
 		StringBuilder content = new StringBuilder();
-		
+
 		content.append(" <div class=\"navbar\">");
 		content.append("  <div class=\"navbar-inner\">");
 		content.append("    <a class=\"brand\" href=\"#\">scoreIT - ");
@@ -71,16 +71,18 @@ public class ViewHelper
 		}
 		else{
 			content.append(" <li><a href=\"/?action=Logoff\">Logoff</a> </li>");
+			content.append(" <li><a href=\"/?showView=NewGameView\">ScoreIT</a> </li>");
+			content.append(" <li><a href=\"/?showView=NewTournamentView\">Tournament</a> </li>");
+			content.append(" <li><a href=\"/?showView=NewSeasonView\">Create Season</a> </li>");
+			content.append(" <li><a href=\"/?showView=MyProfileView\">MyProfile</a> </li>");
 		}
-		content.append(" <li><a href=\"/?showView=NewGameView\">ScoreIT</a> </li>");
-		content.append(" <li><a href=\"/?showView=NewTournamentView\">Tournament</a> </li>");
-		content.append(" <li><a href=\"/?showView=NewSeasonView\">Create Season</a> </li>");
+		
 		content.append(" </ul>");
 		content.append(" </div>");
 		content.append(" </div>");
-		
+
 		pHtmlContent.append(createLiveGridSpan(12, content.toString()));
-		
+
 		//Live Grid End
 		pHtmlContent.append(" </div>");
 
@@ -94,10 +96,23 @@ public class ViewHelper
 		return createHtmlBegin("");
 	}
 
+	public String createLabel(String labelText, String labelClass, String labelFor){
+		StringBuilder label = new StringBuilder();
+		label.append("<label class=");
+		label.append("\"");
+		label.append(labelClass);
+		label.append("\" ");
+		label.append("for=\"");
+		label.append(labelFor);
+		label.append("\">");
+		label.append(labelText);
+		label.append("</label>");
+		return label.toString();
+	}
 	/**
 	 * @see #createHtmlBegin(String, boolean)
 	 */
-	public String createHtmlBegin( final String pTitle )
+	public String createHtmlBegin( final String pTitle)
 	{
 		return createHtmlBegin(pTitle, true);
 	}
@@ -112,7 +127,7 @@ public class ViewHelper
 	 * @return The content of a HTML-site which contains the beginning of this
 	 *         site.
 	 */
-	public String createHtmlBegin( final String pTitle, final boolean pDoShowMenubar )
+	public String createHtmlBegin( final String pTitle, final boolean pDoShowMenubar)
 	{
 		final StringBuilder htmlBegin = new StringBuilder();
 		htmlBegin.append("<!DOCTYPE HTML><html>\n");
@@ -130,11 +145,12 @@ public class ViewHelper
 		htmlBegin.append("      <meta name=\"robots\" content=\"noindex\">\n");
 		//BootStrap Include
 		htmlBegin.append("		<link href=\"/res/bootstrap/css/bootstrap.min.css\" rel=\"stylesheet\" media=\"screen\">");
-		
+
+	
 		//Responsive Design
 		htmlBegin.append("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
 		htmlBegin.append("<link href=\"/res/bootstrap/css/bootstrap-responsive.css\" rel=\"stylesheet\">");
-		
+
 		htmlBegin.append("   </head>\n");
 		htmlBegin.append("  <body>\n");
 		htmlBegin.append("		<script src=\"http://code.jquery.com/jquery.js\"></script>");
@@ -149,7 +165,7 @@ public class ViewHelper
 
 		return htmlBegin.toString();
 	}
-	
+
 	/** Creates a live Grid
 	 * 
 	 */
@@ -160,131 +176,143 @@ public class ViewHelper
 		liveGridSpan.append("</div>");
 		return liveGridSpan.toString();
 	}
-	
-	
+
+
+	public String createFormLayout(String content, String description){
+		
+		
+		StringBuilder result = new StringBuilder();
+		result.append("<div class=\"row-fluid\">");
+		result.append(createLiveGridSpan(9, content));
+		result.append(createLiveGridSpan(3, description));
+		result.append("</div>");
+
+		return result.toString();
+	}
+
 	/** Creates the "Create you Tournament" Section for the Main Website
 	 * 
 	 */
 	public String createMainSiteIntroArea(){
-		
-		
+
+
 		StringBuilder mainSiteIntroArea = new StringBuilder();
 		//Start the LiveGridRow
 		mainSiteIntroArea.append("<div class=\"row-fluid\">");
-			mainSiteIntroArea.append("<div class=\"span12\">");
-			
-				mainSiteIntroArea.append("<div class=\"span6\">");
-					mainSiteIntroArea.append("<img src=\"/res/images/logo.png\" />");
-				mainSiteIntroArea.append("</div>");
-			
-				mainSiteIntroArea.append("<div class=\"span6\">");
-					mainSiteIntroArea.append("<h2>Score-IT</h2>");
-					
-					mainSiteIntroArea.append(tournamentText);
-					mainSiteIntroArea.append("<div class=\"row-fluid\">");
-						mainSiteIntroArea.append("<div class=\"span6\">");
-							mainSiteIntroArea.append("<a href=\"?showView=RegisterView\"><button class=\"btn btn-large btn-primary\" type=\"button\">Register</button></a>");
-						mainSiteIntroArea.append("</div>");
-						mainSiteIntroArea.append("<div class=\"span6\">");
-							mainSiteIntroArea.append("<a href=\"/?showView=NewTournamentView\"><button class=\"btn btn-large\" type=\"button\">Create Tournament</button></a>");
-						mainSiteIntroArea.append("</div>");
-					
-					mainSiteIntroArea.append("</div>");
-				mainSiteIntroArea.append("</div>");
-			mainSiteIntroArea.append("</div>");
+		mainSiteIntroArea.append("<div class=\"span12\">");
+
+		mainSiteIntroArea.append("<div class=\"span6\">");
+		mainSiteIntroArea.append("<img src=\"/res/images/logo.png\" />");
+		mainSiteIntroArea.append("</div>");
+
+		mainSiteIntroArea.append("<div class=\"span6\">");
+		mainSiteIntroArea.append("<h2>Score-IT</h2>");
+
+		mainSiteIntroArea.append(tournamentText);
+		mainSiteIntroArea.append("<div class=\"row-fluid\">");
+		mainSiteIntroArea.append("<div class=\"span6\">");
+		mainSiteIntroArea.append("<a href=\"?showView=RegisterView\"><button class=\"btn btn-large btn-primary\" type=\"button\">Register</button></a>");
+		mainSiteIntroArea.append("</div>");
+		mainSiteIntroArea.append("<div class=\"span6\">");
+		mainSiteIntroArea.append("<a href=\"/?showView=NewTournamentView\"><button class=\"btn btn-large\" type=\"button\">Create Tournament</button></a>");
+		mainSiteIntroArea.append("</div>");
+
+		mainSiteIntroArea.append("</div>");
+		mainSiteIntroArea.append("</div>");
+		mainSiteIntroArea.append("</div>");
 		mainSiteIntroArea.append("</div>");	
-	return mainSiteIntroArea.toString();
+		return mainSiteIntroArea.toString();
 	}
-	
+
 	/**Creates the three thumbnails at the MainPage	
 	 * @param tournaments The List of Tournaments to be displayed
 	 */
-public String newsThumbnails(List<Tournament> tournaments, List<BadmintonSingle> badmintonSingle){
-		
-		
+	public String newsThumbnails(List<Tournament> tournaments, List<BadmintonSingle> badmintonSingle){
+
+
 		StringBuilder newsThumbnails = new StringBuilder();
 		//Start the LiveGridRow
-		
-		
+
+
 		newsThumbnails.append("<div class=\"row-fluid\">");
-			
-		
-		
-		
-			newsThumbnails.append("<ul class=\"thumbnails\">");
-				newsThumbnails.append("<li class=\"span4\">");
-					newsThumbnails.append("<div class=\"thumbnail\">");
-						newsThumbnails.append("<img src=\"/res/images/logo.png\" style=\"width: 300px; height: 200px;\" />");
-						newsThumbnails.append("<div class=\"caption\">");
-						newsThumbnails.append("<h3>Latest Tournaments</h3>");
-						newsThumbnails.append("<table class=\"table table-striped\">");
-						for (Tournament item : tournaments){
-							newsThumbnails.append("<tr> <td>");
-							newsThumbnails.append(item.getName());
-							newsThumbnails.append("</td> </tr>");							
-						}
-					
-						newsThumbnails.append("</table>");
-					newsThumbnails.append("</div>");
-				newsThumbnails.append("</div>");
-			newsThumbnails.append("</li>");
-			
-			
-			
-			
-			newsThumbnails.append("<li class=\"span4\">");
-			newsThumbnails.append("<div class=\"thumbnail\">");
-				newsThumbnails.append("<img src=\"/res/images/logo.png\" style=\"width: 300px; height: 200px;\" />");
-				newsThumbnails.append("<div class=\"caption\">");
-				newsThumbnails.append("<h3>Latest Games</h3>");
-				newsThumbnails.append("<table class=\"table table-striped\">");
-				newsThumbnails.append("<thead> <th> TEAM 1</th> <th> TEAM 2</th>  <th> RESULT</th> <th> RESULT</th>  </thead>");
-				for (BadmintonSingle item : badmintonSingle){
-					
-					newsThumbnails.append("<tr> <td>");
-					newsThumbnails.append(item.getPlayerOne());
-					
-					newsThumbnails.append("</td> <td>");
-					newsThumbnails.append(item.getPlayerTwo());
-					
-					newsThumbnails.append("</td> <td>");
-					newsThumbnails.append(item.getResultOne());
-					
-					newsThumbnails.append("</td> <td>");
-					newsThumbnails.append(item.getResultTwo());
-					
-				
 
-					newsThumbnails.append("</td> </tr>");							
-				}
-			
 
-				newsThumbnails.append("</table>");
-			newsThumbnails.append("</div>");
+
+
+		newsThumbnails.append("<ul class=\"thumbnails\">");
+		newsThumbnails.append("<li class=\"span4\">");
+		newsThumbnails.append("<div class=\"thumbnail\">");
+		newsThumbnails.append("<img src=\"/res/images/logo.png\" style=\"width: 300px; height: 200px;\" />");
+		newsThumbnails.append("<div class=\"caption\">");
+		newsThumbnails.append("<h3>Latest Tournaments</h3>");
+		newsThumbnails.append("<table class=\"table table-striped\">");
+		for (Tournament item : tournaments){
+			newsThumbnails.append("<tr> <td>");
+			newsThumbnails.append(item.getName());
+			newsThumbnails.append("</td> </tr>");							
+		}
+
+		newsThumbnails.append("</table>");
 		newsThumbnails.append("</div>");
-	newsThumbnails.append("</li>");
-	
-	newsThumbnails.append("<li class=\"span4\">");
-	newsThumbnails.append("<div class=\"thumbnail\">");
+		newsThumbnails.append("</div>");
+		newsThumbnails.append("</li>");
+
+
+
+
+		newsThumbnails.append("<li class=\"span4\">");
+		newsThumbnails.append("<div class=\"thumbnail\">");
+		newsThumbnails.append("<img src=\"/res/images/logo.png\" style=\"width: 300px; height: 200px;\" />");
+		newsThumbnails.append("<div class=\"caption\">");
+		newsThumbnails.append("<h3>Latest Games</h3>");
+		newsThumbnails.append("<table class=\"table table-striped\">");
+		newsThumbnails.append("<thead> <th> TEAM 1</th> <th> TEAM 2</th>  <th> RESULT</th> <th> RESULT</th>  </thead>");
+		for (BadmintonSingle item : badmintonSingle){
+
+			newsThumbnails.append("<tr> <td>");
+			newsThumbnails.append(item.getPlayerOne());
+
+			newsThumbnails.append("</td> <td>");
+			newsThumbnails.append(item.getPlayerTwo());
+
+			newsThumbnails.append("</td> <td>");
+			newsThumbnails.append(item.getResultOne());
+
+			newsThumbnails.append("</td> <td>");
+			newsThumbnails.append(item.getResultTwo());
+
+
+
+			newsThumbnails.append("</td> </tr>");							
+		}
+
+
+		newsThumbnails.append("</table>");
+		newsThumbnails.append("</div>");
+		newsThumbnails.append("</div>");
+		newsThumbnails.append("</li>");
+
+		newsThumbnails.append("<li class=\"span4\">");
+		newsThumbnails.append("<div class=\"thumbnail\">");
 		newsThumbnails.append("<img src=\"/res/images/logo.png\" style=\"width: 300px; height: 200px;\" />");
 		newsThumbnails.append("<div class=\"caption\">");
 		newsThumbnails.append("<h3>Whats Up Next</h3>");
 		newsThumbnails.append("<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus molest </p>");
-	newsThumbnails.append("</div>");
-newsThumbnails.append("</div>");
-newsThumbnails.append("</li>");
-			
-		
-			newsThumbnails.append("</ul>");
+		newsThumbnails.append("</div>");
+		newsThumbnails.append("</div>");
+		newsThumbnails.append("</li>");
+
+
+		newsThumbnails.append("</ul>");
 		newsThumbnails.append("</div>");	
-	return newsThumbnails.toString();
+		return newsThumbnails.toString();
 	}
-	
-	
+
+
 	/** Creates the Footer Information for the Website
 	 * 
 	 */
-	
+
 	public String createFooter(){
 		StringBuilder footer = new StringBuilder();
 		footer.append("<div class=\"row-fluid footer\">");
@@ -294,8 +322,8 @@ newsThumbnails.append("</li>");
 		footer.append("</div>");
 		return footer.toString();
 	}
-	
-	
+
+
 	/**
 	 * Creates the end of a HTML-site.
 	 * 
@@ -320,9 +348,10 @@ newsThumbnails.append("</li>");
 	 * @param percentageWon Hand in the percentage a user won (e.g. 54.34).
 	 * @return Returns the entire bar with bootstrap classes.
 	 */
-	public String createSuccessBar(double percentageWon){
+	public String createSuccessBar(int gamesWon, int gamesPlayed){
 		final StringBuilder htmlSuccessBar = new StringBuilder();
-		double percentageLost = 100.00 - percentageWon;
+		double percentageWon = (100.00 / gamesPlayed) *  gamesWon;
+		double percentageLost = 100.00 -percentageWon;
 
 		htmlSuccessBar.append("<div class=\"progress\">");
 		htmlSuccessBar.append("		<div class=\"bar bar-success\" style=\"width:"+ percentageWon +"%\">"+ percentageWon +"</div>");

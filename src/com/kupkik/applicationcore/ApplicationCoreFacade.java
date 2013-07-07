@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.google.appengine.api.datastore.Key;
+import com.kupkik.model.DisplaySkillGraph;
 import com.kupkik.model.Season;
 import com.kupkik.model.Tournament;
 import com.kupkik.model.UserWithPassword;
@@ -84,8 +85,8 @@ public class ApplicationCoreFacade
     
     
    
-    public CreateGameAnswer createBadmintonSingleGame(final String pTournamentName, final String playerOne, final String playerTwo, final int resultOne, final int resultTwo, final Date date){
-    	PFBadmintonSaver.saveNewBadmintonSingleGame(pTournamentName, playerOne, playerTwo, resultOne, resultTwo, date);
+    public CreateGameAnswer createBadmintonSingleGame(final Key pTournamentKey, final String playerOne, final String playerTwo, final int resultOne, final int resultTwo, final Date date){
+    	PFBadmintonSaver.saveNewBadmintonSingleGame(pTournamentKey, playerOne, playerTwo, resultOne, resultTwo, date);
         return CreateGameAnswer.OK;
     }
     
@@ -316,6 +317,14 @@ public class ApplicationCoreFacade
 	public List<Tournament> getAllTournamentsOfUser(String userName) {
 
 		return PFCommonGetter.getAllTournamentsOfUser(userName);
+	}
+	
+	public  static DisplaySkillGraph getAllGamesInSeason(Key season, String userName){
+	return PFBadmintonGetters.getAllGamesInSeason( season,  userName);
+	}
+
+	public List<Season> getAllSeasons() {
+		return PFCommonGetter.getAllSeasons();
 	}
 
 }

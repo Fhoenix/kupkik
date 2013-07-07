@@ -11,12 +11,14 @@ public class BadmintonSingle {
 	private int resultTwo;
 	private int resultOne;
 	private Date date;
+	private String tournament;
 
-	public BadmintonSingle(final String playerOne, final String playerTwo, final int resultOne, final int resultTwo, final Date date){
+	public BadmintonSingle(final String playerOne, final String playerTwo, final int resultOne, final int resultTwo, final Date date, final String tournament){
 		this.playerOne = playerOne;
 		this.playerTwo = playerTwo;
 		this.resultOne = resultOne;
 		this.resultTwo = resultTwo;
+		this.tournament = tournament;
 		this.date = date;
 	}
 

@@ -7,7 +7,9 @@
 	List<Season> seasons = (List<Season>)request.getAttribute("seasons"); 
 %> 
 
-<%= viewHelper.createHtmlBegin("Turnier Erstellung")  %> 
+<%=
+
+viewHelper.createHtmlBegin("Create Tournament")  %> 
 
         <H1 ALIGN="CENTER">Turnier Erstellung</H1>
         

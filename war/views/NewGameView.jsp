@@ -1,80 +1,144 @@
-<%@ page import="com.kupkik.model.*" %>
-<%@ page import="com.kupkik.ui.html.view.*" %>
-<%@ page import="java.util.List" %>
+<%@page import="com.google.appengine.api.datastore.KeyFactory"%>
+<%@ page import="com.kupkik.model.*"%>
+<%@ page import="com.kupkik.ui.html.view.*"%>
+<%@ page import="java.util.List"%>
 
-<% 
-	ViewHelper viewHelper = (ViewHelper)request.getAttribute("viewHelper");  
-	List<User> users = (List<User>)request.getAttribute("users"); 
-	List<Tournament> tournaments = (List<Tournament>)request.getAttribute("tournaments");  
-%> 
+<%
+	ViewHelper viewHelper = (ViewHelper) request
+			.getAttribute("viewHelper");
+	List<User> users = (List<User>) request.getAttribute("users");
+	List<Tournament> tournaments = (List<Tournament>) request
+			.getAttribute("tournaments");
+%>
 
-<%= viewHelper.createHtmlBegin("Turnier Erstellung")  %> 
+<%=viewHelper.createHtmlBegin("Turnier Erstellung")%>
+<form action="/" method="post">
+	<input type="hidden" name="action" value="CreateBadmintonSingleGame">
+	<div class="row-fluid">
+		<div class="span6">
+			<h1>ScoreIT</h1>
 
-        <H1 ALIGN="CENTER">Siel Erstellung</H1>
-        
-        <form action="/" method="post">
-            <input type="hidden" name="action" value="CreateBadmintonSingleGame">
-            <br />
-                      Turnier
-            <select name="tournamentName">
-            <% for (Tournament item : tournaments) 
-            {
-            	
-            	out.println("	 <option value=\"" +item.getName() + "\">"+ item.getName()+"</option>");
-            	
-             } %>	
-			</select>
+			<div class="row-fluid">
+				<div class="span12">&nbsp;</div>
+			</div>
+
+			<div class="row-fluid">
+				<div class="span4"><%=viewHelper.createLabel("Tournament Name", "label",
+					"tournamentKey")%></div>
+				<div class="span8">
+					<select id="tournamentKey" style="width: 100%;"
+						name="tournamentKey">
+						<%
+							for (Tournament item : tournaments) {
+								out.println("	 <option value=\"" + KeyFactory.keyToString(item.getKey()) + "\">"
+										+ item.getName() + " | " + item.getParentKey().getName() + "</option>");
+							}
+						%>
+					</select>
+				</div>
+			</div>
+
+			<div class="row-fluid">
+				<div class="span12">&nbsp;</div>
+			</div>
+
+			<div class="row-fluid">
+				<div class="span10"><strong>Player 1</strong></div>
+				<div class="span2"><strong>Result</strong></div>
+			</div>
+
+			<div class="row-fluid">
+				<div class="span10">
+
+					<select id="playerOne" style="width: 100%;" name="playerOne">
+
+						<%
+							for (User item : users) {
+								out.println("	 <option value=\"" + item.getName() + "\">"
+										+ item.getName() + "</option>");
+							}
+						%>
+					</select>
+
+
+				</div>
+				<div class="span2">
+					<input id="resultOne" style="width: 80%;" name="resultOne"
+						type="text" size="20" maxlength="20">
+				</div>
+			</div>
+		</div>
+		<div class="span6">
+			<h1>Badminton Single</h1>
 			
-			
-            <br />
-            Spieler 1:
-            <select name="playerOne">
-            <% for (User item : users) 
-            {
-            	
-            	out.println("	 <option value=\"" +item.getName() + "\">"+ item.getName()+"</option>");
-            	
-             } %>	
-			</select>
-            <br />
-			Spieler 2:
-            <select name="playerTwo">
-            <% for (User item : users) 
-            {
-            
-            	out.println("	 <option value=\"" +item.getName() + "\">"+ item.getName()+"</option>");
-            	
-             } %>	
-			</select>
+			<div class="row-fluid">
+				<div class="span12">&nbsp;</div>
+			</div>
 
-            <br />
-			 Ergebnis:
-            <input name="resultOne" type="text" size="50" maxlength="50">
-            <br />
-             Ergebnis2:
-            
-            
-       
-            <input name="resultTwo" type="text" size="50" maxlength="50">
-            <br>
-            
-            
-            <br />
-            <input type="submit" value=" Absenden ">
-        </form>
-        
-        <br>
-        <br>
-        <a href="/">zur&uuml;ck zur Hauptseite</a>
-        <br>
 
-<% 
-	if(request.getAttribute("errorMessage") != null)
-	{
- %> 
-    	<b>Fehler: </b><%= viewHelper.convertTextForHtml((String)request.getAttribute("errorMessage")) %>
-<% 
+			<div class="row-fluid">
+				<div class="span12">Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier</div>
+
+			</div>
+
+			<div class="row-fluid">
+				<div class="span12">&nbsp;</div>
+			</div>
+
+			<div class="row-fluid">
+				<div class="span2"><strong>Result</strong></div>
+				<div class="span10"><strong>Player 2</strong></div>
+			</div>
+
+			<div class="row-fluid">
+				<div class="span2">
+					<input id="resultTwo" name="resultTwo" type="text"
+						style="width: 80%;" maxlength="20">
+				</div>
+				<div class="span10">
+					<select id="playerTwo" style="width: 100%;" name="playerTwo">
+
+						<%
+							for (User item : users) {
+								out.println("	 <option value=\"" + item.getName() + "\">"
+										+ item.getName() + "</option>");
+							}
+						%>
+					</select>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span6">
+			<div class="row-fluid">
+				<div class="span6">
+					<input type="submit" value=" Absenden">
+				</div>
+				<div class="span6">
+					<a href="/">zur&uuml;ck zur Hauptseite</a>
+				</div>
+			</div>
+			<div class="span6"></div>
+		</div>
+	</div>
+
+</form>
+
+
+
+
+
+<%
+	if (request.getAttribute("errorMessage") != null) {
+%>
+<b>Fehler: </b><%=viewHelper.convertTextForHtml((String) request
+						.getAttribute("errorMessage"))%>
+<%
 	}
- %> 
+%>
 
-<%= viewHelper.createHtmlEnd()  %> 
+<%=viewHelper.createHtmlEnd()%>

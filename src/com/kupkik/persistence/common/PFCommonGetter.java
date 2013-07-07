@@ -155,5 +155,29 @@ public class PFCommonGetter {
 		}
 		return seasons;	
 	}
+	
+	/**
+	 * Get all Seasons that belongs to an user.
+	 * @param userName user name.
+	 * @return List of {@link Season}.
+	 */
+	public static List<Season> getAllSeasons() {
+		
+		List<Season> seasons = new ArrayList<Season>();
+		
+
+			DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();			
+			Query getSeasonKey = new Query("Season");
+			
+			PreparedQuery pQGetSeason = dataStore.prepare(getSeasonKey);
+			List<Entity> seasonEntity = pQGetSeason.asList(FetchOptions.Builder.withDefaults());
+			
+			
+			 for (Entity item: seasonEntity){
+				 seasons.add( new Season(item.getKey().getName(), item.getKey(), item.getParent()));
+		        }
+		
+		return seasons;	
+	}
 
 }
