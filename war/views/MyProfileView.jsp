@@ -14,10 +14,10 @@
 
 <%=viewHelper.createHtmlBegin("My Profile")%>
 <div class="row-fluid">
-	<form action="/" method="post">
-		<input type="hidden" name="action" value="CreateMyProfile">
 		<div class="span12">
 			<h1>Profile Crawler</h1>
+	<form action="/" method="post">
+		<input type="hidden" name="action" value="CreateMyProfile">
 
 			<div class="row-fluid">
 				<div class="span2">Choose a Season</div>
@@ -43,39 +43,60 @@
 			</div>
 
 
-		</div>
+	
 	</form>
-</div>
 
-<div class="row-fluid">
-	<div class="span12">&nbsp;</div>
-</div>
+
+	<div class="row-fluid">
+		<div class="span12">&nbsp;</div>
+	</div>
 <%
 	if (displaySkillGraph != null) {
 
 
+		StringBuilder skillTable = new StringBuilder();
+		skillTable.append("<table class=\"table table-striped\">");
+		skillTable.append("<thead> <th style=\"width:30%\"> Description</th> <th style=\"width:70%\"> Value </th>  </thead>");
+		skillTable.append("<tr> <td>WL-RATE (WIN-LOOSE)</td><td>");
+		skillTable.append(viewHelper.createSuccessBar(displaySkillGraph.getGamesWon(), displaySkillGraph.getGamesPlayed()));
+		skillTable.append("</td> </tr>");
+		
+		skillTable.append("<tr> <td>Participation Rate</td><td>");
+		skillTable.append(viewHelper.createSuccessBar(displaySkillGraph.getGamesPlayed(), displaySkillGraph.getBadmintonSingleGames().size()));
+		skillTable.append("</td> </tr>");
+
+		skillTable.append("<tr> <td>Games Won</td><td>");
+		skillTable.append(displaySkillGraph.getGamesWon());
+		skillTable.append("</td> </tr>");
+		
+		skillTable.append("<tr> <td>Games Played</td><td>");
+		skillTable.append(displaySkillGraph.getGamesPlayed());
+		skillTable.append("</td> </tr>");
+		
+		skillTable.append("<tr> <td>Games Lost</td><td>");
+		skillTable.append(displaySkillGraph.getGamesLost());
+		skillTable.append("</td> </tr>");
+		
+		skillTable.append("<tr> <td>Games Total</td><td>");
+		skillTable.append(displaySkillGraph.getBadmintonSingleGames().size());
+		skillTable.append("</td> </tr>");
+		
+		skillTable.append("</table>");
+		
 		out.println("<div class=\"row-fluid\">");
 			out.println("<div class=\"span8\">");
-			out.println("<div class=\"row-fluid\">");
-				out.println("<div class=\"span4\">WL-RATE (WIN-LOOSE)</div>");
-				out.println("<div class=\"span8\">"+ viewHelper.createSuccessBar(displaySkillGraph.getGamesWon(), displaySkillGraph.getGamesPlayed())+"</div>");
+			out.println(skillTable.toString());
 			out.println("</div>");
-			out.println("<div class=\"row-fluid\">");
-				out.println("<div class=\"span4\">Participation Rate</div>");
-				out.println("<div class=\"span8\">"+ viewHelper.createSuccessBar(displaySkillGraph.getGamesPlayed(), displaySkillGraph.getBadmintonSingleGames().size())+"</div>");
+			
+			out.println("<div class=\"span4\">");
 			out.println("</div>");
-		
-			out.println("<div class=\"row-fluid\">");
-				out.println("<div class=\"span4\">Total Games in that Season</div>");
-				out.println("<div class=\"span8\">"+displaySkillGraph.getBadmintonSingleGames().size()+"</div>");
-			out.println("</div>");
-		out.println("</div>");
-		out.println("<div class=\"span8\">&nbsp;");
-		out.println("</div>");		
-		out.println("</div>");
+		out.println("</div>");	
+
 
 	}
 %>
+	</div>
+</div>
 <%
 	if (request.getAttribute("errorMessage") != null) {
 %>

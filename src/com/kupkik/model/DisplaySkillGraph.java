@@ -1,6 +1,7 @@
 package com.kupkik.model;
 
 
+import java.util.Collections;
 import java.util.List;
 
 import com.kupkik.model.game.BadmintonSingle;
@@ -41,7 +42,7 @@ public class DisplaySkillGraph {
 	}
 	
 	public List<BadmintonSingle> getBadmintonSingleGames() {
-		return badmintonSingleGames;
+		return Collections.unmodifiableList(badmintonSingleGames) ;
 	}
 
 	public void setBadmintonSingleGames(List<BadmintonSingle> badmintonSingleGames) {

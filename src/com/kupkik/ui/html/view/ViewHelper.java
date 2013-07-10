@@ -1,5 +1,6 @@
 package com.kupkik.ui.html.view;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -63,21 +64,31 @@ public class ViewHelper
 
 		content.append(" </a>");
 		content.append(" 		<ul class=\"nav\">");
-		content.append(" 	      <li class=\"active\"><a href=\"#\">Home</a></li>");
+		content.append(" 	      <li class=\"active\"><a href=\"/\">Home</a></li>");
 
 
 		if( currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) ){
-			content.append(" <li><a href=\"/?showView=LoginView\">Login</a> </li>");
+		
+			content.append("<li><a href=\"/?showView=RegisterView\">Register here!</a></li>");
+			content.append(" </ul>");
+			content.append("<form class=\"navbar-form pull-right\" action=\"/\" method=\"post\">");
+			content.append("<input type=\"hidden\" name=\"action\" value=\"Login\">");
+			content.append("<input class=\"span2\" name=\"user_name\" type=\"text\" size=\"50\" maxlength=\"50\">");
+
+			content.append("<input class=\"span2\" name=\"password\" type=\"password\" size=\"12\" maxlength=\"12\">");
+
+			content.append("<input  class=\"btn\" type=\"submit\" value=\"Login\">");
+			
+			content.append("</form>");
 		}
 		else{
-			content.append(" <li><a href=\"/?action=Logoff\">Logoff</a> </li>");
 			content.append(" <li><a href=\"/?showView=NewGameView\">ScoreIT</a> </li>");
 			content.append(" <li><a href=\"/?showView=NewTournamentView\">Tournament</a> </li>");
 			content.append(" <li><a href=\"/?showView=NewSeasonView\">Create Season</a> </li>");
 			content.append(" <li><a href=\"/?showView=MyProfileView\">MyProfile</a> </li>");
+			content.append(" <li><a href=\"/?action=Logoff\">Logoff</a> </li>");
+			content.append(" </ul>");
 		}
-		
-		content.append(" </ul>");
 		content.append(" </div>");
 		content.append(" </div>");
 
@@ -146,7 +157,7 @@ public class ViewHelper
 		//BootStrap Include
 		htmlBegin.append("		<link href=\"/res/bootstrap/css/bootstrap.min.css\" rel=\"stylesheet\" media=\"screen\">");
 
-	
+
 		//Responsive Design
 		htmlBegin.append("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
 		htmlBegin.append("<link href=\"/res/bootstrap/css/bootstrap-responsive.css\" rel=\"stylesheet\">");
@@ -179,8 +190,8 @@ public class ViewHelper
 
 
 	public String createFormLayout(String content, String description){
-		
-		
+
+
 		StringBuilder result = new StringBuilder();
 		result.append("<div class=\"row-fluid\">");
 		result.append(createLiveGridSpan(9, content));
@@ -210,12 +221,10 @@ public class ViewHelper
 
 		mainSiteIntroArea.append(tournamentText);
 		mainSiteIntroArea.append("<div class=\"row-fluid\">");
-		mainSiteIntroArea.append("<div class=\"span6\">");
+		mainSiteIntroArea.append("<div class=\"span12\">");
 		mainSiteIntroArea.append("<a href=\"?showView=RegisterView\"><button class=\"btn btn-large btn-primary\" type=\"button\">Register</button></a>");
 		mainSiteIntroArea.append("</div>");
-		mainSiteIntroArea.append("<div class=\"span6\">");
-		mainSiteIntroArea.append("<a href=\"/?showView=NewTournamentView\"><button class=\"btn btn-large\" type=\"button\">Create Tournament</button></a>");
-		mainSiteIntroArea.append("</div>");
+
 
 		mainSiteIntroArea.append("</div>");
 		mainSiteIntroArea.append("</div>");
@@ -317,7 +326,7 @@ public class ViewHelper
 		StringBuilder footer = new StringBuilder();
 		footer.append("<div class=\"row-fluid footer\">");
 		footer.append("<div class=\"span12\">");
-		footer.append("SCORE IT - CREATE PLAY SHARE");
+		footer.append("SCORE IT - CREATE PLAY SHARE | Copyright CS & SK | Version 1.0 Beta");
 		footer.append("</div>");
 		footer.append("</div>");
 		return footer.toString();
@@ -344,18 +353,16 @@ public class ViewHelper
 	/**
 	 * Creates a SuccessBar showing the percentage a user won in green, and the percentage lost in red.
 	 * Percentage lost is calculated.
-	 * 
-	 * @param percentageWon Hand in the percentage a user won (e.g. 54.34).
-	 * @return Returns the entire bar with bootstrap classes.
-	 */
+*/
 	public String createSuccessBar(int gamesWon, int gamesPlayed){
 		final StringBuilder htmlSuccessBar = new StringBuilder();
+		
 		double percentageWon = (100.00 / gamesPlayed) *  gamesWon;
-		double percentageLost = 100.00 -percentageWon;
-
+		double percentageLost = 100.00 - percentageWon;
+		DecimalFormat decimalFormat = new DecimalFormat("##.##");
 		htmlSuccessBar.append("<div class=\"progress\">");
-		htmlSuccessBar.append("		<div class=\"bar bar-success\" style=\"width:"+ percentageWon +"%\">"+ percentageWon +"</div>");
-		htmlSuccessBar.append("		<div class=\"bar bar-danger\" style=\"width:"+ percentageLost +"%\">"+ percentageLost +"</div>");
+		htmlSuccessBar.append("		<div class=\"bar bar-success\" style=\"width:"+ decimalFormat.format(percentageWon) +"%\">"+ decimalFormat.format(percentageWon) +"%</div>");
+		htmlSuccessBar.append("		<div class=\"bar bar-danger\" style=\"width:"+ decimalFormat.format(percentageLost) +"%\">"+ decimalFormat.format(percentageLost) +"%</div>");
 		htmlSuccessBar.append("</div>");
 
 		return htmlSuccessBar.toString();
