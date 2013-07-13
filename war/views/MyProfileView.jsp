@@ -1,6 +1,7 @@
 <%@ page import="com.kupkik.model.*"%>
 <%@ page import="com.kupkik.ui.html.view.*"%>
 <%@ page import="java.util.List"%>
+<%@ page import="java.util.Arrays"%>
 <%@page import="com.google.appengine.api.datastore.KeyFactory"%>
 
 <%
@@ -58,43 +59,61 @@
 		skillTable.append("<table class=\"table table-striped\">");
 		skillTable.append("<thead> <th style=\"width:30%\"> Description</th> <th style=\"width:70%\"> Value </th>  </thead>");
 		skillTable.append("<tr> <td>WL-RATE (WIN-LOOSE)</td><td>");
-		skillTable.append(viewHelper.createSuccessBar(displaySkillGraph.getGamesWon(), displaySkillGraph.getGamesPlayed()));
+		skillTable.append(viewHelper.createSuccessBar(displaySkillGraph.getTotalNumberWon(), displaySkillGraph.getTotalNumberPlayed()));
 		skillTable.append("</td> </tr>");
 		
 		skillTable.append("<tr> <td>Participation Rate</td><td>");
-		skillTable.append(viewHelper.createSuccessBar(displaySkillGraph.getGamesPlayed(), displaySkillGraph.getBadmintonSingleGames().size()));
+		skillTable.append(viewHelper.createSuccessBar(displaySkillGraph.getTotalNumberPlayed(), displaySkillGraph.getTotalNumberGames()));
 		skillTable.append("</td> </tr>");
 
 		skillTable.append("<tr> <td>Games Won</td><td>");
-		skillTable.append(displaySkillGraph.getGamesWon());
+		skillTable.append(displaySkillGraph.getTotalNumberWon());
 		skillTable.append("</td> </tr>");
 		
 		skillTable.append("<tr> <td>Games Played</td><td>");
-		skillTable.append(displaySkillGraph.getGamesPlayed());
+		skillTable.append(displaySkillGraph.getTotalNumberPlayed());
 		skillTable.append("</td> </tr>");
 		
 		skillTable.append("<tr> <td>Games Lost</td><td>");
-		skillTable.append(displaySkillGraph.getGamesLost());
+		skillTable.append(displaySkillGraph.getTotalNumberLost());
 		skillTable.append("</td> </tr>");
 		
 		skillTable.append("<tr> <td>Games Total</td><td>");
-		skillTable.append(displaySkillGraph.getBadmintonSingleGames().size());
+		skillTable.append(displaySkillGraph.getTotalNumberGames());
 		skillTable.append("</td> </tr>");
+		
+		skillTable.append("<tr> <td>Winrate</td><td>");
+		skillTable.append(Arrays.asList(displaySkillGraph.getWinRateInPercentForEachTournament()));
+		skillTable.append("</td> </tr>");
+		
+		skillTable.append("<tr> <td>Winrate</td><td>");
+		skillTable.append(Arrays.asList(displaySkillGraph.getTournamentNames()));
+		skillTable.append("</td> </tr>");
+		
 		
 		skillTable.append("</table>");
 		
 		out.println("<div class=\"row-fluid\">");
-			out.println("<div class=\"span8\">");
+			out.println("<div class=\"span12\">");
 			out.println(skillTable.toString());
 			out.println("</div>");
-			
-			out.println("<div class=\"span4\">");
-			out.println("</div>");
+
 		out.println("</div>");	
 
-
+		out.println("<div class=\"row-fluid\">");
+		out.println("<div  class=\"span12\">");
+		out.println("<div id=\"SkillGraphCanvas\" style=\"width:100%\">");
+		
+out.println( viewHelper.createLineChart(displaySkillGraph.getTournamentNames(), displaySkillGraph.getWinRateInPercentForEachTournament(), null));
+		out.println("</div>");
+		out.println("</div>");
+		
+		
+	out.println("</div>");	
 	}
+
 %>
+
 	</div>
 </div>
 <%

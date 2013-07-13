@@ -1,12 +1,15 @@
 package com.kupkik.ui.html.view;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
+import com.kupkik.messages.MessageCommon;
 import com.kupkik.messages.MessagesFooter;
 import com.kupkik.messages.MessagesHome;
 import com.kupkik.model.Tournament;
@@ -50,18 +53,22 @@ public class ViewHelper
 	 */
 	private void createMenuBar( final StringBuilder pHtmlContent)
 	{
+		UserWithPassword currentUser = (UserWithPassword) mSession.getAttribute("currentUser");
+		StringBuilder content = new StringBuilder();
+	
 
 		//Start the LiveGridRow
 		pHtmlContent.append(" <div class=\"row\">");
 
-		StringBuilder content = new StringBuilder();
 
 		content.append(" <div class=\"navbar\">");
 		content.append("  <div class=\"navbar-inner\">");
-		content.append("    <a class=\"brand\" href=\"#\">SCORE IT - ");
-
-		UserWithPassword currentUser = (UserWithPassword) mSession.getAttribute("currentUser");
-		content.append(currentUser.getName());
+		if( !currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) ){
+			content.append("    <a class=\"brand\" href=\"#\">"+ MessageCommon.PROJECT_NAME + " | ");
+			content.append(currentUser.getName());
+		}else{
+			content.append("    <a class=\"brand\" href=\"#\">"+ MessageCommon.PROJECT_NAME + "");
+		}
 
 		content.append(" </a>");
 		content.append(" 		<ul class=\"nav\">");
@@ -69,21 +76,18 @@ public class ViewHelper
 
 
 		if( currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) ){
-		
 			content.append("<li><a href=\"/?showView=RegisterView\">Register Here!</a></li>");
 			content.append(" </ul>");
 			content.append("<form class=\"navbar-form pull-right\" action=\"/\" method=\"post\">");
+			
 			content.append("<input type=\"hidden\" name=\"action\" value=\"Login\">");
-			content.append("<input class=\"span2\" name=\"user_name\" type=\"text\" size=\"50\" maxlength=\"50\">");
-
-			content.append("<input class=\"span2\" name=\"password\" type=\"password\" size=\"12\" maxlength=\"12\">");
-
+			content.append("<input class=\"span2\" placeholder=\"Username\" name=\"user_name\" type=\"text\" size=\"50\" maxlength=\"50\">");
+			content.append("<input class=\"span2\" placeholder=\"Password\" name=\"password\" type=\"password\" size=\"12\" maxlength=\"12\">");
 			content.append("<input  class=\"btn\" type=\"submit\" value=\"Login\">");
 			
 			content.append("</form>");
-		}
-		else{
-			content.append(" <li><a href=\"/?showView=NewGameView\">ScoreIT</a> </li>");
+		}else{
+			content.append(" <li><a href=\"/?showView=NewGameView\">"+ MessageCommon.PROJECT_NAME + "</a> </li>");
 			content.append(" <li><a href=\"/?showView=NewTournamentView\">Tournament</a> </li>");
 			content.append(" <li><a href=\"/?showView=NewSeasonView\">Create Season</a> </li>");
 			content.append(" <li><a href=\"/?showView=MyProfileView\">MyProfile</a> </li>");
@@ -92,12 +96,9 @@ public class ViewHelper
 		}
 		content.append(" </div>");
 		content.append(" </div>");
-
 		pHtmlContent.append(createLiveGridSpan(12, content.toString()));
-
 		//Live Grid End
 		pHtmlContent.append(" </div>");
-
 	}
 
 	/**
@@ -166,7 +167,8 @@ public class ViewHelper
 		htmlBegin.append("   </head>\n");
 		htmlBegin.append("  <body>\n");
 		htmlBegin.append("		<script src=\"http://code.jquery.com/jquery.js\"></script>");
-		htmlBegin.append("		<script src=\"js/bootstrap.min.js\"></script>");
+		htmlBegin.append("		<script src=\"/res/bootstrap/js/bootstrap.min.js\"></script>");
+		htmlBegin.append("		<script src=\"/res/chartjs/Chart.js\"></script>");
 		//Open the Bootstrap Container
 		htmlBegin.append("		<div class=\"container\">");
 
@@ -216,7 +218,7 @@ public class ViewHelper
 		mainSiteIntroArea.append("<img src=\"/res/images/logo.png\" />");
 		mainSiteIntroArea.append("</div>");
 		mainSiteIntroArea.append("<div class=\"span6\">");
-		mainSiteIntroArea.append("<h2>Score-IT</h2>");
+		mainSiteIntroArea.append("<h2>"+ MessageCommon.PROJECT_NAME + "</h2>");
 		
 		if( currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) ){
 			mainSiteIntroArea.append(MessagesHome.WELCOME_GUEST_USER);
@@ -326,7 +328,7 @@ public class ViewHelper
 		StringBuilder footer = new StringBuilder();
 		footer.append("<div class=\"row-fluid footer custom_footer\">");
 		footer.append("<div class=\"span12\">");
-		footer.append(MessagesFooter.FOOTER_SIGNITURE);
+		footer.append("<div class=\"container-fluid\"><p>" + MessagesFooter.FOOTER_SIGNITURE + "</p></div>");
 		footer.append("</div>");
 		footer.append("</div>");
 		return footer.toString();
@@ -366,5 +368,61 @@ public class ViewHelper
 		htmlSuccessBar.append("</div>");
 
 		return htmlSuccessBar.toString();
+	}
+	
+	public String createLineChart(String[] games, String[] winRateInPercent, int[] looseRateInPercent ){
+		StringBuilder lineChart = new StringBuilder();
+		
+	
+		lineChart.append("<canvas id=\"myChart\" ></canvas>");
+		lineChart.append("<script>");
+		
+		lineChart.append("(function() {");
+		lineChart.append("    var canvas = document.getElementById('myChart'),");
+		lineChart.append("            context = canvas.getContext('2d');");
+		    // resize the canvas to fill browser window dynamically
+		lineChart.append(" window.addEventListener('resize', resizeCanvas, false);");
+	
+		lineChart.append("   function resizeCanvas() {");
+		lineChart.append("  var pixels = $('#SkillGraphCanvas').width(); ");
+		lineChart.append("           canvas.width = pixels;");
+		lineChart.append("canvas.height = 400;");
+
+		         
+		lineChart.append("drawStuff(); ");
+		lineChart.append("    }");
+		lineChart.append("   resizeCanvas();");
+
+		lineChart.append("    function drawStuff() {");
+		    	lineChart.append("var ctx = document.getElementById(\"myChart\").getContext(\"2d\");");
+
+				lineChart.append("var ctx = $(\"#myChart\").get(0).getContext(\"2d\");");
+
+				lineChart.append("var data = {");
+				lineChart.append("		labels :"+Arrays.asList(games)+" ,");
+
+				
+				lineChart.append("			datasets : [");
+				lineChart.append("				{");
+				lineChart.append("					fillColor : \"rgba(87,169,87,0.8)\",");
+				lineChart.append("					strokeColor : \"rgba(220,220,220,1)\",");
+				lineChart.append("					pointColor : \"rgba(153,204,0,1)\",");
+				lineChart.append("				pointStrokeColor : \"#fff\",");
+				lineChart.append("				data : "+ Arrays.asList(winRateInPercent) +"" );
+				lineChart.append("			}");
+				lineChart.append("		]");
+				lineChart.append("	};");
+				
+				lineChart.append("var options = {scaleOverlay : true, scaleOverride : true, scaleSteps : 10, scaleStepWidth : 10 ,scaleStartValue : 0, scaleShowLabels: true, scaleFontSize: 14, bezierCurve: false} ;");
+						
+					
+				
+				lineChart.append("var myNewChart = new Chart(ctx).Line(data, options);");
+				lineChart.append("     }");  
+						lineChart.append(" 	})();");
+						lineChart.append("</script>");
+		
+		
+		return lineChart.toString();
 	}
 }

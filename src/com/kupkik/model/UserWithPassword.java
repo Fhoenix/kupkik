@@ -12,7 +12,11 @@ public class UserWithPassword
         extends User
         implements Serializable
 {
-    private String mPasswordMd5;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5976571227535896875L;
+	private String mPasswordMd5;
    
 
     public UserWithPassword(String pName, String pPasswordMd5, Key key)

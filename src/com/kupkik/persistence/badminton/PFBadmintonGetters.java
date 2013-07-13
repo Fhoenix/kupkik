@@ -18,6 +18,7 @@ import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.kupkik.model.DisplaySkillGraph;
 import com.kupkik.model.Tournament;
 import com.kupkik.model.game.BadmintonSingle;
+import com.kupkik.model.game.IGame;
 
 public class PFBadmintonGetters {
 	//    private static final Logger sLogger = Logger.getLogger(HtmlStarterServlet.class.getName());
@@ -67,18 +68,24 @@ public class PFBadmintonGetters {
 
 		List<Entity> tournamentEntity = PQTournaments.asList(FetchOptions.Builder.withDefaults());
 
-		int gamesPlayed = 0;
-		int gamesWon = 0;
-		List<BadmintonSingle> badmintonSingleGames = new ArrayList<BadmintonSingle>();
+		int totalGamesPlayed = 0;
+		int totalGamesWon = 0;
+		int totalNumberGames = 0;
+		
 
+		List<Tournament> tournaments = new ArrayList<Tournament>();
 		for (Entity tournament: tournamentEntity){
-
+			int gamesWon = 0;
+			int gamesPlayed = 0;
+			
 			DatastoreService dataStore2 = DatastoreServiceFactory.getDatastoreService();
 			Query getGamesForTournament = new Query("BadmintonSingle").setAncestor(tournament.getKey());
 			PreparedQuery PQGames = dataStore2.prepare(getGamesForTournament);
 			List<Entity> games = PQGames.asList(FetchOptions.Builder.withDefaults());	
 			
+			List<IGame> badmintonSingleGames = new ArrayList<IGame>();
 			for(Entity game : games){
+				totalNumberGames++;
 				String playerOne = game.getProperty("playerOne").toString();
 				
 				
@@ -88,23 +95,34 @@ public class PFBadmintonGetters {
 				//Date date = (Date) game.getProperty("date");
 				String tournamentName = game.getParent().getName();
 				
+				
 				badmintonSingleGames.add(new BadmintonSingle(playerOne, playerTwo, resultOne, resultTwo, null, tournamentName));
+				
 				
 				if (playerOne.equals(userName)
 						|| playerTwo.equals(userName)){
+					totalGamesPlayed++;
 					gamesPlayed++;
 
 				
 
 					if((playerOne.equals(userName) && resultTwo < resultOne) 
 							|| (playerTwo.equals(userName) && resultOne < resultTwo) ){
+						totalGamesWon++;
 						gamesWon++;
 					}
 				}
 			}
+			Tournament t = new Tournament(tournament.getKey().getName(), tournament.getKey(), tournament.getParent());
+			t.setGames(badmintonSingleGames);
+			t.setGamesWon(gamesWon);
+			t.setGamesPlayed(gamesPlayed);
+			
+			tournaments.add(t);
+			
 			
 		}
-		dataskillGraph = new DisplaySkillGraph(gamesPlayed, gamesWon,badmintonSingleGames);
+		dataskillGraph = new DisplaySkillGraph(totalGamesPlayed, totalGamesWon, totalNumberGames,tournaments);
 		return dataskillGraph;
 
 

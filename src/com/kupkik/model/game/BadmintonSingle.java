@@ -1,8 +1,9 @@
 package com.kupkik.model.game;
 
 import java.util.Date;
+import java.util.List;
 
-public class BadmintonSingle {
+public class BadmintonSingle implements IGame {
 
 
 
@@ -54,6 +55,7 @@ public class BadmintonSingle {
 		this.resultOne = resultOne;
 	}
 
+	@Override
 	public Date getDate() {
 		return date;
 	}
@@ -61,4 +63,8 @@ public class BadmintonSingle {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+
+
+
+
 }

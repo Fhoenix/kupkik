@@ -1,5 +1,9 @@
 package com.kupkik.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import com.google.appengine.api.datastore.Key;
 
 public class Season {
@@ -7,6 +11,7 @@ public class Season {
 	private String name;
 	private Key key;
 	private Key parentKey;
+	private List<Tournament> tournaments = new ArrayList<Tournament>();
 	
 	
 	public Season(String name, Key key, Key parentKey){
@@ -44,4 +49,16 @@ public class Season {
 	public void setParentKey(Key parentKey) {
 		this.parentKey = parentKey;
 	}
+
+
+	public List<Tournament> getTournaments() {
+		return Collections.unmodifiableList(tournaments);
+	}
+
+
+	public void setTournaments(List<Tournament> tournaments) {
+		this.tournaments = tournaments;
+	}
+	
+
 }

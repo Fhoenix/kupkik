@@ -1,51 +1,85 @@
 package com.kupkik.model;
 
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.kupkik.model.game.BadmintonSingle;
 
 public class DisplaySkillGraph {
 
-	private int gamesWon;
-	private int gamesPlayed;
-	
-	private List<BadmintonSingle> badmintonSingleGames;
+	private int totalNumberWon;
+	private int totalNumberPlayed;
 
 
-	public DisplaySkillGraph(int gamesPlayed, int gamesWon, List<BadmintonSingle>  badmintonSingleGames ) {
-		this.badmintonSingleGames = badmintonSingleGames;
-		this.gamesPlayed = gamesPlayed;
-		this.gamesWon = gamesWon;
-		
-	}
-	
-	public int getGamesWon() {
-		return gamesWon;
-	}
-	
-	public void setGamesWon(int gamesWon) {
-		this.gamesWon = gamesWon;
-	}
-	
-	public int getGamesPlayed() {
-		return gamesPlayed;
-	}
-	
-	public void setGamesPlayed(int gamesPlayed) {
-		this.gamesPlayed = gamesPlayed;
-	}
-	
-	public int getGamesLost(){
-		return gamesPlayed-gamesWon;
-	}
-	
-	public List<BadmintonSingle> getBadmintonSingleGames() {
-		return Collections.unmodifiableList(badmintonSingleGames) ;
+
+
+	private List<Tournament> tournaments;
+	private int totalNumberGames;
+
+	public DisplaySkillGraph(int totalNumberPlayed, int totalNumberWon, int totalNumberGames, List<Tournament> tournaments ) {
+
+		this.totalNumberPlayed = totalNumberPlayed;
+		this.totalNumberWon = totalNumberWon;
+		this.totalNumberGames = totalNumberGames;
+		this.tournaments = tournaments;
+
 	}
 
-	public void setBadmintonSingleGames(List<BadmintonSingle> badmintonSingleGames) {
-		this.badmintonSingleGames = badmintonSingleGames;
+	public int getTotalNumberWon() {
+		return totalNumberWon;
 	}
+
+	public void setTotalNumberWon(int totalNumberWon) {
+		this.totalNumberWon = totalNumberWon;
+	}
+
+	public int getTotalNumberPlayed() {
+		return totalNumberPlayed;
+	}
+
+	public int getTotalNumberLost() {
+		return totalNumberPlayed-totalNumberWon;
+	}
+
+	public void setTotalNumberPlayed(int totalNumberPlayed) {
+		this.totalNumberPlayed = totalNumberPlayed;
+	}
+
+	public int getTotalNumberGames() {
+		return totalNumberGames;
+	}
+
+	public void setTotalNumberGames(int totalNumberGames) {
+		this.totalNumberGames = totalNumberGames;
+	}
+
+
+	public String[] getTournamentNames() {
+		String[] tournamentNames = new String[tournaments.size()];
+		for (int i = 0; i < tournaments.size(); i++){
+			tournamentNames[i]= "\""+tournaments.get(i).getName()+"\"";	
+		}
+		return tournamentNames;
+	}
+	
+	public String[] getWinRateInPercentForEachTournament() {
+		String[] values = new String[tournaments.size()];
+		for (int i = 0; i < tournaments.size(); i++){
+			Double rate;
+			if (tournaments.get(i).getGamesPlayed() <= 0){
+				rate = 0.00;
+			}else{
+				rate = (100.00/tournaments.get(i).getGamesPlayed())*tournaments.get(i).getGamesWon();	
+			}
+			values[i] = String.valueOf(rate);
+		}
+		return values;
+	}
+
+	
+
+
+
+
 }

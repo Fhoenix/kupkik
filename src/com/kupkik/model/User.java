@@ -10,7 +10,11 @@ import com.google.appengine.api.datastore.Key;
 public class User
         implements Serializable
 {
-    private String name;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5790554928089421666L;
+	private String name;
     private Key key;
 
     public User(String pName, Key key)
