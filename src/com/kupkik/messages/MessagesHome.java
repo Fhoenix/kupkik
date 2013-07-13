@@ -1,6 +1,6 @@
-package com.kupkik.ui.html.view;
+package com.kupkik.messages;
 
-public final class Messages {
+public final class MessagesHome {
 
 	
 	/** LANDING PAGE BEGIN */
@@ -15,10 +15,6 @@ public final class Messages {
 	/** LANDING PAGE END */
 	
 	
-	/** FOOTER MESSAGES BEGIN */
-	
-	public static final String FOOTER_SIGNITURE = "SCORE IT - CREATE PLAY SHARE | Copyright CS & SK | Version 1.0 Beta";
-	
-	/** FOOTER MESSAGES END */
+
 	
 }
