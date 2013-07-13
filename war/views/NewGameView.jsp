@@ -14,6 +14,7 @@
 <%=viewHelper.createHtmlBegin("Turnier Erstellung")%>
 <form action="/" method="post">
 	<input type="hidden" name="action" value="CreateBadmintonSingleGame">
+	<div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span6">
 			<h1>ScoreIT</h1>
@@ -30,8 +31,10 @@
 						name="tournamentKey">
 						<%
 							for (Tournament item : tournaments) {
-								out.println("	 <option value=\"" + KeyFactory.keyToString(item.getKey()) + "\">"
-										+ item.getName() + " | " + item.getParentKey().getName() + "</option>");
+								out.println("	 <option value=\""
+										+ KeyFactory.keyToString(item.getKey()) + "\">"
+										+ item.getName() + " | "
+										+ item.getParentKey().getName() + "</option>");
 							}
 						%>
 					</select>
@@ -42,13 +45,10 @@
 				<div class="span12">&nbsp;</div>
 			</div>
 
-			<div class="row-fluid">
-				<div class="span10"><strong>Player 1</strong></div>
-				<div class="span2"><strong>Result</strong></div>
-			</div>
 
 			<div class="row-fluid">
-				<div class="span10">
+				<div class="span2">Player 1</div>
+				<div class="span6">
 
 					<select id="playerOne" style="width: 100%;" name="playerOne">
 
@@ -62,41 +62,20 @@
 
 
 				</div>
+				<div class="span2">Result</div>
 				<div class="span2">
 					<input id="resultOne" style="width: 80%;" name="resultOne"
 						type="text" size="20" maxlength="20">
 				</div>
 			</div>
-		</div>
-		<div class="span6">
-			<h1>Badminton Single</h1>
-			
-			<div class="row-fluid">
-				<div class="span12">&nbsp;</div>
-			</div>
+
+
 
 
 			<div class="row-fluid">
-				<div class="span12">Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier</div>
+				<div class="span2">Player 2</div>
+				<div class="span6">
 
-			</div>
-
-			<div class="row-fluid">
-				<div class="span12">&nbsp;</div>
-			</div>
-
-			<div class="row-fluid">
-				<div class="span2"><strong>Result</strong></div>
-				<div class="span10"><strong>Player 2</strong></div>
-			</div>
-
-			<div class="row-fluid">
-				<div class="span2">
-					<input id="resultTwo" name="resultTwo" type="text"
-						style="width: 80%;" maxlength="20">
-				</div>
-				<div class="span10">
 					<select id="playerTwo" style="width: 100%;" name="playerTwo">
 
 						<%
@@ -106,25 +85,57 @@
 							}
 						%>
 					</select>
+
+				</div>
+				<div class="span2">Result</div>
+				<div class="span2">
+					<input id="resultTwo" name="resultTwo" type="text"
+						style="width: 80%;" maxlength="20">
+
 				</div>
 			</div>
-
-
-		</div>
-	</div>
-	<div class="row-fluid">
-		<div class="span6">
 			<div class="row-fluid">
-				<div class="span6">
-					<input type="submit" value=" Absenden">
-				</div>
-				<div class="span6">
-					<a href="/">zur&uuml;ck zur Hauptseite</a>
+				<div class="span12">
+					<div class="row-fluid">
+						<div class="span6">
+							<input type="submit" value=" Absenden">
+						</div>
+						<div class="span6">
+							&nbsp;
+						</div>
+					</div>
+					<div class="span6"></div>
 				</div>
 			</div>
-			<div class="span6"></div>
+		</div>
+		<div class="span6">
+			<h1>Badminton Single</h1>
+			
+Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
+					v
+					Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
+	
+			
+
+
+		</div>
 		</div>
 	</div>
+
 
 </form>
 
