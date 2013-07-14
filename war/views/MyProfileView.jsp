@@ -104,7 +104,7 @@
 		out.println("<div  class=\"span12\">");
 		out.println("<div id=\"SkillGraphCanvas\" style=\"width:100%\">");
 		
-		out.println( viewHelper.createLineChart(displaySkillGraph.getTournamentNames(), displaySkillGraph.getWinRateInPercentForEachTournament(), null));
+		out.println( viewHelper.createLineChart(displaySkillGraph.getTournamentNames(), displaySkillGraph.getWinRateInPercentForEachTournament(), displaySkillGraph.getLooseRateInPercentForEachTournament()));
 		out.println("</div>");
 		out.println("</div>");
 		

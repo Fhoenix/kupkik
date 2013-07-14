@@ -376,7 +376,7 @@ public class ViewHelper
 		return htmlSuccessBar.toString();
 	}
 	
-	public String createLineChart(String[] games, String[] winRateInPercent, int[] looseRateInPercent ){
+	public String createLineChart(String[] games, String[] winRateInPercent, String[] looseRateInPercent ){
 		StringBuilder lineChart = new StringBuilder();
 	
 		lineChart.append("<canvas id=\"myChart\" ></canvas>");
@@ -407,7 +407,16 @@ public class ViewHelper
 		lineChart.append("					pointColor : \"rgba(153,204,0,1)\",");
 		lineChart.append("				pointStrokeColor : \"#fff\",");
 		lineChart.append("				data : "+ Arrays.asList(winRateInPercent) +"" );
+		lineChart.append("			},");
+		
+		lineChart.append("				{");
+		lineChart.append("					fillColor : \"rgba(220,80,75,0.8)\",");
+		lineChart.append("					strokeColor : \"rgba(220,220,220,1)\",");
+		lineChart.append("					pointColor : \"rgba(220,80,75,1)\",");
+		lineChart.append("				pointStrokeColor : \"#fff\",");
+		lineChart.append("				data : "+ Arrays.asList(looseRateInPercent) +"" );
 		lineChart.append("			}");
+		
 		lineChart.append("		]");
 		lineChart.append("	};");
 				

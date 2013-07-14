@@ -6,6 +6,9 @@ import javax.servlet.http.HttpSession;
 import com.kupkik.applicationcore.ApplicationCoreFacade;
 import com.kupkik.applicationcore.ApplicationCoreFacade.CreateSeasonAnswer;
 import com.kupkik.applicationcore.ApplicationCoreFacade.CreateTournamentAnswer;
+import com.kupkik.messages.HandlerMessages;
+import com.kupkik.messages.MessageError;
+import com.kupkik.messages.MessageSuccess;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
@@ -27,7 +30,7 @@ public class CreateSeasonHandler
 
         if( currentUser.getName().equals(HtmlRequestProcessor.GUEST_USER.getName()) )
         {
-            pRequest.setAttribute("errorMessage", "Nur eingeloggte Nutzer k?nnen Turniere anlegen!");
+            pRequest.setAttribute(HandlerMessages.ERROR.toString(), MessageError.SEASON_USER_NOT_LOGGED_IN);
             return "NewSeasonView";
         }
 
@@ -38,7 +41,7 @@ public class CreateSeasonHandler
 
         if( createSeasonAnswer == CreateSeasonAnswer.NAME_INVALID )
         {
-            pRequest.setAttribute("errorMessage", "Der Name der Saison muss zwischen " + 
+            pRequest.setAttribute(HandlerMessages.ERROR.toString(), "Der Name der Saison muss zwischen " + 
         ApplicationCoreFacade.MIN_SEASON_NAME_SIZE
                     + " und " + ApplicationCoreFacade.MAX_SEASON_NAME_SIZE
                     + " Zeichen lang sein und darf nur Buchstaben, Zahlen, Leerzeichen " + " oder Unterstriche enthalten!");
@@ -46,17 +49,18 @@ public class CreateSeasonHandler
         }
         if( createSeasonAnswer == CreateSeasonAnswer.SEASON_ALREADY_EXISTS )
         {
-            pRequest.setAttribute("errorMessage", "Es existiert bereits ein Saison mit diesem Namen!");
+            pRequest.setAttribute(HandlerMessages.ERROR.toString(), MessageError.SEASON_NAME_ALREADY_EXISTS);
             return "NewSeasonView";
         }
         if( createSeasonAnswer == CreateSeasonAnswer.USER_CREDENTIALS_INVALID )
         {
-            pRequest.setAttribute("errorMessage", "Sie sind nicht dazu berechtigt eine Saison anzulegen.");
+            pRequest.setAttribute(HandlerMessages.ERROR.toString(), MessageError.SEASON_NO_SUFFICIENT_RIGHTS_TO_CREATE_SEASON);
             return "NewSeasonView";
         }
 
         // everything is OK
+        pRequest.setAttribute(HandlerMessages.SUCCESS.toString(), MessageSuccess.SEASON_SUCCESSFULLY_ADDED);
 
-        return "MainView";
+        return "NewSeasonView";
     }
 }

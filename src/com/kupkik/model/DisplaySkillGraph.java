@@ -65,4 +65,19 @@ public class DisplaySkillGraph {
 		}
 		return values;
 	}
+	
+	public String[] getLooseRateInPercentForEachTournament() {
+		String[] values = new String[tournaments.size()];
+		for (int i = 0; i < tournaments.size(); i++){
+			Double rate;
+			if (tournaments.get(i).getGamesPlayed() <= 0){
+				rate = 0.00;
+			}else{
+				rate = (100.00/tournaments.get(i).getGamesPlayed())*(tournaments.get(i).getGamesPlayed()-tournaments.get(i).getGamesWon());	
+			}
+			values[i] = String.valueOf(rate);
+		}
+		return values;
+	}
+	
 }

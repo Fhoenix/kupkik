@@ -27,8 +27,7 @@
 				<div class="span4"><%=viewHelper.createLabel("Tournament Name", "label",
 					"tournamentKey")%></div>
 				<div class="span8">
-					<select id="tournamentKey" style="width: 100%;"
-						name="tournamentKey">
+					<select id="tournamentKey" name="tournamentKey">
 						<%
 							for (Tournament item : tournaments) {
 								out.println("	 <option value=\""
@@ -50,7 +49,7 @@
 				<div class="span2">Player 1</div>
 				<div class="span6">
 
-					<select id="playerOne" style="width: 100%;" name="playerOne">
+					<select id="playerOne" name="playerOne">
 
 						<%
 							for (User item : users) {
@@ -62,10 +61,9 @@
 
 
 				</div>
-				<div class="span2">Result</div>
-				<div class="span2">
-					<input id="resultOne" style="width: 80%;" name="resultOne"
-						type="text" size="20" maxlength="20">
+				
+				<div class="span4">
+					<input id="resultOne" placeholder="Result" name="resultOne" type="text">
 				</div>
 			</div>
 
@@ -87,10 +85,9 @@
 					</select>
 
 				</div>
-				<div class="span2">Result</div>
-				<div class="span2">
-					<input id="resultTwo" name="resultTwo" type="text"
-						style="width: 80%;" maxlength="20">
+			
+				<div class="span4">
+					<input id="resultTwo" placeholder="Result" name="resultTwo" type="text">
 
 				</div>
 			</div>

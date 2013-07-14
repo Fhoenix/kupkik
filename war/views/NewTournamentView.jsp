@@ -11,24 +11,92 @@
 
 viewHelper.createHtmlBegin("Create Tournament")  %> 
 
-        <H1 ALIGN="CENTER">Turnier Erstellung</H1>
+      
+      
+      
+   <div class="row-fluid">
+		<div class="span6">
+			<h1>New Tournament</h1>
+ 			<form action="/" method="post">
+ 			 <input type="hidden" name="action" value="CreateTournament">
+				<div class="row-fluid">
+					<div class="span12">&nbsp;</div>
+				</div>
+	
+				<div class="row-fluid">
+					<div class="span4"><%=viewHelper.createLabel("Select a Season", "label",
+					"seasonKey")%>	</div>
+					<div class="span8">  
+						<select id="seasonKey" name="seasonKey">
+            				<% for (Season item : seasons){
+            					out.println("	 <option value=\"" +KeyFactory.keyToString(item.getKey()) + "\">"+ item.getName()+"</option>");
+       						 } %>	
+						</select>
+					</div>
+				</div>
+				
+				<div class="row-fluid">
+					<div class="span12"> <input placeholder="Tournament Name" name="name" type="text"></div>
+				</div>
+				
+				<div class="row-fluid">
+					<div class="span12"><input type="submit" value="Absenden"></div>
+				</div>
+				  
+			 </form>
+		</div>	
+		<div class="span6">
+			<h1>Whats a Tournament</h1>
+			
+					Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
+					v
+					Beschreibung Turnier Beschreibung Turnier
+					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
+	
+			
+
+
+		</div>
+	</div>
+
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+       
         
-        <form action="/" method="post">
-            <input type="hidden" name="action" value="CreateTournament">
-            <select name="seasonKey">
-            <% for (Season item : seasons) 
-            {
-            	
-            	out.println("	 <option value=\"" +KeyFactory.keyToString(item.getKey()) + "\">"+ item.getName()+"</option>");
-            	
-             } %>	
-			</select>
-            Name:
-            <br>
-            <input name="name" type="text" size="50" maxlength="50">
-            <br>
-            <input type="submit" value=" Absenden ">
-        </form>
+       
+           
+           
+          
+       
 <% 
 	if(request.getAttribute("errorMessage") != null)
 	{
