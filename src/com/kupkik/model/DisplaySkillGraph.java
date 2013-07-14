@@ -1,29 +1,19 @@
 package com.kupkik.model;
 
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
 
 public class DisplaySkillGraph {
 
 	private int totalNumberWon;
 	private int totalNumberPlayed;
-
-
-
-
 	private List<Tournament> tournaments;
 	private int totalNumberGames;
 
 	public DisplaySkillGraph(int totalNumberPlayed, int totalNumberWon, int totalNumberGames, List<Tournament> tournaments ) {
-
 		this.totalNumberPlayed = totalNumberPlayed;
 		this.totalNumberWon = totalNumberWon;
 		this.totalNumberGames = totalNumberGames;
 		this.tournaments = tournaments;
-
 	}
 
 	public int getTotalNumberWon() {
@@ -54,7 +44,6 @@ public class DisplaySkillGraph {
 		this.totalNumberGames = totalNumberGames;
 	}
 
-
 	public String[] getTournamentNames() {
 		String[] tournamentNames = new String[tournaments.size()];
 		for (int i = 0; i < tournaments.size(); i++){
@@ -76,10 +65,4 @@ public class DisplaySkillGraph {
 		}
 		return values;
 	}
-
-	
-
-
-
-
 }

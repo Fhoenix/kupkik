@@ -58,44 +58,58 @@ public class ViewHelper
 	
 
 		//Start the LiveGridRow
-		pHtmlContent.append(" <div class=\"row\">");
+		pHtmlContent.append("<div class=\"row\">");
 
-
-		content.append(" <div class=\"navbar\">");
-		content.append("  <div class=\"navbar-inner\">");
+		content.append("<div class=\"navbar\">");
+		content.append("	<div class=\"navbar-inner\">");
+		content.append("		<div class=\"container\">");
+		content.append(" 			<a class=\"btn btn-navbar\" data-toggle=\"collapse\" data-target=\".navbar-responsive-collapse\">");
+		content.append(" 				<span class=\"icon-bar\"></span>");
+		content.append(" 				<span class=\"icon-bar\"></span>");
+		content.append("  				<span class=\"icon-bar\"></span>");
+		content.append("  			</a>");
+		
 		if( !currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) ){
-			content.append("    <a class=\"brand\" href=\"#\">"+ MessageCommon.PROJECT_NAME + " | ");
+			content.append("		<a class=\"brand\" href=\"#\">"+ MessageCommon.PROJECT_NAME + " | ");
 			content.append(currentUser.getName());
 		}else{
-			content.append("    <a class=\"brand\" href=\"#\">"+ MessageCommon.PROJECT_NAME + "");
+			content.append("    	<a class=\"brand\" href=\"#\">"+ MessageCommon.PROJECT_NAME + "");
 		}
-
-		content.append(" </a>");
-		content.append(" 		<ul class=\"nav\">");
-		content.append(" 	      <li class=\"active\"><a href=\"/\">Home</a></li>");
-
-
+		content.append(" 			</a>");
+		content.append("		<div class=\"nav-collapse navbar-responsive-collapse collapse\" style=\"height: 0px;\">");
+		content.append(" 			<ul class=\"nav\">");
+		content.append(" 	      		<li class=\"active\"><a href=\"/\">Home</a></li>");
 		if( currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) ){
-			content.append("<li><a href=\"/?showView=RegisterView\">Register Here!</a></li>");
-			content.append(" </ul>");
-			content.append("<form class=\"navbar-form pull-right\" action=\"/\" method=\"post\">");
-			
-			content.append("<input type=\"hidden\" name=\"action\" value=\"Login\">");
-			content.append("<input class=\"span2\" placeholder=\"Username\" name=\"user_name\" type=\"text\" size=\"50\" maxlength=\"50\">");
-			content.append("<input class=\"span2\" placeholder=\"Password\" name=\"password\" type=\"password\" size=\"12\" maxlength=\"12\">");
-			content.append("<input  class=\"btn\" type=\"submit\" value=\"Login\">");
-			
-			content.append("</form>");
+			content.append("			<li><a href=\"/?showView=RegisterView\">Register Here!</a></li>");
+			content.append(" 		</ul>");
+			content.append("		<form class=\"navbar-form pull-right\" action=\"/\" method=\"post\">");
+			content.append("			<input type=\"hidden\" name=\"action\" value=\"Login\">");
+			content.append("			<input class=\"span2\" placeholder=\"Username\" name=\"user_name\" type=\"text\" size=\"50\" maxlength=\"50\">");
+			content.append("			<input class=\"span2\" placeholder=\"Password\" name=\"password\" type=\"password\" size=\"12\" maxlength=\"12\">");
+			content.append("			<input class=\"btn\" type=\"submit\" value=\"Login\">");
+			content.append("		</form>");
 		}else{
-			content.append(" <li><a href=\"/?showView=NewGameView\">"+ MessageCommon.PROJECT_NAME + "</a> </li>");
-			content.append(" <li><a href=\"/?showView=NewTournamentView\">Tournament</a> </li>");
-			content.append(" <li><a href=\"/?showView=NewSeasonView\">Create Season</a> </li>");
-			content.append(" <li><a href=\"/?showView=MyProfileView\">MyProfile</a> </li>");
-			content.append(" <li><a href=\"/?action=Logoff\">Logoff</a> </li>");
-			content.append(" </ul>");
+			content.append("			<li class=\"dropdown\">");
+			content.append("				<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">"+ MessageCommon.PROJECT_NAME +"<b class=\"caret\"></b></a>");
+			content.append("				<ul class=\"dropdown-menu\">");
+			content.append("					<li><a href=\"/?showView=NewGameView\">"+ MessageCommon.PROJECT_NAME + "</a> </li>");
+			content.append(" 					<li><a href=\"/?showView=NewTournamentView\">Tournament</a> </li>");
+			content.append(" 					<li><a href=\"/?showView=NewSeasonView\">Create Season</a> </li>");
+			content.append("				</ul>");
+			content.append("			</li>");
+			content.append("			<li class=\"dropdown\">");
+			content.append("				<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">My Profile<b class=\"caret\"></b></a>");
+			content.append("				<ul class=\"dropdown-menu\">");
+			content.append(" 					<li><a href=\"/?showView=MyProfileView\">MyProfile</a> </li>");
+			content.append("				</ul>");
+			content.append("			</li>");
+			content.append(" 			<li><a href=\"/?action=Logoff\">Logout</a> </li>");
+			content.append(" 		</ul>");
 		}
-		content.append(" </div>");
-		content.append(" </div>");
+		content.append(" 		</div>");
+		content.append(" 		</div>");
+		content.append(" 	</div>");
+		content.append("</div>");
 		pHtmlContent.append(createLiveGridSpan(12, content.toString()));
 		//Live Grid End
 		pHtmlContent.append(" </div>");
@@ -372,7 +386,6 @@ public class ViewHelper
 	
 	public String createLineChart(String[] games, String[] winRateInPercent, int[] looseRateInPercent ){
 		StringBuilder lineChart = new StringBuilder();
-		
 	
 		lineChart.append("<canvas id=\"myChart\" ></canvas>");
 		lineChart.append("<script>");
@@ -382,45 +395,36 @@ public class ViewHelper
 		lineChart.append("            context = canvas.getContext('2d');");
 		    // resize the canvas to fill browser window dynamically
 		lineChart.append(" window.addEventListener('resize', resizeCanvas, false);");
-	
 		lineChart.append("   function resizeCanvas() {");
 		lineChart.append("  var pixels = $('#SkillGraphCanvas').width(); ");
 		lineChart.append("           canvas.width = pixels;");
 		lineChart.append("canvas.height = 400;");
-
-		         
 		lineChart.append("drawStuff(); ");
 		lineChart.append("    }");
 		lineChart.append("   resizeCanvas();");
-
 		lineChart.append("    function drawStuff() {");
-		    	lineChart.append("var ctx = document.getElementById(\"myChart\").getContext(\"2d\");");
+		lineChart.append("var ctx = document.getElementById(\"myChart\").getContext(\"2d\");");
+		lineChart.append("var ctx = $(\"#myChart\").get(0).getContext(\"2d\");");
+		lineChart.append("var data = {");
+		lineChart.append("		labels :"+Arrays.asList(games)+" ,");
 
-				lineChart.append("var ctx = $(\"#myChart\").get(0).getContext(\"2d\");");
-
-				lineChart.append("var data = {");
-				lineChart.append("		labels :"+Arrays.asList(games)+" ,");
-
+		lineChart.append("			datasets : [");
+		lineChart.append("				{");
+		lineChart.append("					fillColor : \"rgba(87,169,87,0.8)\",");
+		lineChart.append("					strokeColor : \"rgba(220,220,220,1)\",");
+		lineChart.append("					pointColor : \"rgba(153,204,0,1)\",");
+		lineChart.append("				pointStrokeColor : \"#fff\",");
+		lineChart.append("				data : "+ Arrays.asList(winRateInPercent) +"" );
+		lineChart.append("			}");
+		lineChart.append("		]");
+		lineChart.append("	};");
 				
-				lineChart.append("			datasets : [");
-				lineChart.append("				{");
-				lineChart.append("					fillColor : \"rgba(87,169,87,0.8)\",");
-				lineChart.append("					strokeColor : \"rgba(220,220,220,1)\",");
-				lineChart.append("					pointColor : \"rgba(153,204,0,1)\",");
-				lineChart.append("				pointStrokeColor : \"#fff\",");
-				lineChart.append("				data : "+ Arrays.asList(winRateInPercent) +"" );
-				lineChart.append("			}");
-				lineChart.append("		]");
-				lineChart.append("	};");
+		lineChart.append("var options = {scaleOverlay : true, scaleOverride : true, scaleSteps : 10, scaleStepWidth : 10 ,scaleStartValue : 0, scaleShowLabels: true, scaleFontSize: 14, bezierCurve: false} ;");
 				
-				lineChart.append("var options = {scaleOverlay : true, scaleOverride : true, scaleSteps : 10, scaleStepWidth : 10 ,scaleStartValue : 0, scaleShowLabels: true, scaleFontSize: 14, bezierCurve: false} ;");
-						
-					
-				
-				lineChart.append("var myNewChart = new Chart(ctx).Line(data, options);");
-				lineChart.append("     }");  
-						lineChart.append(" 	})();");
-						lineChart.append("</script>");
+		lineChart.append("var myNewChart = new Chart(ctx).Line(data, options);");
+		lineChart.append("     }");  
+		lineChart.append(" 	})();");
+		lineChart.append("</script>");
 		
 		
 		return lineChart.toString();
