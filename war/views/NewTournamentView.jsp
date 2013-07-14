@@ -29,12 +29,6 @@ viewHelper.createHtmlBegin("Create Tournament")  %>
             <br>
             <input type="submit" value=" Absenden ">
         </form>
-        
-        <br>
-        <br>
-        <a href="/">zur&uuml;ck zur Hauptseite</a>
-        <br>
-
 <% 
 	if(request.getAttribute("errorMessage") != null)
 	{

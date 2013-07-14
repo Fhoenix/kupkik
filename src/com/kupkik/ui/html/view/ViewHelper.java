@@ -113,6 +113,7 @@ public class ViewHelper
 		pHtmlContent.append(createLiveGridSpan(12, content.toString()));
 		//Live Grid End
 		pHtmlContent.append(" </div>");
+		pHtmlContent.append("	<div class=\"container-fluid\">");
 	}
 
 	/**
@@ -159,14 +160,10 @@ public class ViewHelper
 		final StringBuilder htmlBegin = new StringBuilder();
 		htmlBegin.append("<!DOCTYPE HTML><html>\n");
 		htmlBegin.append("   <head>\n");
-
-		if( pTitle.equals("") )
-		{
-			htmlBegin.append("      <title>kupkik</title>\n");
-		}
-		else
-		{
-			htmlBegin.append("      <title>kupkik | " + pTitle + "</title>\n");
+		if( pTitle.equals("") ){
+			htmlBegin.append("      <title>"+ MessageCommon.PROJECT_NAME + "</title>\n");
+		}else{
+			htmlBegin.append("      <title>"+ MessageCommon.PROJECT_NAME + " " + pTitle + "</title>\n");
 		}
 
 		htmlBegin.append("      <meta name=\"robots\" content=\"noindex\">\n");
@@ -185,6 +182,7 @@ public class ViewHelper
 		htmlBegin.append("		<script src=\"/res/chartjs/Chart.js\"></script>");
 		//Open the Bootstrap Container
 		htmlBegin.append("		<div class=\"container\">");
+	
 
 		if( pDoShowMenubar )
 		{
@@ -207,8 +205,6 @@ public class ViewHelper
 
 
 	public String createFormLayout(String content, String description){
-
-
 		StringBuilder result = new StringBuilder();
 		result.append("<div class=\"row-fluid\">");
 		result.append(createLiveGridSpan(9, content));
@@ -223,7 +219,6 @@ public class ViewHelper
 	 */
 	public String createMainSiteIntroArea(){
 		UserWithPassword currentUser = (UserWithPassword) mSession.getAttribute("currentUser");
-
 		StringBuilder mainSiteIntroArea = new StringBuilder();
 		//Start the LiveGridRow
 		mainSiteIntroArea.append("<div class=\"row-fluid\">");
@@ -278,14 +273,10 @@ public class ViewHelper
 			newsThumbnails.append(item.getName());
 			newsThumbnails.append("</td> </tr>");							
 		}
-
 		newsThumbnails.append("</table>");
 		newsThumbnails.append("</div>");
 		newsThumbnails.append("</div>");
 		newsThumbnails.append("</li>");
-
-
-
 
 		newsThumbnails.append("<li class=\"span4\">");
 		newsThumbnails.append("<div class=\"thumbnail\">");
@@ -310,7 +301,6 @@ public class ViewHelper
 
 			newsThumbnails.append("</td> </tr>");							
 		}
-
 
 		newsThumbnails.append("</table>");
 		newsThumbnails.append("</div>");
@@ -345,6 +335,7 @@ public class ViewHelper
 		footer.append("<div class=\"container-fluid\"><p>" + MessagesFooter.FOOTER_SIGNITURE + "</p></div>");
 		footer.append("</div>");
 		footer.append("</div>");
+
 		return footer.toString();
 	}
 
@@ -354,9 +345,10 @@ public class ViewHelper
 	 * 
 	 * @return The content of a HTML-site which contains the end of this site.
 	 */
-	public String createHtmlEnd()
-	{
+	public String createHtmlEnd(){
+		
 		final StringBuilder htmlEnd = new StringBuilder();
+		htmlEnd.append("</div>");
 		htmlEnd.append(createFooter());
 		//Bootstrap Container Closed
 		htmlEnd.append("  </div>\n");

@@ -14,7 +14,7 @@
 <%=viewHelper.createHtmlBegin("Turnier Erstellung")%>
 <form action="/" method="post">
 	<input type="hidden" name="action" value="CreateBadmintonSingleGame">
-	<div class="container-fluid">
+
 	<div class="row-fluid">
 		<div class="span6">
 			<h1>ScoreIT</h1>
@@ -134,7 +134,7 @@ Beschreibung Turnier Beschreibung Turnier
 
 		</div>
 		</div>
-	</div>
+
 
 
 </form>
