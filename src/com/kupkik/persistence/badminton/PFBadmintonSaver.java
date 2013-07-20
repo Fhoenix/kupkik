@@ -1,5 +1,6 @@
 package com.kupkik.persistence.badminton;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import com.google.appengine.api.datastore.DatastoreService;
@@ -19,6 +20,22 @@ public class PFBadmintonSaver {
 		
 		badmintonSingleGame.setProperty("playerOne", playerOne);
 		badmintonSingleGame.setProperty("playerTwo", playerTwo);
+		badmintonSingleGame.setProperty("resultOne", resultOne);
+		badmintonSingleGame.setProperty("resultTwo", resultTwo);
+		
+		badmintonSingleGame.setProperty("date", date);
+		   DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	       datastore.put(badmintonSingleGame);
+		
+	}
+	
+	
+	public static void saveNewBadmintonDoubleGame(final Key pTournamentKey, final String[] teamOne, final String[] teamTwo, final int resultOne, final int resultTwo, final Date date){
+		
+		Entity badmintonSingleGame = new Entity("BadmintonDouble", pTournamentKey);
+		
+		badmintonSingleGame.setProperty("teamOne", Arrays.asList(teamOne));
+		badmintonSingleGame.setProperty("teamTwo", Arrays.asList(teamTwo));
 		badmintonSingleGame.setProperty("resultOne", resultOne);
 		badmintonSingleGame.setProperty("resultTwo", resultTwo);
 		

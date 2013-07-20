@@ -24,7 +24,7 @@ div .custom_footer {
 }
 
 /* Supports Firefox, Safari, Opera and IE */
-input[type=text] {
+input[type=text].fillLayout, input[type=password].fillLayout, input[type=email].fillLayout{
 	width: 100%;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;

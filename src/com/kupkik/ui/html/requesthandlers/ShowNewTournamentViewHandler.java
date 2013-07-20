@@ -17,25 +17,25 @@ import com.kupkik.model.game.BadmintonSingle;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 
-public class ShowNewTournamentViewHandler
-        implements IHtmlRequestHandler
+public class ShowNewTournamentViewHandler implements IHtmlRequestHandler
 {
 
-    @Override
-    public String performActionAndGetNextView( final HttpServletRequest pRequest, final HttpSession pSession,
-            final ApplicationCoreFacade pApplicationCoreFacade )
-    {
-    	
-    	
-        UserWithPassword currentUser = (UserWithPassword) pSession.getAttribute("currentUser");
+    
+    private class SeasonsComparator implements Comparator<Season>{
 
-        if( currentUser.getName().equals(HtmlRequestProcessor.GUEST_USER.getName()) )
-        {
-            pRequest.setAttribute("errorMessage", "Nur eingeloggte Nutzer können Ihre Saisons sehen!");
-            return "LoginView";
-        }
-        
-        
+		@Override
+		public int compare(Season season1, Season season2) {
+			
+			return season1.getName().compareTo(season2.getName());
+		}
+    	
+    }
+
+	@Override
+	public String performActionAndGetNextView(HttpServletRequest pRequest,
+			HttpSession pSession, ApplicationCoreFacade pApplicationCoreFacade) {
+    	
+		UserWithPassword currentUser = (UserWithPassword) pRequest.getSession().getAttribute("currentUser");
         List<Season> seasons = pApplicationCoreFacade.getAllSeasonsForUser(currentUser);
         Collections.sort(seasons, new SeasonsComparator());
         
@@ -49,17 +49,6 @@ public class ShowNewTournamentViewHandler
 
         
         return null;
-    }
-
-    
-    private class SeasonsComparator implements Comparator<Season>{
-
-		@Override
-		public int compare(Season season1, Season season2) {
-			
-			return season1.getName().compareTo(season2.getName());
-		}
-    	
-    }
+	}
 
 }

@@ -29,9 +29,11 @@ public class CreateTournamentTest
         final String userName = "usul";
         final String password = "qwert";
         final Key key = KeyFactory.createKey("User", userName);
+        final String firstname = "qwert";
+        final String surname = "qwert";
         
         final String md5Password = CredentialsUtils.getMd5HashForText(password);
-        UserWithPassword currentUser = new UserWithPassword(userName,md5Password,key);
+        UserWithPassword currentUser = new UserWithPassword(userName,md5Password,key,firstname, surname);
 
         final String tournamentName = "A test tournament";
 
@@ -110,8 +112,10 @@ public class CreateTournamentTest
         final String password = "qwert";
         final String md5Password = CredentialsUtils.getMd5HashForText(password);
         final Key key = KeyFactory.createKey("User", userName);
+        final String firstname = "qwert";
+        final String surname = "qwert";
         
-        UserWithPassword currentUser = new UserWithPassword(userName,md5Password,key);
+        UserWithPassword currentUser = new UserWithPassword(userName,md5Password,key,firstname, surname);
 
         final String tournamentName = "adddddddddddddddddddddddddddddddddddfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
                 + "adddddddddddddddddddddddddddddddddddfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
@@ -153,7 +157,10 @@ public class CreateTournamentTest
         final String password = "qwert";
         final String md5Password = CredentialsUtils.getMd5HashForText(password);
         final Key key = KeyFactory.createKey("User", userName);
-        UserWithPassword currentUser = new UserWithPassword(userName,md5Password,key);
+        final String firstname = "qwert";
+        final String surname = "qwert";
+        
+        UserWithPassword currentUser = new UserWithPassword(userName,md5Password,key,firstname, surname);
 
         final String tournamentName = "a";
 
@@ -193,7 +200,9 @@ public class CreateTournamentTest
         final String password = "qwert";
         final String md5Password = CredentialsUtils.getMd5HashForText(password);
         final Key key = KeyFactory.createKey("User", userName);
-        UserWithPassword currentUser = new UserWithPassword(userName,md5Password,key);
+        final String firstname = "qwert";
+        final String surname = "qwert";
+        UserWithPassword currentUser = new UserWithPassword(userName,md5Password,key,firstname, surname);
 
         final String tournamentName = "A test@ tournament";
 
@@ -233,7 +242,9 @@ public class CreateTournamentTest
         final String password = "qwert";
         final String md5Password = CredentialsUtils.getMd5HashForText(password);
         final Key key = KeyFactory.createKey("User", userName);
-        UserWithPassword currentUser = new UserWithPassword(userName,md5Password,key);
+        final String firstname = "qwert";
+        final String surname = "qwert";
+        UserWithPassword currentUser = new UserWithPassword(userName,md5Password,key,firstname, surname);
 
         final String tournamentName = "A test tournament";
 

@@ -19,9 +19,9 @@ public class UserWithPassword
 	private String mPasswordMd5;
    
 
-    public UserWithPassword(String pName, String pPasswordMd5, Key key)
+    public UserWithPassword(String pName, String pPasswordMd5, Key key, String firstname, String surname)
     {
-        super(pName, key);
+        super(pName, key,firstname,surname);
         mPasswordMd5 = pPasswordMd5;
     }
 

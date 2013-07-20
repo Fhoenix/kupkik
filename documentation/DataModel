@@ -1,0 +1,16 @@
+KIND#User
+- key
+- parent 		(NO PARENT)
+- name 			(Email Adress) 		Text: 50
+- firstname							Text: 50
+- surname							Text: 50
+
+
+KIND#Season
+- key
+- name								
+- parent - #user.key
+- ArrayList<Tournaments>
+
+
+

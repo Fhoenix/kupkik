@@ -1,4 +1,4 @@
-<%@page import="com.google.appengine.api.datastore.KeyFactory"%>
+<%@ page import="com.google.appengine.api.datastore.KeyFactory"%>
 <%@ page import="com.kupkik.model.*" %>
 <%@ page import="com.kupkik.ui.html.view.*" %>
 <%@ page import="java.util.List" %>
@@ -7,9 +7,7 @@
 	List<Season> seasons = (List<Season>)request.getAttribute("seasons"); 
 %> 
 
-<%=
-
-viewHelper.createHtmlBegin("Create Tournament")  %> 
+<%= viewHelper.createHtmlBegin("Create Tournament")  %> 
 
       
       
@@ -36,7 +34,7 @@ viewHelper.createHtmlBegin("Create Tournament")  %>
 				</div>
 				
 				<div class="row-fluid">
-					<div class="span12"> <input placeholder="Tournament Name" name="name" type="text"></div>
+					<div class="span12"> <input class="fillLayout"  placeholder="Tournament Name" name="name" type="text"></div>
 				</div>
 				
 				<div class="row-fluid">

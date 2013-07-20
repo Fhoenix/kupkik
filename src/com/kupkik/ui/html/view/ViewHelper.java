@@ -70,10 +70,10 @@ public class ViewHelper
 		content.append("  			</a>");
 		
 		if( !currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) ){
-			content.append("		<a class=\"brand\" href=\"#\">"+ MessageCommon.PROJECT_NAME + " | ");
+			content.append("		<a class=\"brand\" href=\"#\"><img src=\"/res/images/logo_icon.png\" alt=\"logo\" /> - ");
 			content.append(currentUser.getName());
 		}else{
-			content.append("    	<a class=\"brand\" href=\"#\">"+ MessageCommon.PROJECT_NAME + "");
+			content.append("    	<a class=\"brand\" href=\"#\"><img src=\"/res/images/logo_icon.png\" alt=\"logo\" />");
 		}
 		content.append(" 			</a>");
 		content.append("		<div class=\"nav-collapse navbar-responsive-collapse collapse\" style=\"height: 0px;\">");
@@ -84,7 +84,7 @@ public class ViewHelper
 			content.append(" 		</ul>");
 			content.append("		<form class=\"navbar-form pull-right\" action=\"/\" method=\"post\">");
 			content.append("			<input type=\"hidden\" name=\"action\" value=\"Login\">");
-			content.append("			<input class=\"span2\" placeholder=\"Username\" name=\"user_name\" type=\"text\" size=\"50\" maxlength=\"50\">");
+			content.append("			<input class=\"span2\" placeholder=\"Your E-Mail\" name=\"user_name\" type=\"email\" size=\"50\" maxlength=\"50\">");
 			content.append("			<input class=\"span2\" placeholder=\"Password\" name=\"password\" type=\"password\" size=\"12\" maxlength=\"12\">");
 			content.append("			<input class=\"btn\" type=\"submit\" value=\"Login\">");
 			content.append("		</form>");
@@ -92,7 +92,16 @@ public class ViewHelper
 			content.append("			<li class=\"dropdown\">");
 			content.append("				<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">"+ MessageCommon.PROJECT_NAME +"<b class=\"caret\"></b></a>");
 			content.append("				<ul class=\"dropdown-menu\">");
-			content.append("					<li><a href=\"/?showView=NewGameView\">"+ MessageCommon.PROJECT_NAME + "</a> </li>");
+		
+			
+			content.append("					<li class=\"dropdown-submenu\">");
+			content.append("   					<a tabindex=\"-1\" href=\"#\">Score Game</a>");
+			content.append("						<ul class=\"dropdown-menu\">");
+			content.append("							<li><a href=\"/?showView=NewBadmintonSingleGameView\">Badminton Single</a> </li>");
+			content.append("							<li><a href=\"/?showView=NewBadmintonDoubleGameView\">Badminton Double</a> </li>");
+			content.append("						</ul>");
+			content.append("					</li>");
+			
 			content.append(" 					<li><a href=\"/?showView=NewTournamentView\">Tournament</a> </li>");
 			content.append(" 					<li><a href=\"/?showView=NewSeasonView\">Create Season</a> </li>");
 			content.append("				</ul>");
@@ -189,6 +198,7 @@ public class ViewHelper
 			createMenuBar(htmlBegin);
 		}
 
+		
 		return htmlBegin.toString();
 	}
 
@@ -332,7 +342,18 @@ public class ViewHelper
 		StringBuilder footer = new StringBuilder();
 		footer.append("<div class=\"row-fluid footer custom_footer\">");
 		footer.append("<div class=\"span12\">");
-		footer.append("<div class=\"container-fluid\"><p>" + MessagesFooter.FOOTER_SIGNITURE + "</p></div>");
+		footer.append("<div class=\"container-fluid\">");
+			footer.append("<div class=\"row-fluid\">");
+			
+				footer.append("<div class=\"span1\">");
+				footer.append("		<img src=\"/res/images/logo_icon.png\" alt=\"logo\" />");
+				footer.append("</div>");	
+				
+				footer.append("<div style=\"vertical-align: middle;\"class=\"span11\">");
+				footer.append( MessagesFooter.FOOTER_SIGNITURE);
+				footer.append("</div>");	
+			footer.append("</div>");
+		footer.append("</div>");
 		footer.append("</div>");
 		footer.append("</div>");
 
@@ -401,13 +422,7 @@ public class ViewHelper
 		lineChart.append("		labels :"+Arrays.asList(games)+" ,");
 
 		lineChart.append("			datasets : [");
-		lineChart.append("				{");
-		lineChart.append("					fillColor : \"rgba(87,169,87,0.8)\",");
-		lineChart.append("					strokeColor : \"rgba(220,220,220,1)\",");
-		lineChart.append("					pointColor : \"rgba(153,204,0,1)\",");
-		lineChart.append("				pointStrokeColor : \"#fff\",");
-		lineChart.append("				data : "+ Arrays.asList(winRateInPercent) +"" );
-		lineChart.append("			},");
+		
 		
 		lineChart.append("				{");
 		lineChart.append("					fillColor : \"rgba(220,80,75,0.8)\",");
@@ -415,6 +430,14 @@ public class ViewHelper
 		lineChart.append("					pointColor : \"rgba(220,80,75,1)\",");
 		lineChart.append("				pointStrokeColor : \"#fff\",");
 		lineChart.append("				data : "+ Arrays.asList(looseRateInPercent) +"" );
+		lineChart.append("			},");
+		
+		lineChart.append("				{");
+		lineChart.append("					fillColor : \"rgba(87,169,87,0.8)\",");
+		lineChart.append("					strokeColor : \"rgba(220,220,220,1)\",");
+		lineChart.append("					pointColor : \"rgba(153,204,0,1)\",");
+		lineChart.append("				pointStrokeColor : \"#fff\",");
+		lineChart.append("				data : "+ Arrays.asList(winRateInPercent) +"" );
 		lineChart.append("			}");
 		
 		lineChart.append("		]");
@@ -422,7 +445,7 @@ public class ViewHelper
 				
 		lineChart.append("var options = {scaleOverlay : true, scaleOverride : true, scaleSteps : 10, scaleStepWidth : 10 ,scaleStartValue : 0, scaleShowLabels: true, scaleFontSize: 14, bezierCurve: false} ;");
 				
-		lineChart.append("var myNewChart = new Chart(ctx).Line(data, options);");
+		lineChart.append("var myNewChart = new Chart(ctx).Bar(data, options);");
 		lineChart.append("     }");  
 		lineChart.append(" 	})();");
 		lineChart.append("</script>");

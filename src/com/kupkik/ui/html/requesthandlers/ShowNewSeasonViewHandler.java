@@ -17,8 +17,7 @@ import com.kupkik.model.game.BadmintonSingle;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 
-public class ShowNewSeasonViewHandler
-        implements IHtmlRequestHandler
+public class ShowNewSeasonViewHandler implements IHtmlRequestHandler
 {
 
     @Override
@@ -26,15 +25,7 @@ public class ShowNewSeasonViewHandler
             final ApplicationCoreFacade pApplicationCoreFacade )
     {
     	
-    	
-        UserWithPassword currentUser = (UserWithPassword) pSession.getAttribute("currentUser");
-
-        if( currentUser == null || currentUser.getName().equals(HtmlRequestProcessor.GUEST_USER.getName()) )
-        {
-            pRequest.setAttribute("errorMessage", "Nur eingeloggte Nutzer können Ihre Saisons sehen!");
-            return "LoginView";
-        }
-        
+        UserWithPassword currentUser = (UserWithPassword) pRequest.getSession().getAttribute("currentUser");
         
         List<Season> seasons = pApplicationCoreFacade.getAllSeasonsForUser(currentUser);
         Collections.sort(seasons, new SeasonsComparator());

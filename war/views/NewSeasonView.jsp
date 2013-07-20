@@ -1,25 +1,25 @@
-<%@page import="com.google.appengine.repackaged.com.google.common.base.StringUtil"%>
-<%@page import="com.kupkik.messages.HandlerMessages"%>
-<%@page import="com.sun.corba.se.impl.protocol.giopmsgheaders.MessageHandler"%>
+<%@ page import="com.google.appengine.repackaged.com.google.common.base.StringUtil"%>
+<%@ page import="com.kupkik.messages.HandlerMessagesEnum"%>
+<%@ page import="com.sun.corba.se.impl.protocol.giopmsgheaders.MessageHandler"%>
 <%@ page import="com.kupkik.model.*" %>
 <%@ page import="com.kupkik.ui.html.view.*" %>
 
 
-<% 
-	ViewHelper viewHelper = (ViewHelper)request.getAttribute("viewHelper");  
-%> 
-
-
-<%= viewHelper.createHtmlBegin("Saison Erstellung")  %> 
 <%
-	if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(HandlerMessages.ERROR.toString())))
-	{
+	ViewHelper viewHelper = (ViewHelper)request.getAttribute("viewHelper");
 %> 
-    	<div class="alert alert-error"><%= viewHelper.convertTextForHtml((String)request.getAttribute(HandlerMessages.ERROR.toString())) %> </div>
-<% 
-	}else if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(HandlerMessages.SUCCESS.toString()))) {
+
+
+<%=viewHelper.createHtmlBegin("Saison Erstellung")%> 
+<%
+ 	if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(HandlerMessagesEnum.ERROR.toString())))
+ 	{
+ %> 
+    	<div class="alert alert-error"><%=viewHelper.convertTextForHtml((String)request.getAttribute(HandlerMessagesEnum.ERROR.toString()))%> </div>
+<%
+	}else if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(HandlerMessagesEnum.SUCCESS.toString()))) {
 %>
-		<div class="alert alert-success"><%= viewHelper.convertTextForHtml((String)request.getAttribute(HandlerMessages.SUCCESS.toString())) %> </div>
+		<div class="alert alert-success"><%=viewHelper.convertTextForHtml((String)request.getAttribute(HandlerMessagesEnum.SUCCESS.toString()))%> </div>
 <% 		
 	}
  %> 
@@ -32,7 +32,7 @@
 				<div class="span12">&nbsp;</div>
 			</div>
 			<div class="row-fluid">
-				<div class="span8"><input placeholder="Season Name" name="name" type="text" value="<% 
+				<div class="span8"><input class="fillLayout" placeholder="Season Name" name="name" type="text" value="<% 
 				if (!StringUtil.isEmptyOrWhitespace((String)request.getAttribute("name"))){
 					out.print((String)request.getAttribute("name"));
 				}

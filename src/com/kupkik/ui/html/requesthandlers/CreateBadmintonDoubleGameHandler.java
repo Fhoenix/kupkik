@@ -16,7 +16,7 @@ import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 
 
-public class CreateBadmintonSingleGameHandler  implements IHtmlRequestHandler{
+public class CreateBadmintonDoubleGameHandler  implements IHtmlRequestHandler{
 
 	@Override
 	public String performActionAndGetNextView(HttpServletRequest pRequest,
@@ -28,11 +28,12 @@ public class CreateBadmintonSingleGameHandler  implements IHtmlRequestHandler{
 		if( currentUser.getName().equals(HtmlRequestProcessor.GUEST_USER.getName()) )
 		{
 			pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), "Nur eingeloggte Nutzer können Spiele anlegen!");
-			return "NewBadmintonSingleGameView";
+			return "NewBadmintonDoubleGameView";
 		}
 
-		String playerOne = pRequest.getParameter("playerOne");
-		String playerTwo = pRequest.getParameter("playerTwo");
+		
+		String[] team1 = new String[]{pRequest.getParameter("teamOne-One"), pRequest.getParameter("teamOne-Two")};
+		String[] team2 = new String[]{pRequest.getParameter("teamTwo-One"),pRequest.getParameter("teamTwo-Two")};
 		int resultOne = Integer.parseInt(pRequest.getParameter("resultOne"));
 		int resultTwo = Integer.parseInt(pRequest.getParameter("resultTwo"));
 		String pTournamentKey = pRequest.getParameter("tournamentKey");
@@ -41,9 +42,9 @@ public class CreateBadmintonSingleGameHandler  implements IHtmlRequestHandler{
 		Date date = new Date();
 
 
-		CreateGameAnswer createTournamentAnswer = pApplicationCoreFacade.createBadmintonSingleGame(KeyFactory.stringToKey(pTournamentKey), 
-				playerOne, 
-				playerTwo, 
+		CreateGameAnswer createTournamentAnswer = pApplicationCoreFacade.createBadmintonDoubleGame(KeyFactory.stringToKey(pTournamentKey), 
+				team1, 
+				team2, 
 				resultOne,
 				resultTwo,
 				date);
@@ -51,13 +52,13 @@ public class CreateBadmintonSingleGameHandler  implements IHtmlRequestHandler{
         if( createTournamentAnswer == CreateGameAnswer.NOK )
         {
             pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), "Das Spiel konnte nicht angelegt werden!");
-            return "NewBadmintonSingleGameView";
+            return "NewBadmintonDoubleGameView";
         }else{
         	pRequest.setAttribute(HandlerMessagesEnum.SUCCESS.toString(), "Das Spiel wurde angelegt!");
         }
 
 
-		return "NewBadmintonSingleGameView";
+		return "NewBadmintonDoubleGameView";
 	}
 
 }

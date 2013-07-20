@@ -2,7 +2,7 @@
 <%@ page import="com.kupkik.ui.html.view.*"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Arrays"%>
-<%@page import="com.google.appengine.api.datastore.KeyFactory"%>
+<%@ page import="com.google.appengine.api.datastore.KeyFactory"%>
 
 <%
 	ViewHelper viewHelper = (ViewHelper) request
@@ -18,7 +18,7 @@
 		<div class="span12">
 			<h1>Profile Crawler</h1>
 	<form action="/" method="post">
-		<input type="hidden" name="action" value="CreateMyProfile">
+		<input class="fillLayout"  type="hidden" name="action" value="CreateMyProfile">
 
 			<div class="row-fluid">
 				<div class="span2">Choose a Season</div>

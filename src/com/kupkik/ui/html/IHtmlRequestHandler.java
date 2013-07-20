@@ -21,6 +21,6 @@ public interface IHtmlRequestHandler
      *            the access to the application-core
      * @return The name of the view to show next.
      */
-    String performActionAndGetNextView( final HttpServletRequest pRequest, final HttpSession pSession,
+    public String performActionAndGetNextView( final HttpServletRequest pRequest, final HttpSession pSession,
             final ApplicationCoreFacade pApplicationCoreFacade );
 }

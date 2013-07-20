@@ -23,7 +23,9 @@ public class LogoffTest
         final String password = "qwert";
         final String md5Password = CredentialsUtils.getMd5HashForText(password);
         final Key key = KeyFactory.createKey("User", userName);
-        UserWithPassword currentUser = new UserWithPassword(userName,md5Password,key);
+        final String firstname = "qwert";
+        final String surname = "qwert";
+        UserWithPassword currentUser = new UserWithPassword(userName,md5Password,key,firstname, surname);
 
         HashMap<String, Object> attributesForSession = new HashMap<>();
         attributesForSession.put("currentUser", currentUser);

@@ -15,15 +15,27 @@ public class User
 	 */
 	private static final long serialVersionUID = 5790554928089421666L;
 	private String name;
+	private String firstname;
+	private String surname;
     private Key key;
 
-    public User(String pName, Key key)
+    public User(String pName, Key key, String firstname, String surname)
     {
         name = pName;
         this.key = key;
+        this.firstname = firstname;
+        this.surname = surname;
     }
 
-    public Key getKey() {
+    public String getFirstname() {
+		return firstname;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public Key getKey() {
 		return key;
 	}
 

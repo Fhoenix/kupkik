@@ -3,6 +3,7 @@ package com.kupkik.applicationcore;
 import java.util.Date;
 import java.util.List;
 
+
 import com.google.appengine.api.datastore.Key;
 import com.kupkik.model.DisplaySkillGraph;
 import com.kupkik.model.Season;
@@ -26,6 +27,8 @@ public class ApplicationCoreFacade
 {
     public static final int   MIN_USER_NAME_SIZE       = 3;
     public static final int   MAX_USER_NAME_SIZE       = 50;
+    public static final int   MAX_FIRSTNAME_SIZE       = 50;
+    public static final int   MAX_SURNAME_SIZE       = 50;
     public static final int   MIN_PASSWORD_SIZE        = 3;
 
     public static final int   MAX_TOURNAMENT_NAME_SIZE = 50;
@@ -48,7 +51,11 @@ public class ApplicationCoreFacade
     {
         OK,
         USER_ALREADY_EXISTS,
-        USER_NAME_INVALID,
+        USER_NAME_TOO_SHORT,
+        USER_NAME_TOO_LONG,
+        USER_NAME_USES_INVALID_CHARACTERS,
+        FIRSTNAME_INVALID,
+        SURNAME_INVALID,
         PASSWORD_INVALID
     }
 
@@ -90,6 +97,11 @@ public class ApplicationCoreFacade
         return CreateGameAnswer.OK;
     }
     
+    public CreateGameAnswer createBadmintonDoubleGame(final Key pTournamentKey, final String[] team1, final String[] team2, final int resultOne, final int resultTwo, final Date date){
+    	PFBadmintonSaver.saveNewBadmintonDoubleGame(pTournamentKey, team1, team2, resultOne, resultTwo, date);
+        return CreateGameAnswer.OK;
+    }
+    
     /**
      * create a new tournament
      * 
@@ -107,7 +119,7 @@ public class ApplicationCoreFacade
         {
             return CreateSeasonAnswer.NAME_INVALID;
         }
-        if( !pSeasonName.matches("[0-9a-zA-Z_ ]*") )
+        if( !pSeasonName.matches("[0-9a-zA-Z_@]*") )
         {
             return CreateSeasonAnswer.NAME_INVALID;
         }
@@ -222,24 +234,35 @@ public class ApplicationCoreFacade
      *            MD5-hash.
      * @return The result of trying to save the user in the database.
      */
-    public SaveUserAnswer saveNewUser( final String pUserName, final String pUserPassword )
+    public SaveUserAnswer saveNewUser( final String pUserName, final String pUserPassword, final String firstname, final String surname)
     {
         // does the user exist already?
-
-        if( doesUserExistWithName(pUserName) )
-        {
+        if( doesUserExistWithName(pUserName) ){
             return SaveUserAnswer.USER_ALREADY_EXISTS;
         }
 
+        if (isUserNameTooShort(pUserName)){
+        	return SaveUserAnswer.USER_NAME_TOO_SHORT;
+        }
+        
+        if (isUserNameTooLong(pUserName)){
+        	return SaveUserAnswer.USER_NAME_TOO_LONG;
+        }
+        
         // is the user-name valid?
-
-        if( !isUsernameValid(pUserName) )
-        {
-            return SaveUserAnswer.USER_NAME_INVALID;
+        if( !isUserNameCharctersValid(pUserName) ){
+            return SaveUserAnswer.USER_NAME_USES_INVALID_CHARACTERS;
+        }
+        
+        if( firstname.length() > MAX_FIRSTNAME_SIZE ){
+            return SaveUserAnswer.FIRSTNAME_INVALID ;
+        }
+        
+        if( surname.length() > MAX_SURNAME_SIZE ){
+            return SaveUserAnswer.SURNAME_INVALID ;
         }
 
         // is the password valid?
-
         if( !isPasswordValid(pUserPassword) )
         {
             return SaveUserAnswer.PASSWORD_INVALID;
@@ -249,12 +272,14 @@ public class ApplicationCoreFacade
 
         String passwordMd5 = CredentialsUtils.getMd5HashForText(pUserPassword);
 
-        PFCommonSaver.saveNewUser(pUserName, passwordMd5);
+        PFCommonSaver.saveNewUser(pUserName, passwordMd5, firstname, surname);
 
         return SaveUserAnswer.OK;
     }
 
-    private boolean isPasswordValid( final String pPassword )
+
+
+	private boolean isPasswordValid( final String pPassword )
     {
         if( pPassword.length() < MIN_PASSWORD_SIZE )
         {
@@ -264,22 +289,31 @@ public class ApplicationCoreFacade
         return true;
     }
 
-    private boolean isUsernameValid( final String pUserName )
+    private boolean isUserNameTooShort(final String pUserName){
+    	  if( pUserName.length() < MIN_USER_NAME_SIZE )
+          {
+              return true;
+          }
+    	  return false;
+    }
+    
+    private boolean isUserNameTooLong(String pUserName) {
+    	 if( pUserName.length() > MAX_USER_NAME_SIZE )
+         {
+             return true;
+         }
+    	 return false;
+	}
+    
+    private boolean isUserNameCharctersValid( final String pUserName )
     {
-        if( pUserName.length() < MIN_USER_NAME_SIZE )
+
+        if( EmailValidator.validate(pUserName) )
         {
-            return false;
-        }
-        if( pUserName.length() > MAX_USER_NAME_SIZE )
-        {
-            return false;
-        }
-        if( !pUserName.matches("[0-9a-zA-Z_]*") )
-        {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
 	/**
@@ -315,7 +349,6 @@ public class ApplicationCoreFacade
 	}
 
 	public List<Tournament> getAllTournamentsOfUser(String userName) {
-
 		return PFCommonGetter.getAllTournamentsOfUser(userName);
 	}
 	
@@ -323,6 +356,8 @@ public class ApplicationCoreFacade
 	return PFBadmintonGetters.getAllGamesInSeason( season,  userName);
 	}
 
+	/** Returns all Seasons in a List<Seasons> */
+	
 	public List<Season> getAllSeasons() {
 		return PFCommonGetter.getAllSeasons();
 	}

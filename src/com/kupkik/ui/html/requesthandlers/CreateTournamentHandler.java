@@ -8,61 +8,57 @@ import com.google.appengine.api.datastore.KeyFactory;
 
 import com.kupkik.applicationcore.ApplicationCoreFacade;
 import com.kupkik.applicationcore.ApplicationCoreFacade.CreateTournamentAnswer;
+import com.kupkik.messages.HandlerMessagesEnum;
+import com.kupkik.messages.MessageError;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 
-public class CreateTournamentHandler
-        implements IHtmlRequestHandler
+public class CreateTournamentHandler implements IHtmlRequestHandler
 {
 
     @Override
     public String performActionAndGetNextView( final HttpServletRequest pRequest, final HttpSession pSession,
             final ApplicationCoreFacade pApplicationCoreFacade )
     {
-
-    	
-    		// the chosen tournament-name
+ 
+    	  UserWithPassword currentUser = (UserWithPassword) pRequest.getSession().getAttribute("currentUser");
+          if( currentUser.getName().equals(HtmlRequestProcessor.GUEST_USER.getName()) )
+          {
+              pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.TOURNAMENT_NO_SUFFICIENT_RIGHTS_TO_CREATE_SEASON);
+              return "NewSeasonView";
+          }
+          
+    	// the chosen tournament-name
         String tournamentName = pRequest.getParameter("name");
         Key seasonKey = KeyFactory.stringToKey(pRequest.getParameter("seasonKey"));
 
-        // is user logged in?
-
-        UserWithPassword currentUser = (UserWithPassword) pSession.getAttribute("currentUser");
-
-        if( currentUser.getName().equals(HtmlRequestProcessor.GUEST_USER.getName()) )
-        {
-            pRequest.setAttribute("errorMessage", "Nur eingeloggte Nutzer k�nnen Turniere anlegen!");
-            return "NewTournamentView";
-        }
-//
+ 
         // try to create tournament
 
         CreateTournamentAnswer createTournamentAnswer = pApplicationCoreFacade.createTournament(tournamentName, seasonKey);
 
         if( createTournamentAnswer == CreateTournamentAnswer.NAME_INVALID )
         {
-            pRequest.setAttribute("errorMessage", "Der Name des Turniers muss zwischen " + ApplicationCoreFacade.MIN_TOURNAMENT_NAME_SIZE
-                    + " und " + ApplicationCoreFacade.MAX_TOURNAMENT_NAME_SIZE
-                    + " Zeichen lang sein und darf nur Buchstaben, Zahlen, Leerzeichen " + " oder Unterstriche enthalten!");
+            pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.TOURNAMENT_NAME_INVALID );
             return "NewTournamentView";
         }
         if( createTournamentAnswer == CreateTournamentAnswer.TOURNAMENT_ALREADY_EXISTS )
         {
-            pRequest.setAttribute("errorMessage", "Es existiert bereits ein Turnier mit diesem Namen!");
+            pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.TOURNAMENT_WITH_THAT_NAME_EXISTS);
             return "NewTournamentView";
         }
         if( createTournamentAnswer == CreateTournamentAnswer.USER_CREDENTIALS_INVALID )
         {
-            pRequest.setAttribute("errorMessage", "Sie sind nicht dazu berechtigt ein Turnier anzulegen.");
+            pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.TOURNAMENT_NO_SUFFICIENT_RIGHTS_TO_CREATE_SEASON);
             return "NewTournamentView";
         }
         if( createTournamentAnswer == CreateTournamentAnswer.SEASON_DOES_NOT_EXIST )
         {
-            pRequest.setAttribute("errorMessage", "Season does not exist");
+            pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.TOURNAMENT_SEASON_DOES_NOT_EXIST);
             return "NewTournamentView";
         }else{
-        	 pRequest.setAttribute("errorMessage", "KEY SEASON: "+ seasonKey.toString() + " " + createTournamentAnswer.toString());
+        	 pRequest.setAttribute(HandlerMessagesEnum.SUCCESS.toString(), MessageError.TOURNAMENT_SUCCESSFULLY_ADDED);
              return "NewTournamentView";
         }
 

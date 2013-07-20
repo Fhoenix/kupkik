@@ -31,7 +31,7 @@ public class HtmlRequestProcessor
     private HttpServletRequest           mRequest;
     private HttpServletResponse          mResponse;
     private ServletContext               mServletContext;
-    public final static UserWithPassword GUEST_USER = new UserWithPassword("guest", "none",KeyFactory.createKey("User","guest" ));
+    public final static UserWithPassword GUEST_USER = new UserWithPassword("guest", "none",KeyFactory.createKey("User","guest"),"guest","guest");
 
     private static final Logger          sLogger    = Logger.getLogger(HtmlStarterServlet.class.getName());
 
@@ -96,7 +96,13 @@ public class HtmlRequestProcessor
      */
     private void doHandleClientRequest() throws Exception
     {
-        // lets see who is logged in
+        
+    	
+    	UserWithPassword currentUser = (UserWithPassword) mRequest.getSession().getAttribute("currentUser");
+
+    
+    	
+    	// lets see who is logged in
         checkUserLogin();
 
         makeViewHelperClassAvailableToViews();
@@ -123,15 +129,17 @@ public class HtmlRequestProcessor
             nextViewName = requestHandler.performActionAndGetNextView(mRequest, mRequest.getSession(), mApplicationCoreFacade);
         }
 
+       
         // if there is a handler for preparing the view, load it and let
         // prepare the data IMPORTANT: For all data needed in the view, such a Handler
         //must exist. See the naming convention.
         IHtmlRequestHandler viewPreparationHandler = loadHandlerForPreparingView(nextViewName);
         if( viewPreparationHandler != null )
         {
-            viewPreparationHandler.performActionAndGetNextView(mRequest, mRequest.getSession(), mApplicationCoreFacade);
+        	viewPreparationHandler.performActionAndGetNextView(mRequest, mRequest.getSession(), mApplicationCoreFacade);
         }
-
+    	
+       
         // show the view
         showView(nextViewName);
     }

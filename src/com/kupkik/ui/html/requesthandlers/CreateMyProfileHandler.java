@@ -13,27 +13,25 @@ import com.kupkik.model.UserWithPassword;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 
-public class CreateMyProfileHandler
-        implements IHtmlRequestHandler
+public class CreateMyProfileHandler implements IHtmlRequestHandler
 {
 
     @Override
     public String performActionAndGetNextView( final HttpServletRequest pRequest, final HttpSession pSession,
             final ApplicationCoreFacade pApplicationCoreFacade )
     {
-    	
-    	// the chosen season-name
-        Key seasonKey  = KeyFactory.stringToKey(pRequest.getParameter("seasonKey"));
-    	
-        UserWithPassword currentUser = (UserWithPassword) pSession.getAttribute("currentUser");
+    	UserWithPassword currentUser = (UserWithPassword) pRequest.getAttribute("currentUser");
 
         if( currentUser.getName().equals(HtmlRequestProcessor.GUEST_USER.getName()) )
         {
             pRequest.setAttribute("errorMessage", "Nur eingeloggte Nutzer k?nnen Turniere anlegen!");
             return "NewSeasonView";
         }
-        
-        DisplaySkillGraph allGamesInSeason = ApplicationCoreFacade.getAllGamesInSeason(seasonKey, currentUser.getName());
+    	// the chosen season-name
+        Key seasonKey  = KeyFactory.stringToKey(pRequest.getParameter("seasonKey"));
+    	
+
+        DisplaySkillGraph allGamesInSeason = ApplicationCoreFacade.getAllGamesInSeason(seasonKey,currentUser.getName());
         pRequest.setAttribute("displaySkillGraph",allGamesInSeason);
 
         return "MyProfileView";

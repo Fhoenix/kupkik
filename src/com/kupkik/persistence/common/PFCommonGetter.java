@@ -98,7 +98,7 @@ public class PFCommonGetter {
 		List<UserWithPassword> users = new ArrayList<UserWithPassword>();
 		for( Entity currentUserEntity : userEntities )
 		{
-			UserWithPassword currentUser = new UserWithPassword(currentUserEntity.getKey().getName(), currentUserEntity.getProperty("passwordMd5").toString(), currentUserEntity.getKey());
+			UserWithPassword currentUser = new UserWithPassword(currentUserEntity.getKey().getName(), currentUserEntity.getProperty("passwordMd5").toString(), currentUserEntity.getKey(), currentUserEntity.getProperty("firstname").toString(), currentUserEntity.getProperty("surname").toString());
 			users.add(currentUser);
 		}
 
@@ -157,7 +157,7 @@ public class PFCommonGetter {
 	}
 	
 	/**
-	 * Get all Seasons that belongs to an user.
+	 * Get all Seasons
 	 * @param userName user name.
 	 * @return List of {@link Season}.
 	 */

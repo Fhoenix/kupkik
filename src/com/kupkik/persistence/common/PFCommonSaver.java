@@ -9,8 +9,6 @@ import com.kupkik.model.Season;
 
 public class PFCommonSaver {
 
-	
-
 	/**
 	 * Saves a new Tournament
 	 * @param pTournamentName Tournament Name
@@ -30,10 +28,12 @@ public class PFCommonSaver {
 	 * @param pUserPassword
 	 *            The password of the new user as a MD5 hash.
 	 */
-	public static void saveNewUser( final String pUserName, final String pUserPasswordMd5 )
+	public static void saveNewUser( final String pUserName, final String pUserPasswordMd5, final String firstname, final String surname )
 	{
 	    Entity user = new Entity("User", pUserName);
 	    user.setProperty("passwordMd5", pUserPasswordMd5);
+	    user.setProperty("firstname", firstname);
+	    user.setProperty("surname", surname);
 	    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	    datastore.put(user);
 	}

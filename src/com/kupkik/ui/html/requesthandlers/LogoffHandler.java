@@ -8,8 +8,7 @@ import com.kupkik.model.UserWithPassword;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 
-public class LogoffHandler
-        implements IHtmlRequestHandler
+public class LogoffHandler implements IHtmlRequestHandler
 {
 
     @Override
