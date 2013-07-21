@@ -66,7 +66,7 @@ public class CreateBadmintonDoubleGameHandler  implements IHtmlRequestHandler{
 				resultTwo,
 				date);
 
-        if( createGameAnswer == CreateGameAnswer.NOK )
+        if( createGameAnswer == CreateGameAnswer.GAME_NOK )
         {
             pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), "Das Spiel konnte nicht angelegt werden!");
             return "NewBadmintonDoubleGameView";

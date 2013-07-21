@@ -34,7 +34,7 @@ public class CreateSeasonHandler implements IHtmlRequestHandler
         CreateSeasonAnswer createSeasonAnswer = pApplicationCoreFacade.createSeason(seasonName, currentUser.getName(),
         		currentUser.getPasswordMd5());
 
-        if( createSeasonAnswer == CreateSeasonAnswer.NAME_INVALID ){
+        if( createSeasonAnswer == CreateSeasonAnswer.SEASON_NAME_INVALID ){
             pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.SEASON_NAME_INVALID);
             return "NewSeasonView";
         }
@@ -42,7 +42,7 @@ public class CreateSeasonHandler implements IHtmlRequestHandler
             pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.SEASON_NAME_ALREADY_EXISTS);
             return "NewSeasonView";
         }
-        if( createSeasonAnswer == CreateSeasonAnswer.USER_CREDENTIALS_INVALID ){
+        if( createSeasonAnswer == CreateSeasonAnswer.SEASON_USER_CREDENTIALS_INVALID ){
             pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.SEASON_NO_SUFFICIENT_RIGHTS_TO_CREATE_SEASON);
             return "NewSeasonView";
         }

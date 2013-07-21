@@ -2,6 +2,9 @@
 <%@ page import="com.kupkik.model.*" %>
 <%@ page import="com.kupkik.ui.html.view.*" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.kupkik.messages.HandlerMessagesEnum"%>
+<%@ page import="com.sun.corba.se.impl.protocol.giopmsgheaders.MessageHandler"%>
+<%@ page import="com.google.appengine.repackaged.com.google.common.base.StringUtil"%>
 <% 
 	ViewHelper viewHelper = (ViewHelper)request.getAttribute("viewHelper");  
 	List<Season> seasons = (List<Season>)request.getAttribute("seasons"); 
@@ -9,7 +12,18 @@
 
 <%= viewHelper.createHtmlBegin("Create MatchDay")  %> 
 
-      
+   <%
+ 	if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(HandlerMessagesEnum.ERROR.toString())))
+ 	{
+ %> 
+    	<div class="alert alert-error"><%=viewHelper.convertTextForHtml((String)request.getAttribute(HandlerMessagesEnum.ERROR.toString()))%> </div>
+<%
+	}else if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(HandlerMessagesEnum.SUCCESS.toString()))) {
+%>
+		<div class="alert alert-success"><%=viewHelper.convertTextForHtml((String)request.getAttribute(HandlerMessagesEnum.SUCCESS.toString()))%> </div>
+<% 		
+	}
+ %>    
       
       
    <div class="row-fluid">

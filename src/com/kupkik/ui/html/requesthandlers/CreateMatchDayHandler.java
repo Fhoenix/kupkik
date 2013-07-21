@@ -38,7 +38,7 @@ public class CreateMatchDayHandler implements IHtmlRequestHandler
 
         CreateMatchDayAnswer createMatchDayAnswer = pApplicationCoreFacade.createMatchDay(matchDayName, seasonKey);
 
-        if( createMatchDayAnswer == CreateMatchDayAnswer.NAME_INVALID )
+        if( createMatchDayAnswer == CreateMatchDayAnswer.MATCHDAY_NAME_INVALID )
         {
             pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.MATCHDAY_NAME_INVALID );
             return "NewMatchDayView";
@@ -48,12 +48,12 @@ public class CreateMatchDayHandler implements IHtmlRequestHandler
             pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.MATCHDAY_WITH_THAT_NAME_EXISTS);
             return "NewMatchDayView";
         }
-        if( createMatchDayAnswer == CreateMatchDayAnswer.USER_CREDENTIALS_INVALID )
+        if( createMatchDayAnswer == CreateMatchDayAnswer.MATCHDAY_USER_CREDENTIALS_INVALID )
         {
             pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.MATCHDAY_NO_SUFFICIENT_RIGHTS_TO_CREATE_SEASON);
             return "NewMatchDayView";
         }
-        if( createMatchDayAnswer == CreateMatchDayAnswer.SEASON_DOES_NOT_EXIST )
+        if( createMatchDayAnswer == CreateMatchDayAnswer.MATCHDAY_SEASON_DOES_NOT_EXIST )
         {
             pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.MATCHDAY_SEASON_DOES_NOT_EXIST);
             return "NewMatchDayView";

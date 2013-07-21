@@ -82,7 +82,7 @@
 				</div>
 				
 				<div class="span4">
-					<input class="fillLayout"  id="resultOne" placeholder="Result" name="resultOne" type="text">
+					<input class="fillLayout"  id="resultOne" placeholder="Result" name="resultOne" type="number">
 				</div>
 			</div>
 
@@ -106,7 +106,7 @@
 				</div>
 			
 				<div class="span4">
-					<input class="fillLayout" id="resultTwo" placeholder="Result" name="resultTwo" type="text">
+					<input class="fillLayout" id="resultTwo" placeholder="Result" name="resultTwo" type="number">
 
 				</div>
 			</div>

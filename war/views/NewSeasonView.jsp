@@ -1,8 +1,9 @@
 <%@ page import="com.google.appengine.repackaged.com.google.common.base.StringUtil"%>
 <%@ page import="com.kupkik.messages.HandlerMessagesEnum"%>
-<%@ page import="com.sun.corba.se.impl.protocol.giopmsgheaders.MessageHandler"%>
 <%@ page import="com.kupkik.model.*" %>
 <%@ page import="com.kupkik.ui.html.view.*" %>
+<%@ page import="com.kupkik.messages.HandlerMessagesEnum"%>
+<%@ page import="com.sun.corba.se.impl.protocol.giopmsgheaders.MessageHandler"%>
 
 
 <%

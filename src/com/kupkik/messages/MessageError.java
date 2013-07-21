@@ -38,5 +38,7 @@ public class MessageError {
 	public static final String MATCHDAY_WITH_THAT_NAME_EXISTS = "Es existiert bereits ein Turnier mit diesem Namen!";
 	public static final String MATCHDAY_SUCCESSFULLY_ADDED = "Matchday successfully added!";
 
-
+	//Badminton Single
+	public static final String BADMINTON_SINGLE_MIN_POINTS_NOT_REACHED = "Keines der Spiele hat die minimale Punktezahlt "+ ApplicationCoreFacade.MIN_END_RESULT + "erreicht!";
+	public static final String BADMINTON_RESULT_INVALID = "Die Ergebnisse nicht nicht valide! PunkteAbstand stimmt nicht!";
 }

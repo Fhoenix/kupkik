@@ -44,7 +44,7 @@ public class RegisterUserHandler
         if( errorMessage == null )
         {
             SaveUserAnswer saveUserAnswer = pApplicationCoreFacade.saveNewUser(userName, password1, firstname, lastname);
-            if( saveUserAnswer == SaveUserAnswer.PASSWORD_INVALID ){
+            if( saveUserAnswer == SaveUserAnswer.USER_PASSWORD_INVALID ){
                 errorMessage = MessageError.REGISTER_PASSWORD_LENGTH_INVALID;
             }else if( saveUserAnswer == SaveUserAnswer.USER_ALREADY_EXISTS ){
                 errorMessage = MessageError.REGISTER_USER_ALREADY_EXISTS + userName;
@@ -54,9 +54,9 @@ public class RegisterUserHandler
                 errorMessage = MessageError.REGISTER_USER_NAME_TOO_SHORT;
             }else if( saveUserAnswer == SaveUserAnswer.USER_NAME_USES_INVALID_CHARACTERS){
                 errorMessage = MessageError.REGISTER_USERNAME_INVALID_CHARACTER + userName;
-            }else if( saveUserAnswer == SaveUserAnswer.FIRSTNAME_INVALID ){
+            }else if( saveUserAnswer == SaveUserAnswer.USER_FIRSTNAME_INVALID ){
             	errorMessage = MessageError.REGISTER_FIRSTNAME_INVALID;
-            }else if( saveUserAnswer == SaveUserAnswer.SURNAME_INVALID ){
+            }else if( saveUserAnswer == SaveUserAnswer.USER_SURNAME_INVALID ){
             	errorMessage =  MessageError.REGISTER_SURNAME_INVALID;
             }
         }
