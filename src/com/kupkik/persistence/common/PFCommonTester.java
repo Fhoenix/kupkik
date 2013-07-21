@@ -16,16 +16,16 @@ public class PFCommonTester {
 
 
 	/**
-	 * Does a tournament with a specific name exist?
+	 * Does a matchday with a specific name exist?
 	 * 
-	 * @param pTournamentName
-	 *            the name of the tournament in question
-	 * @return 'true', if a tournament with this name does exist
+	 * @param pMatchDayName
+	 *            the name of the matchday in question
+	 * @return 'true', if a matchday with this name does exist
 	 */
-	public static boolean doesTournamentExistWithName( final String pTournamentName )
+	public static boolean doesMatchDayExistWithName( final String pMatchDayName )
 	{
-		sLogger.info("doesTournamentExistWithName: " + pTournamentName);
-		Key key = KeyFactory.createKey("Tournament", pTournamentName);
+		sLogger.info("doesMatchdayExistWithName: " + pMatchDayName);
+		Key key = KeyFactory.createKey("Matchday", pMatchDayName);
 
 		try
 		{
@@ -34,11 +34,11 @@ public class PFCommonTester {
 		}
 		catch( EntityNotFoundException e )
 		{
-			sLogger.info("tournament does NOT exist: " + pTournamentName);
+			sLogger.info("MatchDay does NOT exist: " + pMatchDayName);
 			return false;
 		}
 
-		sLogger.info("tournament does exist: " + pTournamentName);
+		sLogger.info("Matchday does exist: " + pMatchDayName);
 		return true;
 	}
 	
@@ -59,11 +59,11 @@ public class PFCommonTester {
 		}
 		catch( EntityNotFoundException e )
 		{
-			sLogger.info("tournament does NOT exist: " + key.getName());
+			sLogger.info("Season does NOT exist: " + key.getName());
 			return false;
 		}
 
-		sLogger.info("tournament does exist: " + key.getName());
+		sLogger.info("Season does exist: " + key.getName());
 		return true;
 	}
 

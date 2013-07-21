@@ -7,7 +7,7 @@ import java.util.List;
 import com.google.appengine.api.datastore.Key;
 import com.kupkik.model.game.IGame;
 
-public class Tournament
+public class MatchDay
 {
 	private String name;
 	private Key key;
@@ -18,7 +18,7 @@ public class Tournament
 
 
 
-	public Tournament(final String pName, final Key pKey, final Key pParentKey)
+	public MatchDay(final String pName, final Key pKey, final Key pParentKey)
 	{
 		name = pName;
 		key = pKey;

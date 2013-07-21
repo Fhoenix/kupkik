@@ -10,15 +10,15 @@ import com.kupkik.model.Season;
 public class PFCommonSaver {
 
 	/**
-	 * Saves a new Tournament
-	 * @param pTournamentName Tournament Name
+	 * Saves a new MatchDay
+	 * @param matchDayName MatchDay Name
 	 * @param seasonKey The Parent key refering to the {@link Season}
 	 */
-    public static void saveNewTournament( final String pTournamentName, final Key seasonKey )
+    public static void saveNewMatchDay( final String matchDayName, final Key seasonKey )
 	{
-	    Entity tournament = new Entity("Tournament", pTournamentName, seasonKey);
+	    Entity matchDay = new Entity("MatchDay", matchDayName, seasonKey);
 	    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-	    datastore.put(tournament);
+	    datastore.put(matchDay);
 	}
     /**
 	 * Save a new user in the database.
@@ -42,18 +42,18 @@ public class PFCommonSaver {
 	
 
 	/**
-	 * Saves a new tournament to the database.
+	 * Saves a new Season to the database.
 	 * 
-	 * @param pTournamentName
-	 *            the name of the new tournament
+	 * @param pSeasonName
+	 *            the name of the new pSeasonName
 	 * @param pUserName
-	 *            the name of the user, who creates the tournament
+	 *            the name of the user, who creates the season
 	 */
 	public static void saveNewSeason( final String pSeasonName, final String pUserName )
 	{
 	    Key userKey = KeyFactory.createKey("User", pUserName);
-	    Entity tournament = new Entity("Season", pSeasonName, userKey);
+	    Entity season = new Entity("Season", pSeasonName, userKey);
 	    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-	    datastore.put(tournament);
+	    datastore.put(season);
 	}
 }

@@ -269,7 +269,8 @@ public class HtmlRequestProcessor
         {
             throw new RuntimeException("View does not exist: " + pViewName);
         }
-
+        
+       
         RequestDispatcher rd = mServletContext.getRequestDispatcher("/views/" + pViewName + ".jsp");
         rd.forward(mRequest, mResponse);
     }

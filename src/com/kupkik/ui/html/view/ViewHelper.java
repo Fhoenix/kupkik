@@ -12,7 +12,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import com.kupkik.messages.MessageCommon;
 import com.kupkik.messages.MessagesFooter;
 import com.kupkik.messages.MessagesHome;
-import com.kupkik.model.Tournament;
+import com.kupkik.model.MatchDay;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.model.game.BadmintonSingle;
 import com.kupkik.ui.html.HtmlRequestProcessor;
@@ -70,8 +70,8 @@ public class ViewHelper
 		content.append("  			</a>");
 		
 		if( !currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) ){
-			content.append("		<a class=\"brand\" href=\"#\"><img src=\"/res/images/logo_icon.png\" alt=\"logo\" /> - ");
-			content.append(currentUser.getName());
+			content.append("		<a class=\"brand\" href=\"#\"><img src=\"/res/images/logo_icon.png\" alt=\"logo\" />");
+			content.append(currentUser.getFirstname());
 		}else{
 			content.append("    	<a class=\"brand\" href=\"#\"><img src=\"/res/images/logo_icon.png\" alt=\"logo\" />");
 		}
@@ -94,6 +94,8 @@ public class ViewHelper
 			content.append("				<ul class=\"dropdown-menu\">");
 		
 			
+			content.append(" 					<li><a href=\"/?showView=NewSeasonView\">Create Season</a> </li>");
+			content.append(" 					<li><a href=\"/?showView=NewMatchDayView\">Create MatchDay</a> </li>");
 			content.append("					<li class=\"dropdown-submenu\">");
 			content.append("   					<a tabindex=\"-1\" href=\"#\">Score Game</a>");
 			content.append("						<ul class=\"dropdown-menu\">");
@@ -102,8 +104,6 @@ public class ViewHelper
 			content.append("						</ul>");
 			content.append("					</li>");
 			
-			content.append(" 					<li><a href=\"/?showView=NewTournamentView\">Tournament</a> </li>");
-			content.append(" 					<li><a href=\"/?showView=NewSeasonView\">Create Season</a> </li>");
 			content.append("				</ul>");
 			content.append("			</li>");
 			content.append("			<li class=\"dropdown\">");
@@ -224,7 +224,7 @@ public class ViewHelper
 		return result.toString();
 	}
 
-	/** Creates the "Create you Tournament" Section for the Main Website
+	/** Creates the "Create you MatchDay" Section for the Main Website
 	 * 
 	 */
 	public String createMainSiteIntroArea(){
@@ -247,7 +247,7 @@ public class ViewHelper
 			mainSiteIntroArea.append("</div>");
 		}else{
 			mainSiteIntroArea.append("Hi ");
-			mainSiteIntroArea.append(currentUser.getName());
+			mainSiteIntroArea.append(currentUser.getFirstname());
 			mainSiteIntroArea.append(", <br />");
 			mainSiteIntroArea.append(MessagesHome.WELCOME_REGISTERED_USER);
 			mainSiteIntroArea.append("<div class=\"row-fluid\">");
@@ -264,9 +264,9 @@ public class ViewHelper
 	}
 
 	/**Creates the three thumbnails at the MainPage	
-	 * @param tournaments The List of Tournaments to be displayed
+	 * @param matchDays The List of matchDays to be displayed
 	 */
-	public String newsThumbnails(List<Tournament> tournaments, List<BadmintonSingle> badmintonSingle){
+	public String newsThumbnails(List<MatchDay> matchDays, List<BadmintonSingle> badmintonSingle){
 		StringBuilder newsThumbnails = new StringBuilder();
 
 		//Start the LiveGridRow
@@ -278,7 +278,7 @@ public class ViewHelper
 		newsThumbnails.append("<div class=\"caption\">");
 		newsThumbnails.append("<h3>"+ MessagesHome.NEWS_BOXES_1 +"</h3>");
 		newsThumbnails.append("<table class=\"table table-striped\">");
-		for (Tournament item : tournaments){
+		for (MatchDay item : matchDays){
 			newsThumbnails.append("<tr> <td>");
 			newsThumbnails.append(item.getName());
 			newsThumbnails.append("</td> </tr>");							
@@ -288,7 +288,7 @@ public class ViewHelper
 		newsThumbnails.append("</div>");
 		newsThumbnails.append("</li>");
 
-		newsThumbnails.append("<li class=\"span4\">");
+		newsThumbnails.append("<li class=\"span8\">");
 		newsThumbnails.append("<div class=\"thumbnail\">");
 		newsThumbnails.append("<img src=\"/res/images/logo.png\" style=\"width: 300px; height: 200px;\" />");
 		newsThumbnails.append("<div class=\"caption\">");
@@ -298,10 +298,10 @@ public class ViewHelper
 		for (BadmintonSingle item : badmintonSingle){
 
 			newsThumbnails.append("<tr> <td>");
-			newsThumbnails.append(item.getPlayerOne());
+			newsThumbnails.append(item.getPlayerOne().getSurname()+", "+ item.getPlayerOne().getFirstname());
 
 			newsThumbnails.append("</td> <td>");
-			newsThumbnails.append(item.getPlayerTwo());
+			newsThumbnails.append(item.getPlayerTwo().getSurname()+", "+ item.getPlayerTwo().getFirstname());
 
 			newsThumbnails.append("</td> <td>");
 			newsThumbnails.append(item.getResultOne());
@@ -317,15 +317,7 @@ public class ViewHelper
 		newsThumbnails.append("</div>");
 		newsThumbnails.append("</li>");
 
-		newsThumbnails.append("<li class=\"span4\">");
-		newsThumbnails.append("<div class=\"thumbnail\">");
-		newsThumbnails.append("<img src=\"/res/images/logo.png\" style=\"width: 300px; height: 200px;\" />");
-		newsThumbnails.append("<div class=\"caption\">");
-		newsThumbnails.append("<h3>Whats Up Next</h3>");
-		newsThumbnails.append("<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus molest </p>");
-		newsThumbnails.append("</div>");
-		newsThumbnails.append("</div>");
-		newsThumbnails.append("</li>");
+	
 
 
 		newsThumbnails.append("</ul>");
@@ -397,27 +389,27 @@ public class ViewHelper
 		return htmlSuccessBar.toString();
 	}
 	
-	public String createLineChart(String[] games, String[] winRateInPercent, String[] looseRateInPercent ){
+	public String createLineChart(String[] games, String[] winRateInPercent, String[] looseRateInPercent, String canvasId, String divId ){
 		StringBuilder lineChart = new StringBuilder();
 	
-		lineChart.append("<canvas id=\"myChart\" ></canvas>");
+		lineChart.append("<canvas id=\""+ canvasId +"\" ></canvas>");
 		lineChart.append("<script>");
 		
 		lineChart.append("(function() {");
-		lineChart.append("    var canvas = document.getElementById('myChart'),");
+		lineChart.append("    var canvas = document.getElementById('"+canvasId +"'),");
 		lineChart.append("            context = canvas.getContext('2d');");
 		    // resize the canvas to fill browser window dynamically
 		lineChart.append(" window.addEventListener('resize', resizeCanvas, false);");
 		lineChart.append("   function resizeCanvas() {");
-		lineChart.append("  var pixels = $('#SkillGraphCanvas').width(); ");
+		lineChart.append("  var pixels = $('#"+divId+"').width(); ");
 		lineChart.append("           canvas.width = pixels;");
 		lineChart.append("canvas.height = 400;");
 		lineChart.append("drawStuff(); ");
 		lineChart.append("    }");
 		lineChart.append("   resizeCanvas();");
 		lineChart.append("    function drawStuff() {");
-		lineChart.append("var ctx = document.getElementById(\"myChart\").getContext(\"2d\");");
-		lineChart.append("var ctx = $(\"#myChart\").get(0).getContext(\"2d\");");
+		lineChart.append("var ctx = document.getElementById(\""+canvasId+"\").getContext(\"2d\");");
+		lineChart.append("var ctx = $(\"#"+ canvasId +"\").get(0).getContext(\"2d\");");
 		lineChart.append("var data = {");
 		lineChart.append("		labels :"+Arrays.asList(games)+" ,");
 

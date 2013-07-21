@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import com.kupkik.applicationcore.ApplicationCoreFacade;
 import com.kupkik.model.Season;
-import com.kupkik.model.Tournament;
+import com.kupkik.model.MatchDay;
 import com.kupkik.model.User;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.model.game.BadmintonSingle;

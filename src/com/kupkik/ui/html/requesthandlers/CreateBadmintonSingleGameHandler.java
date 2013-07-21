@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.kupkik.applicationcore.ApplicationCoreFacade;
 import com.kupkik.applicationcore.ApplicationCoreFacade.CreateGameAnswer;
@@ -31,24 +32,29 @@ public class CreateBadmintonSingleGameHandler  implements IHtmlRequestHandler{
 			return "NewBadmintonSingleGameView";
 		}
 
-		String playerOne = pRequest.getParameter("playerOne");
-		String playerTwo = pRequest.getParameter("playerTwo");
+	
+
+		
+		
+		 Key playerOne = KeyFactory.stringToKey(pRequest.getParameter("playerOne"));
+		 Key playerTwo = KeyFactory.stringToKey(pRequest.getParameter("playerTwo"));
+		
 		int resultOne = Integer.parseInt(pRequest.getParameter("resultOne"));
 		int resultTwo = Integer.parseInt(pRequest.getParameter("resultTwo"));
-		String pTournamentKey = pRequest.getParameter("tournamentKey");
+		String pMatchDayKey = pRequest.getParameter("matchDayKey");
 		
 
 		Date date = new Date();
 
 
-		CreateGameAnswer createTournamentAnswer = pApplicationCoreFacade.createBadmintonSingleGame(KeyFactory.stringToKey(pTournamentKey), 
+		CreateGameAnswer createGameAnswer = pApplicationCoreFacade.createBadmintonSingleGame(KeyFactory.stringToKey(pMatchDayKey), 
 				playerOne, 
 				playerTwo, 
 				resultOne,
 				resultTwo,
 				date);
 
-        if( createTournamentAnswer == CreateGameAnswer.NOK )
+        if( createGameAnswer == CreateGameAnswer.NOK )
         {
             pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), "Das Spiel konnte nicht angelegt werden!");
             return "NewBadmintonSingleGameView";

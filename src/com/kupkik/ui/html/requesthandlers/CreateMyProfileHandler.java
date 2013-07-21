@@ -3,13 +3,16 @@ package com.kupkik.ui.html.requesthandlers;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.mortbay.util.StringUtil;
+
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.kupkik.applicationcore.ApplicationCoreFacade;
 import com.kupkik.applicationcore.ApplicationCoreFacade.CreateSeasonAnswer;
-import com.kupkik.applicationcore.ApplicationCoreFacade.CreateTournamentAnswer;
+import com.kupkik.applicationcore.ApplicationCoreFacade.CreateMatchDayAnswer;
 import com.kupkik.model.DisplaySkillGraph;
 import com.kupkik.model.UserWithPassword;
+import com.kupkik.persistence.common.PFCommonGetter;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 
@@ -27,13 +30,27 @@ public class CreateMyProfileHandler implements IHtmlRequestHandler
             pRequest.setAttribute("errorMessage", "Nur eingeloggte Nutzer k?nnen Turniere anlegen!");
             return "NewSeasonView";
         }
+        
+       
+        
+        Key userKey= currentUser.getKey();
+        if(!pRequest.getParameter("userprofile").toString().isEmpty() ){
+        	  userKey = KeyFactory.stringToKey(pRequest.getParameter("userprofile"));
+        }
     	// the chosen season-name
         Key seasonKey  = KeyFactory.stringToKey(pRequest.getParameter("seasonKey"));
     	
+        
+        
+        pRequest.setAttribute("selectedUser", PFCommonGetter.getUserByKey(userKey));
+        
+        DisplaySkillGraph allGamesInSeasonBadmintonSingle = ApplicationCoreFacade.getAllBadmintonSingleGamesInSeason(seasonKey,userKey);
+        pRequest.setAttribute("displaySkillGraph",allGamesInSeasonBadmintonSingle);
 
-        DisplaySkillGraph allGamesInSeason = ApplicationCoreFacade.getAllGamesInSeason(seasonKey,currentUser.getName());
-        pRequest.setAttribute("displaySkillGraph",allGamesInSeason);
+        DisplaySkillGraph allGamesInSeasonBadmintonDouble = ApplicationCoreFacade.getAllBadmintonDoubleGamesInSeason(seasonKey,userKey);
+        pRequest.setAttribute("displaySkillGraphDouble",allGamesInSeasonBadmintonDouble);
 
+        
         return "MyProfileView";
     }
 }

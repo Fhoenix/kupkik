@@ -14,7 +14,7 @@ import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.kupkik.model.Season;
-import com.kupkik.model.Tournament;
+import com.kupkik.model.MatchDay;
 import com.kupkik.model.User;
 import com.kupkik.model.UserWithPassword;
 
@@ -39,49 +39,66 @@ public class PFCommonGetter {
 		return null;
 	}
     
+    public static UserWithPassword getUserByKey(Key userKey){
+    	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    	Filter keyFilter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, FilterOperator.EQUAL, userKey);
+    	Query getUserQuery = new Query("User").setFilter(keyFilter);
+		PreparedQuery getUser = datastore.prepare(getUserQuery);
+		
+		
+		List<Entity> userEntity = getUser.asList(FetchOptions.Builder.withLimit(1));
+        
+		UserWithPassword userWithPassword = null;
+        for (Entity item: userEntity){
+        	userWithPassword = new UserWithPassword(item.getKey().getName(),item.getProperty("passwordMd5").toString(),item.getKey(), item.getProperty("firstname").toString(),item.getProperty("surname").toString());
+        }
+        return userWithPassword;
+        
+	}
+    
 	/**
-	 * Get all Tournaments in database
+	 * Get all MatchDays in database
 	 * 
-	 * @return all tournaments, not ordered
+	 * @return all MatchDays, not ordered
 	 */
-	public static List<Tournament> getAllTournaments()
+	public static List<MatchDay> getAllMatchDays()
 	{
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		Query getAllTournamentsQuery = new Query("Tournament");
-		PreparedQuery getAllTournamentsPreparedQuery = datastore.prepare(getAllTournamentsQuery);
+		Query getAllMatchDaysQuery = new Query("MatchDay");
+		PreparedQuery getAllMatchDaysPreparedQuery = datastore.prepare(getAllMatchDaysQuery);
 
-		List<Entity> userEntities = getAllTournamentsPreparedQuery.asList(FetchOptions.Builder.withDefaults());
-		List<Tournament> tournaments = new ArrayList<Tournament>();
-		for( Entity currentTournamentEntity : userEntities )
+		List<Entity> userEntities = getAllMatchDaysPreparedQuery.asList(FetchOptions.Builder.withDefaults());
+		List<MatchDay> matchDays = new ArrayList<MatchDay>();
+		for( Entity currentMatchDayEntity : userEntities )
 		{
-			Tournament currentTournament = new Tournament(currentTournamentEntity.getKey().getName(), currentTournamentEntity.getKey(), currentTournamentEntity.getParent());
-			tournaments.add(currentTournament);
+			MatchDay currentMatchDay = new MatchDay(currentMatchDayEntity.getKey().getName(), currentMatchDayEntity.getKey(), currentMatchDayEntity.getParent());
+			matchDays.add(currentMatchDay);
 		}
 
-		return tournaments;
+		return matchDays;
 	}
 
 	/**
-	 * Get Tournament by Tournament Key
-	 * @param tournamentKey tournamentKey
-	 * @return Instance of {@link Tournament}
+	 * Get MatchDay by MatchDay Key
+	 * @param matchDayKey matchDayKey
+	 * @return Instance of {@link MatchDay}
 	 */
-    public static Tournament getTournamentByKey(Key tournamentKey){
+    public static MatchDay getMatchDayByKey(Key matchDayKey){
     	
     	DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
-    	Filter filterName = new FilterPredicate("Key", FilterOperator.EQUAL,tournamentKey );
+    	Filter filterName = new FilterPredicate("Key", FilterOperator.EQUAL,matchDayKey );
     	
-    	Query getTournamentKey = new Query("Tournament").setFilter(filterName);
-    	PreparedQuery pQGetTournament = dataStore.prepare(getTournamentKey);
+    	Query getMatchDayKey = new Query("MatchDay").setFilter(filterName);
+    	PreparedQuery pQGetMatchDay = dataStore.prepare(getMatchDayKey);
     	
-        List<Entity> tournamentEntity = pQGetTournament.asList(FetchOptions.Builder.withLimit(1));
+        List<Entity> matchDaysEntity = pQGetMatchDay.asList(FetchOptions.Builder.withLimit(1));
         
-        Tournament tournament = null;
-        for (Entity item: tournamentEntity){
-        	tournament = new Tournament(item.getKey().getName(), item.getKey(), item.getParent());
+        MatchDay matchDays = null;
+        for (Entity item: matchDaysEntity){
+        	matchDays = new MatchDay(item.getKey().getName(), item.getKey(), item.getParent());
         }
         
-        return tournament;
+        return matchDays;
     }
     
 	/**
@@ -106,26 +123,26 @@ public class PFCommonGetter {
 	}
 	
 	/**
-	 * Get all Tournaments that belong to one User.
+	 * Get all MatchDays that belong to one User.
 	 * @param userName Users name.
-	 * @return a List of {@link Tournament}.
+	 * @return a List of {@link MatchDay}.
 	 */
-	public static List<Tournament> getAllTournamentsOfUser(String userName) {
+	public static List<MatchDay> getAllMatchDaysOfUser(String userName) {
 		
 		List<Season> seasons = getAllSeasonsForUser(userName);
 		
-		List<Tournament> result = new ArrayList<Tournament>();
+		List<MatchDay> result = new ArrayList<MatchDay>();
 		
 		for(Season item :seasons){
 		
 			DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();			
-			Query getTournamentKey = new Query("Tournament").setAncestor(item.getKey());
+			Query getMatchDayKey = new Query("MatchDay").setAncestor(item.getKey());
 			
-			PreparedQuery pQGetSeason = dataStore.prepare(getTournamentKey);
+			PreparedQuery pQGetSeason = dataStore.prepare(getMatchDayKey);
 			List<Entity> seasonEntity = pQGetSeason.asList(FetchOptions.Builder.withDefaults());
 			
 			 for (Entity entity: seasonEntity){
-				 result.add( new Tournament(entity.getKey().getName(), entity.getKey(), entity.getParent()));
+				 result.add( new MatchDay(entity.getKey().getName(), entity.getKey(), entity.getParent()));
 		        }			 
 		}
 		return result;	

@@ -29,14 +29,14 @@ public class MessageError {
 	public static final String REGISTER_FIRSTNAME_INVALID = "Firstname invalide! " ;
 	public static final String REGISTER_SURNAME_INVALID = "Surname invalid";
 	
-	//Tournament
-	public static final String TOURNAMENT_NO_SUFFICIENT_RIGHTS_TO_CREATE_SEASON = "Sind sind nicht berechtigt Turniere zu erstellen";
-	public static final String TOURNAMENT_NAME_INVALID = "Der Name des Turniers muss zwischen " + ApplicationCoreFacade.MIN_TOURNAMENT_NAME_SIZE
-    + " und " + ApplicationCoreFacade.MAX_TOURNAMENT_NAME_SIZE
+	//MATCHDAY
+	public static final String MATCHDAY_NO_SUFFICIENT_RIGHTS_TO_CREATE_SEASON = "Sind sind nicht berechtigt Turniere zu erstellen";
+	public static final String MATCHDAY_NAME_INVALID = "Der Name des Turniers muss zwischen " + ApplicationCoreFacade.MIN_MATCHDAY_NAME_SIZE
+    + " und " + ApplicationCoreFacade.MAX_MATCHDAY_NAME_SIZE
     + " Zeichen lang sein und darf nur Buchstaben, Zahlen, Leerzeichen " + " oder Unterstriche enthalten!";
-	public static final String TOURNAMENT_SEASON_DOES_NOT_EXIST = "Season does not exist";
-	public static final String TOURNAMENT_WITH_THAT_NAME_EXISTS = "Es existiert bereits ein Turnier mit diesem Namen!";
-	public static final String TOURNAMENT_SUCCESSFULLY_ADDED = "Tournament successfully added!";
+	public static final String MATCHDAY_SEASON_DOES_NOT_EXIST = "Season does not exist";
+	public static final String MATCHDAY_WITH_THAT_NAME_EXISTS = "Es existiert bereits ein Turnier mit diesem Namen!";
+	public static final String MATCHDAY_SUCCESSFULLY_ADDED = "Matchday successfully added!";
 
 
 }

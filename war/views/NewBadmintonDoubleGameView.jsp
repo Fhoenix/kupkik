@@ -9,26 +9,26 @@
 
 <%
 	ViewHelper viewHelper = (ViewHelper) request
-			.getAttribute("viewHelper");
+	.getAttribute("viewHelper");
 	List<User> users = (List<User>) request.getAttribute("users");
-	List<Tournament> tournaments = (List<Tournament>) request
-			.getAttribute("tournaments");
+	List<MatchDay> matchDays = (List<MatchDay>) request
+	.getAttribute("matchDays");
 %>
 
 <%=viewHelper.createHtmlBegin("Turnier Erstellung")%>
 
 <%
- 	if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(HandlerMessagesEnum.ERROR.toString())))
+	if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(HandlerMessagesEnum.ERROR.toString())))
  	{
- %> 
+%> 
     	<div class="alert alert-error"><%=viewHelper.convertTextForHtml((String)request.getAttribute(HandlerMessagesEnum.ERROR.toString()))%> </div>
 <%
 	}else if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(HandlerMessagesEnum.SUCCESS.toString()))) {
 %>
 		<div class="alert alert-success"><%=viewHelper.convertTextForHtml((String)request.getAttribute(HandlerMessagesEnum.SUCCESS.toString()))%> </div>
-<% 		
+<%
 	}
- %> 
+%> 
 
 
 <form action="/" method="post">
@@ -43,17 +43,17 @@
 			</div>
 
 			<div class="row-fluid">
-				<div class="span4"><%=viewHelper.createLabel("Tournament Name", "label",
-					"tournamentKey")%></div>
+				<div class="span4"><%=viewHelper.createLabel("MatchDay Name", "label",
+					"matchDayKey")%></div>
 				<div class="span8">
-					<select id="tournamentKey" name="tournamentKey">
+					<select id="matchDayKey" name="matchDayKey">
 						<%
-							for (Tournament item : tournaments) {
-								out.println("	 <option value=\""
-										+ KeyFactory.keyToString(item.getKey()) + "\">"
-										+ item.getName() + " | "
-										+ item.getParentKey().getName() + "</option>");
-							}
+							for (MatchDay item : matchDays) {
+												out.println("	 <option value=\""
+														+ KeyFactory.keyToString(item.getKey()) + "\">"
+														+ item.getName() + " | "
+														+ item.getParentKey().getName() + "</option>");
+											}
 						%>
 					</select>
 				</div>
@@ -72,7 +72,7 @@
 
 						<%
 							for (User item : users) {
-								out.println("	 <option value=\"" + item.getName() + "\">"
+								out.println("	 <option value=\"" + KeyFactory.keyToString(item.getKey())+ "\">"
 										+ item.getSurname() + ", "+ item.getFirstname()+"</option>");
 							}
 						%>
@@ -86,7 +86,7 @@
 
 						<%
 							for (User item : users) {
-								out.println("	 <option value=\"" + item.getName() + "\">"
+								out.println("	 <option value=\"" + KeyFactory.keyToString(item.getKey()) + "\">"
 										+ item.getSurname() + ", "+ item.getFirstname()+"</option>");
 							}
 						%>
@@ -111,7 +111,7 @@
 
 						<%
 							for (User item : users) {
-								out.println("	 <option value=\"" + item.getName() + "\">"
+								out.println("	 <option value=\"" + KeyFactory.keyToString(item.getKey()) + "\">"
 										+ item.getSurname() + ", "+ item.getFirstname()+"</option>");
 							}
 						%>
@@ -124,7 +124,7 @@
 
 						<%
 							for (User item : users) {
-								out.println("	 <option value=\"" + item.getName() + "\">"
+								out.println("	 <option value=\"" + KeyFactory.keyToString(item.getKey()) + "\">"
 										+ item.getSurname() + ", "+ item.getFirstname()+"</option>");
 							}
 						%>
@@ -152,7 +152,7 @@
 			</div>
 		</div>
 		<div class="span6">
-			<h1>Badminton Single</h1>
+			<h1>Badminton Double</h1>
 			
 Beschreibung Turnier Beschreibung Turnier
 					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier

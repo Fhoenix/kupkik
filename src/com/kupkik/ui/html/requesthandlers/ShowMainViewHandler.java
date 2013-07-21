@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.kupkik.applicationcore.ApplicationCoreFacade;
-import com.kupkik.model.Tournament;
+import com.kupkik.model.MatchDay;
 import com.kupkik.model.User;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.model.game.BadmintonSingle;
@@ -26,9 +26,9 @@ public class ShowMainViewHandler
         Collections.sort(users, new UserComparator());
         pRequest.setAttribute("users", users);
         
-        List<Tournament> tournaments = pApplicationCoreFacade.getAllTournaments();
-        Collections.sort(tournaments, new TournamentComparator());
-        pRequest.setAttribute("tournaments", tournaments);
+        List<MatchDay> tournaments = pApplicationCoreFacade.getAllMatchDays();
+        Collections.sort(tournaments, new MatchDayComparator());
+        pRequest.setAttribute("matchDays", tournaments);
 
         List<BadmintonSingle> badmintonSingle = pApplicationCoreFacade.getLatestBadmintonSingleGames(5);
        
@@ -37,11 +37,11 @@ public class ShowMainViewHandler
         return null;
     }
 
-    private class TournamentComparator
-            implements Comparator<Tournament>
+    private class MatchDayComparator
+            implements Comparator<MatchDay>
     {
         @Override
-        public int compare( Tournament pTournament1, Tournament pTournament2 )
+        public int compare( MatchDay pTournament1, MatchDay pTournament2 )
         {
             return pTournament1.getName().compareTo(pTournament2.getName());
         }

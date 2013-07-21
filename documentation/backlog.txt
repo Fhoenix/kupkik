@@ -36,3 +36,9 @@
  		8) Now all challenges have been overcome. Migrate kupkik to that basic project.
  		9) Test that kupkik still builds and deploys.
  		10) check it in
+ 		
+ 		
+ 		
+ 		ROLLBACK
+ 		cd /Applications/customApps/eclipse/plugins/com.google.appengine.eclipse.sdkbundle_1.8.0/appengine-java-sdk-1.8.0/bin
+ 		./appcfg.sh rollback /Users/scheuermann/git/kupkik/war/

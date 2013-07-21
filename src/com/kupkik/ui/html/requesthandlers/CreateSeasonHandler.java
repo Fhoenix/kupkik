@@ -5,7 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import com.kupkik.applicationcore.ApplicationCoreFacade;
 import com.kupkik.applicationcore.ApplicationCoreFacade.CreateSeasonAnswer;
-import com.kupkik.applicationcore.ApplicationCoreFacade.CreateTournamentAnswer;
+import com.kupkik.applicationcore.ApplicationCoreFacade.CreateMatchDayAnswer;
 import com.kupkik.messages.HandlerMessagesEnum;
 import com.kupkik.messages.MessageError;
 import com.kupkik.messages.MessageSuccess;
@@ -30,7 +30,7 @@ public class CreateSeasonHandler implements IHtmlRequestHandler
             pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.SEASON_USER_NOT_LOGGED_IN);
             return "NewSeasonView";
         }
-        // try to create tournament
+        // try to create MatchDay
         CreateSeasonAnswer createSeasonAnswer = pApplicationCoreFacade.createSeason(seasonName, currentUser.getName(),
         		currentUser.getPasswordMd5());
 

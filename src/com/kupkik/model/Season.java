@@ -11,7 +11,7 @@ public class Season {
 	private String name;
 	private Key key;
 	private Key parentKey;
-	private List<Tournament> tournaments = new ArrayList<Tournament>();
+	private List<MatchDay> matchDays = new ArrayList<MatchDay>();
 	
 	
 	public Season(String name, Key key, Key parentKey){
@@ -51,13 +51,13 @@ public class Season {
 	}
 
 
-	public List<Tournament> getTournaments() {
-		return Collections.unmodifiableList(tournaments);
+	public List<MatchDay> getTournaments() {
+		return Collections.unmodifiableList(matchDays);
 	}
 
 
-	public void setTournaments(List<Tournament> tournaments) {
-		this.tournaments = tournaments;
+	public void setTournaments(List<MatchDay> matchDays) {
+		this.matchDays = matchDays;
 	}
 	
 

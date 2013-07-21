@@ -17,7 +17,7 @@ import com.kupkik.model.UserWithPassword;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.utils.CredentialsUtils;
 
-public class CreateTournamentTest
+public class CreateMatchDayTest
         extends UseCaseTestParent
 {
     

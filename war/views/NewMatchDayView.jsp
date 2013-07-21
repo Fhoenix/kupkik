@@ -7,16 +7,16 @@
 	List<Season> seasons = (List<Season>)request.getAttribute("seasons"); 
 %> 
 
-<%= viewHelper.createHtmlBegin("Create Tournament")  %> 
+<%= viewHelper.createHtmlBegin("Create MatchDay")  %> 
 
       
       
       
    <div class="row-fluid">
 		<div class="span6">
-			<h1>New Tournament</h1>
+			<h1>New MatchDay</h1>
  			<form action="/" method="post">
- 			 <input type="hidden" name="action" value="CreateTournament">
+ 			 <input type="hidden" name="action" value="CreateMatchDay">
 				<div class="row-fluid">
 					<div class="span12">&nbsp;</div>
 				</div>
@@ -34,7 +34,7 @@
 				</div>
 				
 				<div class="row-fluid">
-					<div class="span12"> <input class="fillLayout"  placeholder="Tournament Name" name="name" type="text"></div>
+					<div class="span12"> <input class="fillLayout"  placeholder="MatchDay Name" name="name" type="text"></div>
 				</div>
 				
 				<div class="row-fluid">
@@ -44,7 +44,7 @@
 			 </form>
 		</div>	
 		<div class="span6">
-			<h1>Whats a Tournament</h1>
+			<h1>Whats a MatchDay</h1>
 			
 					Beschreibung Turnier Beschreibung Turnier
 					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
