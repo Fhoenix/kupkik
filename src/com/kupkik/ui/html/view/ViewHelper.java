@@ -472,7 +472,7 @@ public class ViewHelper
 			result.append("<div class=\"span8\">");
 		
 			result.append("<table class=\"table table-striped\">");
-			result.append("<thead> <th colspan=\"2\" style=\"width:50%\"><div>" + matchDay.getName() + " Games Played: " +  matchDay.getGamesPlayed()  + " Games Won: "+ matchDay.getGamesWon() + "</div></th> <th colspan=\"2\" style=\"width:50%\"> "+ this.createSuccessBar(matchDay.getGamesWon(), matchDay.getGamesPlayed()) + " </th>  </thead>");
+			result.append("<thead> <th colspan=\"2\" style=\"width:50%\"><div>" + matchDay.getName() + " | Games Played: " +  matchDay.getGamesPlayed()  + " Games Won: "+ matchDay.getGamesWon() + "</div></th> <th colspan=\"2\" style=\"width:50%\"> "+ this.createSuccessBar(matchDay.getGamesWon(), matchDay.getGamesPlayed()) + " </th>  </thead>");
 			
 			
 
