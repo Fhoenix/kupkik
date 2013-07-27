@@ -156,10 +156,10 @@
 		</div>
 		<%
 			StringBuilder skillTable = new StringBuilder();
-				skillTable.append("<table class=\"table table-striped\">");
-				skillTable
-						.append("<thead> <th style=\"width:30%\"> Description</th> <th style=\"width:70%\"> Value </th>  </thead>");
-				skillTable.append("<tr> <td>WL-RATE (WIN-LOOSE)</td><td>");
+			skillTable.append("<table class=\"table table-striped\">");
+		skillTable
+				.append("<thead> <th style=\"width:30%\"> Description</th> <th style=\"width:70%\"> Value </th>  </thead>");
+		skillTable.append("<tr> <td>WL-RATE (WIN-LOOSE)</td><td>");
 				skillTable.append(viewHelper.createSuccessBar(
 						displaySkillGraphDouble.getTotalNumberWon(),
 						displaySkillGraphDouble.getTotalNumberPlayed()));

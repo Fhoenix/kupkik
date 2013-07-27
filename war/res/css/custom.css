@@ -35,7 +35,8 @@ select {
 	width: 100%; 
 }
 
-td .gamewon{
-	
+div .gamewon{
+	margin:0px;
+	padding:0px;
 	background-color: #dff0d8;
 }

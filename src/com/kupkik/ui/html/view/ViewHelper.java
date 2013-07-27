@@ -485,7 +485,7 @@ public class ViewHelper
 					
 					if(iGame.getResultOne() > iGame.getResultTwo() ){
 						result.append("<tr>");
-						result.append("<td class=\"gamewon\">"+ teamToString(iGame.getTeamOne(), selectedUser)+"</td>");
+						result.append("<td><div class=\"gamewon\">"+ teamToString(iGame.getTeamOne(), selectedUser)+"</div></td>");
 						result.append("<td>"+ iGame.getResultOne()+"</td>");
 						result.append("<td>"+ iGame.getResultTwo() +"</td>");
 						result.append("<td>"+ teamToString(iGame.getTeamTwo(), selectedUser) +"</td>");
@@ -495,19 +495,18 @@ public class ViewHelper
 						result.append("<td>"+ teamToString(iGame.getTeamOne(), selectedUser)+"</td>");
 						result.append("<td>"+ iGame.getResultOne()+"</td>");
 						result.append("<td>"+ iGame.getResultTwo() +"</td>");
-						result.append("<td class=\"gamewon\">"+ teamToString(iGame.getTeamTwo(), selectedUser) +"</td>");
+						result.append("<td><div class=\"gamewon\">"+ teamToString(iGame.getTeamTwo(), selectedUser) +"</div></td>");
 						result.append("</tr>");
 					}
 				}
+				result.append("</table>");
+				result.append("</div>");
+				
+				result.append("<div class=\"span4\"></div>");
+				result.append("</div>");
+				
 			}
 			
-			result.append("</table>");
-			result.append("</div>");
-			
-			result.append("<div class=\"span4\"></div>");
-			result.append("</div>");
-			
-			result.append("</div>");
 			
 			result.append("<div class=\"row-fluid\">");
 			result.append("<div class=\"span12\">&nbsp;</div>");
