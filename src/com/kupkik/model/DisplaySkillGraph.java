@@ -5,6 +5,7 @@ import java.util.List;
 public class DisplaySkillGraph {
 
 	private int totalNumberWon;
+
 	private int totalNumberPlayed;
 	private List<MatchDay> matchDays;
 	private int totalNumberGames;
@@ -79,5 +80,13 @@ public class DisplaySkillGraph {
 		}
 		return values;
 	}
+	
+	/**
+	 * @return the matchDays
+	 */
+	public List<MatchDay> getMatchDays() {
+		return matchDays;
+	}
+
 	
 }

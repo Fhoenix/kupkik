@@ -17,6 +17,7 @@ import com.kupkik.model.Season;
 import com.kupkik.model.MatchDay;
 import com.kupkik.model.User;
 import com.kupkik.model.UserWithPassword;
+import com.kupkik.persistence.EntityNameStore;
 
 public class PFCommonGetter {
 
@@ -42,7 +43,7 @@ public class PFCommonGetter {
     public static UserWithPassword getUserByKey(Key userKey){
     	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     	Filter keyFilter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, FilterOperator.EQUAL, userKey);
-    	Query getUserQuery = new Query("User").setFilter(keyFilter);
+    	Query getUserQuery = new Query(EntityNameStore.USER).setFilter(keyFilter);
 		PreparedQuery getUser = datastore.prepare(getUserQuery);
 		
 		
@@ -56,6 +57,28 @@ public class PFCommonGetter {
         
 	}
     
+    
+    public static Season getSeasonByKey(Key season){
+    	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    	Filter keyFilter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, FilterOperator.EQUAL, season);
+    	Query getUserQuery = new Query(EntityNameStore.SEASON).setFilter(keyFilter);
+		PreparedQuery getUser = datastore.prepare(getUserQuery);
+		
+		
+		List<Entity> userEntity = getUser.asList(FetchOptions.Builder.withLimit(1));
+        
+		
+        for (Entity item: userEntity){
+        	return new Season(item.getKey().getName(), item.getKey(), item.getParent(), (List<String>) item.getProperty("GameType"));
+        }
+        return null;
+       
+        
+	}
+    
+    
+    
+    
 	/**
 	 * Get all MatchDays in database
 	 * 
@@ -64,7 +87,7 @@ public class PFCommonGetter {
 	public static List<MatchDay> getAllMatchDays()
 	{
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		Query getAllMatchDaysQuery = new Query("MatchDay");
+		Query getAllMatchDaysQuery = new Query(EntityNameStore.MATCHDAY);
 		PreparedQuery getAllMatchDaysPreparedQuery = datastore.prepare(getAllMatchDaysQuery);
 
 		List<Entity> userEntities = getAllMatchDaysPreparedQuery.asList(FetchOptions.Builder.withDefaults());
@@ -88,7 +111,7 @@ public class PFCommonGetter {
     	DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
     	Filter filterName = new FilterPredicate("Key", FilterOperator.EQUAL,matchDayKey );
     	
-    	Query getMatchDayKey = new Query("MatchDay").setFilter(filterName);
+    	Query getMatchDayKey = new Query(EntityNameStore.MATCHDAY).setFilter(filterName);
     	PreparedQuery pQGetMatchDay = dataStore.prepare(getMatchDayKey);
     	
         List<Entity> matchDaysEntity = pQGetMatchDay.asList(FetchOptions.Builder.withLimit(1));
@@ -108,7 +131,7 @@ public class PFCommonGetter {
 	public static List<UserWithPassword> getAllUsers()
 	{
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		Query getAllUsersQuery = new Query("User");
+		Query getAllUsersQuery = new Query(EntityNameStore.USER);
 		PreparedQuery getAllUsersPreparedQuery = datastore.prepare(getAllUsersQuery);
 
 		List<Entity> userEntities = getAllUsersPreparedQuery.asList(FetchOptions.Builder.withDefaults());
@@ -136,7 +159,7 @@ public class PFCommonGetter {
 		for(Season item :seasons){
 		
 			DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();			
-			Query getMatchDayKey = new Query("MatchDay").setAncestor(item.getKey());
+			Query getMatchDayKey = new Query(EntityNameStore.MATCHDAY).setAncestor(item.getKey());
 			
 			PreparedQuery pQGetSeason = dataStore.prepare(getMatchDayKey);
 			List<Entity> seasonEntity = pQGetSeason.asList(FetchOptions.Builder.withDefaults());
@@ -160,14 +183,14 @@ public class PFCommonGetter {
 		if(PFCommonTester.doesUserExistWithName(userName)){
 			User userByName = getUserByName(userName);
 			DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();			
-			Query getSeasonKey = new Query("Season").setAncestor(userByName.getKey());
+			Query getSeasonKey = new Query(EntityNameStore.SEASON).setAncestor(userByName.getKey());
 			
 			PreparedQuery pQGetSeason = dataStore.prepare(getSeasonKey);
 			List<Entity> seasonEntity = pQGetSeason.asList(FetchOptions.Builder.withDefaults());
 			
 			
 			 for (Entity item: seasonEntity){
-				 seasons.add( new Season(item.getKey().getName(), item.getKey(), item.getParent()));
+				 seasons.add( new Season(item.getKey().getName(), item.getKey(), item.getParent(),(List<String>) item.getProperty("GameType")));
 		        }
 		}
 		return seasons;	
@@ -184,14 +207,14 @@ public class PFCommonGetter {
 		
 
 			DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();			
-			Query getSeasonKey = new Query("Season");
+			Query getSeasonKey = new Query(EntityNameStore.SEASON);
 			
 			PreparedQuery pQGetSeason = dataStore.prepare(getSeasonKey);
 			List<Entity> seasonEntity = pQGetSeason.asList(FetchOptions.Builder.withDefaults());
 			
 			
 			 for (Entity item: seasonEntity){
-				 seasons.add( new Season(item.getKey().getName(), item.getKey(), item.getParent()));
+				 seasons.add( new Season(item.getKey().getName(), item.getKey(), item.getParent(), (List<String>) item.getProperty("GameType")));
 		        }
 		
 		return seasons;	

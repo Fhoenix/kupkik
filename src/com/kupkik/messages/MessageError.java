@@ -18,6 +18,7 @@ public class MessageError {
 	        ApplicationCoreFacade.MIN_SEASON_NAME_SIZE
             + " und " + ApplicationCoreFacade.MAX_SEASON_NAME_SIZE
             + " Zeichen lang sein und darf nur Buchstaben, Zahlen, Leerzeichen " + " oder Unterstriche enthalten!";
+	public static final String SEASON_NEEDS_GAMETYPES = "Please select at least one GameType!";
 	
 	//User Registration
 	public static final String REGISTER_PASSWORD_NOT_EUQUAL = "Die Passwörter sind nicht gleich!";

@@ -1,11 +1,14 @@
 package com.kupkik.persistence.common;
 
+import java.util.List;
+
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.kupkik.model.Season;
+import com.kupkik.persistence.EntityNameStore;
 
 public class PFCommonSaver {
 
@@ -16,7 +19,7 @@ public class PFCommonSaver {
 	 */
     public static void saveNewMatchDay( final String matchDayName, final Key seasonKey )
 	{
-	    Entity matchDay = new Entity("MatchDay", matchDayName, seasonKey);
+	    Entity matchDay = new Entity(EntityNameStore.MATCHDAY, matchDayName, seasonKey);
 	    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	    datastore.put(matchDay);
 	}
@@ -49,10 +52,12 @@ public class PFCommonSaver {
 	 * @param pUserName
 	 *            the name of the user, who creates the season
 	 */
-	public static void saveNewSeason( final String pSeasonName, final String pUserName )
+	public static void saveNewSeason( final String pSeasonName, final String pUserName, final List<String> gameType )
 	{
-	    Key userKey = KeyFactory.createKey("User", pUserName);
+	    Key userKey = KeyFactory.createKey(EntityNameStore.USER, pUserName);
 	    Entity season = new Entity("Season", pSeasonName, userKey);
+	    season.setProperty("GameType", gameType);
+	    
 	    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	    datastore.put(season);
 	}

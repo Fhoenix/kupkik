@@ -12,9 +12,11 @@ public class Season {
 	private Key key;
 	private Key parentKey;
 	private List<MatchDay> matchDays = new ArrayList<MatchDay>();
+	private List<String> gameTypes = new ArrayList<String>();
 	
 	
-	public Season(String name, Key key, Key parentKey){
+	public Season(String name, Key key, Key parentKey, List<String> gameTypes){
+		this.gameTypes = gameTypes;
 		this.name = name;
 		this.key = key;
 		this.parentKey = parentKey;
@@ -58,6 +60,14 @@ public class Season {
 
 	public void setTournaments(List<MatchDay> matchDays) {
 		this.matchDays = matchDays;
+	}
+
+
+	/**
+	 * @return the gameTypes
+	 */
+	public List<String> getGameTypes() {
+		return gameTypes;
 	}
 	
 

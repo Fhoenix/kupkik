@@ -1,5 +1,7 @@
 package com.kupkik.ui.html.requesthandlers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +13,7 @@ import com.kupkik.applicationcore.ApplicationCoreFacade;
 import com.kupkik.applicationcore.ApplicationCoreFacade.CreateSeasonAnswer;
 import com.kupkik.applicationcore.ApplicationCoreFacade.CreateMatchDayAnswer;
 import com.kupkik.model.DisplaySkillGraph;
+import com.kupkik.model.Season;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.persistence.common.PFCommonGetter;
 import com.kupkik.ui.html.HtmlRequestProcessor;
@@ -44,11 +47,24 @@ public class CreateMyProfileHandler implements IHtmlRequestHandler
         
         pRequest.setAttribute("selectedUser", PFCommonGetter.getUserByKey(userKey));
         
-        DisplaySkillGraph allGamesInSeasonBadmintonSingle = ApplicationCoreFacade.getAllBadmintonSingleGamesInSeason(seasonKey,userKey);
-        pRequest.setAttribute("displaySkillGraph",allGamesInSeasonBadmintonSingle);
-
-        DisplaySkillGraph allGamesInSeasonBadmintonDouble = ApplicationCoreFacade.getAllBadmintonDoubleGamesInSeason(seasonKey,userKey);
-        pRequest.setAttribute("displaySkillGraphDouble",allGamesInSeasonBadmintonDouble);
+     
+        Season seasonsByKey = ApplicationCoreFacade.getSeasonsByKey(seasonKey);
+        
+        List<String> gameTypes = seasonsByKey.getGameTypes();
+        for (String string : gameTypes) {
+			if (string.equals("BadmintonSingle")){
+				  DisplaySkillGraph allGamesInSeasonBadmintonSingle = ApplicationCoreFacade.getAllBadmintonSingleGamesInSeason(seasonKey,userKey);
+			        pRequest.setAttribute("displaySkillGraph",allGamesInSeasonBadmintonSingle);
+			}
+			if(string.equals("BadmintonDouble")){
+			     DisplaySkillGraph allGamesInSeasonBadmintonDouble = ApplicationCoreFacade.getAllBadmintonDoubleGamesInSeason(seasonKey,userKey);
+			        pRequest.setAttribute("displaySkillGraphDouble",allGamesInSeasonBadmintonDouble);
+			}
+		}
+        
+        
+      
+   
 
         
         return "MyProfileView";

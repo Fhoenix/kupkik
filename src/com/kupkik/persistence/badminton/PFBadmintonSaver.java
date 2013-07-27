@@ -9,6 +9,7 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.kupkik.persistence.EntityNameStore;
 
 public class PFBadmintonSaver {
 
@@ -17,7 +18,7 @@ public class PFBadmintonSaver {
 
 	public static void saveNewBadmintonSingleGame(final Key matchDayKey, final Key playerOne, final Key playerTwo, final int resultOne, final int resultTwo, final Date date){
 	
-		Entity badmintonSingleGame = new Entity("BadmintonSingle", matchDayKey);
+		Entity badmintonSingleGame = new Entity(EntityNameStore.BADMINTON_SINGLE_GAME, matchDayKey);
 		
 		badmintonSingleGame.setProperty("playerOne", playerOne);
 		badmintonSingleGame.setProperty("playerTwo", playerTwo);
@@ -33,7 +34,7 @@ public class PFBadmintonSaver {
 	
 	public static void saveNewBadmintonDoubleGame(final Key matchDayKey, final List<Key> teamOne, final List<Key> teamTwo, final int resultOne, final int resultTwo, final Date date){
 		
-		Entity badmintonSingleGame = new Entity("BadmintonDouble", matchDayKey);
+		Entity badmintonSingleGame = new Entity(EntityNameStore.BADMINTON_DOUBLE_GAME, matchDayKey);
 		
 		badmintonSingleGame.setProperty("teamOne", teamOne);
 		badmintonSingleGame.setProperty("teamTwo", teamTwo);

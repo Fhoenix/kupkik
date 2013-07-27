@@ -1,8 +1,13 @@
 package com.kupkik.ui.html.requesthandlers;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.google.appengine.api.datastore.Key;
 import com.kupkik.applicationcore.ApplicationCoreFacade;
 import com.kupkik.applicationcore.ApplicationCoreFacade.CreateSeasonAnswer;
 import com.kupkik.applicationcore.ApplicationCoreFacade.CreateMatchDayAnswer;
@@ -23,6 +28,12 @@ public class CreateSeasonHandler implements IHtmlRequestHandler
     {
         // the chosen season-name
         String seasonName = pRequest.getParameter("name");
+        String[] gameType = pRequest.getParameterValues("gameType");
+        
+        if (gameType == null){
+            pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.SEASON_NEEDS_GAMETYPES);
+            return "NewSeasonView";
+        }
 
         UserWithPassword currentUser = (UserWithPassword) pRequest.getSession().getAttribute("currentUser");
         if( currentUser.getName().equals(HtmlRequestProcessor.GUEST_USER.getName()) )
@@ -30,9 +41,15 @@ public class CreateSeasonHandler implements IHtmlRequestHandler
             pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.SEASON_USER_NOT_LOGGED_IN);
             return "NewSeasonView";
         }
+        
+        List<String> gameTypeList = new ArrayList<String>();
+        
+        for (String item : gameType) {
+        	gameTypeList.add(item);
+		}
         // try to create MatchDay
         CreateSeasonAnswer createSeasonAnswer = pApplicationCoreFacade.createSeason(seasonName, currentUser.getName(),
-        		currentUser.getPasswordMd5());
+        		currentUser.getPasswordMd5(), gameTypeList);
 
         if( createSeasonAnswer == CreateSeasonAnswer.SEASON_NAME_INVALID ){
             pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.SEASON_NAME_INVALID);

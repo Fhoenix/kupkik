@@ -24,6 +24,7 @@ import com.kupkik.model.UserWithPassword;
 import com.kupkik.model.game.BadmintonDouble;
 import com.kupkik.model.game.BadmintonSingle;
 import com.kupkik.model.game.IGame;
+import com.kupkik.persistence.EntityNameStore;
 import com.kupkik.persistence.common.PFCommonGetter;
 
 public class PFBadmintonGetters {
@@ -39,7 +40,7 @@ public class PFBadmintonGetters {
 
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
-		Query getLatestBadmintonSingleMatchesQuery = new Query("BadmintonSingle");
+		Query getLatestBadmintonSingleMatchesQuery = new Query(EntityNameStore.BADMINTON_SINGLE_GAME);
 		getLatestBadmintonSingleMatchesQuery.addSort("date", Query.SortDirection.DESCENDING);
 		PreparedQuery getLatestBadmintonSingleMatchesPreparedQuery = datastore.prepare(getLatestBadmintonSingleMatchesQuery);
 
@@ -80,7 +81,7 @@ public class PFBadmintonGetters {
 		
 		DisplaySkillGraph dataskillGraph = null;
 		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
-		Query getMatchDayBySeasonKey = new Query("MatchDay").setAncestor(season);
+		Query getMatchDayBySeasonKey = new Query(EntityNameStore.MATCHDAY).setAncestor(season);
 		PreparedQuery PQMatchDays = dataStore.prepare(getMatchDayBySeasonKey);
 
 		List<Entity> matchDayEntity = PQMatchDays.asList(FetchOptions.Builder.withDefaults());
@@ -96,7 +97,7 @@ public class PFBadmintonGetters {
 			int gamesPlayed = 0;
 			
 			DatastoreService dataStore2 = DatastoreServiceFactory.getDatastoreService();
-			Query getGamesForMatchDay = new Query("BadmintonSingle").setAncestor(matchDay.getKey());
+			Query getGamesForMatchDay = new Query(EntityNameStore.BADMINTON_SINGLE_GAME).setAncestor(matchDay.getKey());
 			PreparedQuery PQGames = dataStore2.prepare(getGamesForMatchDay);
 			List<Entity> games = PQGames.asList(FetchOptions.Builder.withDefaults());	
 			
@@ -166,7 +167,7 @@ public  static DisplaySkillGraph getAllBadmintonDoubleGamesInSeason(Key season, 
 		
 		DisplaySkillGraph dataskillGraph = null;
 		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
-		Query getMatchDaysbySeasonKey = new Query("MatchDay").setAncestor(season);
+		Query getMatchDaysbySeasonKey = new Query(EntityNameStore.MATCHDAY).setAncestor(season);
 		PreparedQuery PQMatchDays = dataStore.prepare(getMatchDaysbySeasonKey);
 
 		List<Entity> matchDayEntity = PQMatchDays.asList(FetchOptions.Builder.withDefaults());
@@ -182,7 +183,7 @@ public  static DisplaySkillGraph getAllBadmintonDoubleGamesInSeason(Key season, 
 			int gamesPlayed = 0;
 			
 			DatastoreService dataStore2 = DatastoreServiceFactory.getDatastoreService();
-			Query getGamesForMatchDay = new Query("BadmintonDouble").setAncestor(matchDay.getKey());
+			Query getGamesForMatchDay = new Query(EntityNameStore.BADMINTON_DOUBLE_GAME).setAncestor(matchDay.getKey());
 			PreparedQuery PQGames = dataStore2.prepare(getGamesForMatchDay);
 			List<Entity> games = PQGames.asList(FetchOptions.Builder.withDefaults());	
 			

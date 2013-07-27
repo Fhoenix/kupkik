@@ -34,3 +34,8 @@ input[type=text].fillLayout, input[type=password].fillLayout, input[type=email].
 select {
 	width: 100%; 
 }
+
+td .gamewon{
+	
+	background-color: #dff0d8;
+}

@@ -1,3 +1,6 @@
+<%@page import="com.kupkik.model.game.IGame"%>
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
+<%@page import="com.sun.org.apache.xerces.internal.impl.xpath.regex.Match"%>
 <%@ page import="com.kupkik.model.*"%>
 <%@ page import="com.kupkik.ui.html.view.*"%>
 <%@ page import="java.util.List"%>
@@ -68,8 +71,8 @@
 
 
 		<%
-			if (displaySkillGraph != null) {
 				UserWithPassword selectedUser =	(UserWithPassword) request.getAttribute("selectedUser");
+			if (displaySkillGraph != null) {
 		%>
 		<div class="row-fluid">
 			<div class="span12"><h2>Profile <%= selectedUser.getSurname() +", "+selectedUser.getFirstname() %></h2></div>
@@ -133,7 +136,15 @@
 				out.println("</div>");
 
 				out.println("</div>");
+				
+				
+				
+				List<MatchDay> matchDays = displaySkillGraph.getMatchDays();
+				out.println(viewHelper.printAllGamesForMatchDays(matchDays,selectedUser) );
+				
 			}
+		
+		
 		%>
 
 
@@ -201,6 +212,11 @@
 				out.println("</div>");
 
 				out.println("</div>");
+				
+				
+				
+				List<MatchDay> matchDays = displaySkillGraphDouble.getMatchDays();
+				out.println(viewHelper.printAllGamesForMatchDays(matchDays, selectedUser));
 			}
 		%>
 

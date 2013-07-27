@@ -3,6 +3,7 @@ package com.kupkik.ui.html.view;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,8 +14,10 @@ import com.kupkik.messages.MessageCommon;
 import com.kupkik.messages.MessagesFooter;
 import com.kupkik.messages.MessagesHome;
 import com.kupkik.model.MatchDay;
+import com.kupkik.model.User;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.model.game.BadmintonSingle;
+import com.kupkik.model.game.IGame;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 
 /**
@@ -25,7 +28,7 @@ public class ViewHelper
 	private HttpSession mSession;
 
 
-	
+
 	public ViewHelper(final HttpSession pSession)
 	{
 		mSession = pSession;
@@ -55,7 +58,7 @@ public class ViewHelper
 	{
 		UserWithPassword currentUser = (UserWithPassword) mSession.getAttribute("currentUser");
 		StringBuilder content = new StringBuilder();
-	
+
 
 		//Start the LiveGridRow
 		pHtmlContent.append("<div class=\"row\">");
@@ -68,7 +71,7 @@ public class ViewHelper
 		content.append(" 				<span class=\"icon-bar\"></span>");
 		content.append("  				<span class=\"icon-bar\"></span>");
 		content.append("  			</a>");
-		
+
 		if( !currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) ){
 			content.append("		<a class=\"brand\" href=\"#\"><img src=\"/res/images/logo_icon.png\" alt=\"logo\" />");
 			content.append(currentUser.getFirstname());
@@ -92,8 +95,8 @@ public class ViewHelper
 			content.append("			<li class=\"dropdown\">");
 			content.append("				<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">"+ MessageCommon.PROJECT_NAME +"<b class=\"caret\"></b></a>");
 			content.append("				<ul class=\"dropdown-menu\">");
-		
-			
+
+
 			content.append(" 					<li><a href=\"/?showView=NewSeasonView\">Create Season</a> </li>");
 			content.append(" 					<li><a href=\"/?showView=NewMatchDayView\">Create MatchDay</a> </li>");
 			content.append("					<li class=\"dropdown-submenu\">");
@@ -103,7 +106,7 @@ public class ViewHelper
 			content.append("							<li><a href=\"/?showView=NewBadmintonDoubleGameView\">Badminton Double</a> </li>");
 			content.append("						</ul>");
 			content.append("					</li>");
-			
+
 			content.append("				</ul>");
 			content.append("			</li>");
 			content.append("			<li class=\"dropdown\">");
@@ -191,14 +194,14 @@ public class ViewHelper
 		htmlBegin.append("		<script src=\"/res/chartjs/Chart.js\"></script>");
 		//Open the Bootstrap Container
 		htmlBegin.append("		<div class=\"container\">");
-	
+
 
 		if( pDoShowMenubar )
 		{
 			createMenuBar(htmlBegin);
 		}
 
-		
+
 		return htmlBegin.toString();
 	}
 
@@ -238,7 +241,7 @@ public class ViewHelper
 		mainSiteIntroArea.append("</div>");
 		mainSiteIntroArea.append("<div class=\"span6\">");
 		mainSiteIntroArea.append("<h2>"+ MessageCommon.PROJECT_NAME + "</h2>");
-		
+
 		if( currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) ){
 			mainSiteIntroArea.append(MessagesHome.WELCOME_GUEST_USER);
 			mainSiteIntroArea.append("<div class=\"row-fluid\">");
@@ -254,7 +257,7 @@ public class ViewHelper
 			mainSiteIntroArea.append("<div class=\"span12\">");
 			mainSiteIntroArea.append("<a href=\"?showView=NewSeasonView\"><button class=\"btn btn-large btn-primary\" type=\"button\">Create Your First Season</button></a>");
 			mainSiteIntroArea.append("</div>");
-			
+
 		}
 		mainSiteIntroArea.append("</div>");
 		mainSiteIntroArea.append("</div>");
@@ -317,7 +320,7 @@ public class ViewHelper
 		newsThumbnails.append("</div>");
 		newsThumbnails.append("</li>");
 
-	
+
 
 
 		newsThumbnails.append("</ul>");
@@ -335,16 +338,16 @@ public class ViewHelper
 		footer.append("<div class=\"row-fluid footer custom_footer\">");
 		footer.append("<div class=\"span12\">");
 		footer.append("<div class=\"container-fluid\">");
-			footer.append("<div class=\"row-fluid\">");
-			
-				footer.append("<div class=\"span1\">");
-				footer.append("		<img src=\"/res/images/logo_icon.png\" alt=\"logo\" />");
-				footer.append("</div>");	
-				
-				footer.append("<div style=\"vertical-align: middle;\"class=\"span11\">");
-				footer.append( MessagesFooter.FOOTER_SIGNITURE);
-				footer.append("</div>");	
-			footer.append("</div>");
+		footer.append("<div class=\"row-fluid\">");
+
+		footer.append("<div class=\"span1\">");
+		footer.append("		<img src=\"/res/images/logo_icon.png\" alt=\"logo\" />");
+		footer.append("</div>");	
+
+		footer.append("<div style=\"vertical-align: middle;\"class=\"span11\">");
+		footer.append( MessagesFooter.FOOTER_SIGNITURE);
+		footer.append("</div>");	
+		footer.append("</div>");
 		footer.append("</div>");
 		footer.append("</div>");
 		footer.append("</div>");
@@ -359,7 +362,7 @@ public class ViewHelper
 	 * @return The content of a HTML-site which contains the end of this site.
 	 */
 	public String createHtmlEnd(){
-		
+
 		final StringBuilder htmlEnd = new StringBuilder();
 		htmlEnd.append("</div>");
 		htmlEnd.append(createFooter());
@@ -374,10 +377,11 @@ public class ViewHelper
 	/**
 	 * Creates a SuccessBar showing the percentage a user won in green, and the percentage lost in red.
 	 * Percentage lost is calculated.
-*/
+	 */
 	public String createSuccessBar(int gamesWon, int gamesPlayed){
-		final StringBuilder htmlSuccessBar = new StringBuilder();
 		
+		final StringBuilder htmlSuccessBar = new StringBuilder();
+		if(gamesPlayed > 0){
 		double percentageWon = (100.00 / gamesPlayed) *  gamesWon;
 		double percentageLost = 100.00 - percentageWon;
 		DecimalFormat decimalFormat = new DecimalFormat("##.##");
@@ -385,20 +389,23 @@ public class ViewHelper
 		htmlSuccessBar.append("		<div class=\"bar bar-success\" style=\"width:"+ decimalFormat.format(percentageWon) +"%\">"+ decimalFormat.format(percentageWon) +"%</div>");
 		htmlSuccessBar.append("		<div class=\"bar bar-danger\" style=\"width:"+ decimalFormat.format(percentageLost) +"%\">"+ decimalFormat.format(percentageLost) +"%</div>");
 		htmlSuccessBar.append("</div>");
+		}else{
+			htmlSuccessBar.append("No Games Played");
+		}
 
 		return htmlSuccessBar.toString();
 	}
-	
+
 	public String createLineChart(String[] games, String[] winRateInPercent, String[] looseRateInPercent, String canvasId, String divId ){
 		StringBuilder lineChart = new StringBuilder();
-	
+
 		lineChart.append("<canvas id=\""+ canvasId +"\" ></canvas>");
 		lineChart.append("<script>");
-		
+
 		lineChart.append("(function() {");
 		lineChart.append("    var canvas = document.getElementById('"+canvasId +"'),");
 		lineChart.append("            context = canvas.getContext('2d');");
-		    // resize the canvas to fill browser window dynamically
+		// resize the canvas to fill browser window dynamically
 		lineChart.append(" window.addEventListener('resize', resizeCanvas, false);");
 		lineChart.append("   function resizeCanvas() {");
 		lineChart.append("  var pixels = $('#"+divId+"').width(); ");
@@ -414,8 +421,8 @@ public class ViewHelper
 		lineChart.append("		labels :"+Arrays.asList(games)+" ,");
 
 		lineChart.append("			datasets : [");
-		
-		
+
+
 		lineChart.append("				{");
 		lineChart.append("					fillColor : \"rgba(220,80,75,0.8)\",");
 		lineChart.append("					strokeColor : \"rgba(220,220,220,1)\",");
@@ -423,7 +430,7 @@ public class ViewHelper
 		lineChart.append("				pointStrokeColor : \"#fff\",");
 		lineChart.append("				data : "+ Arrays.asList(looseRateInPercent) +"" );
 		lineChart.append("			},");
-		
+
 		lineChart.append("				{");
 		lineChart.append("					fillColor : \"rgba(87,169,87,0.8)\",");
 		lineChart.append("					strokeColor : \"rgba(220,220,220,1)\",");
@@ -431,18 +438,110 @@ public class ViewHelper
 		lineChart.append("				pointStrokeColor : \"#fff\",");
 		lineChart.append("				data : "+ Arrays.asList(winRateInPercent) +"" );
 		lineChart.append("			}");
-		
+
 		lineChart.append("		]");
 		lineChart.append("	};");
-				
+
 		lineChart.append("var options = {scaleOverlay : true, scaleOverride : true, scaleSteps : 10, scaleStepWidth : 10 ,scaleStartValue : 0, scaleShowLabels: true, scaleFontSize: 14, bezierCurve: false} ;");
-				
+
 		lineChart.append("var myNewChart = new Chart(ctx).Bar(data, options);");
 		lineChart.append("     }");  
 		lineChart.append(" 	})();");
 		lineChart.append("</script>");
-		
-		
+
+
 		return lineChart.toString();
 	}
+
+	public  String printAllGamesForMatchDays(List<MatchDay> matchDays, UserWithPassword selectedUser){
+		StringBuilder result = new StringBuilder();
+		
+		result.append("<div class=\"row-fluid\">");
+		result.append("<div class=\"span12\">");
+		result.append("<h3>Games Played Grouped by MatchDays</h3>");
+		result.append("</div>");
+		result.append("</div>");
+	
+		
+		
+		
+		
+		
+		for (MatchDay  matchDay: matchDays){
+			result.append("<div class=\"row-fluid\">");
+			result.append("<div class=\"span8\">");
+		
+			result.append("<table class=\"table table-striped\">");
+			result.append("<thead> <th colspan=\"2\" style=\"width:50%\"><div>" + matchDay.getName() + " Games Played: " +  matchDay.getGamesPlayed()  + " Games Won: "+ matchDay.getGamesWon() + "</div></th> <th colspan=\"2\" style=\"width:50%\"> "+ this.createSuccessBar(matchDay.getGamesWon(), matchDay.getGamesPlayed()) + " </th>  </thead>");
+			
+			
+
+			List<IGame> iGames = matchDay.getGames();
+			if (iGames.size() == 0){
+				result.append("<tr> <td colspan=\"4\">No Games Played</td></tr>");
+			}else{
+				for( IGame iGame : iGames){
+					
+					
+					if(iGame.getResultOne() > iGame.getResultTwo() ){
+						result.append("<tr>");
+						result.append("<td class=\"gamewon\">"+ teamToString(iGame.getTeamOne(), selectedUser)+"</td>");
+						result.append("<td>"+ iGame.getResultOne()+"</td>");
+						result.append("<td>"+ iGame.getResultTwo() +"</td>");
+						result.append("<td>"+ teamToString(iGame.getTeamTwo(), selectedUser) +"</td>");
+						result.append("</tr>");
+					}else{
+						result.append("<tr>");
+						result.append("<td>"+ teamToString(iGame.getTeamOne(), selectedUser)+"</td>");
+						result.append("<td>"+ iGame.getResultOne()+"</td>");
+						result.append("<td>"+ iGame.getResultTwo() +"</td>");
+						result.append("<td class=\"gamewon\">"+ teamToString(iGame.getTeamTwo(), selectedUser) +"</td>");
+						result.append("</tr>");
+					}
+				}
+			}
+			
+			result.append("</table>");
+			result.append("</div>");
+			
+			result.append("<div class=\"span4\"></div>");
+			result.append("</div>");
+			
+			result.append("</div>");
+			
+			result.append("<div class=\"row-fluid\">");
+			result.append("<div class=\"span12\">&nbsp;</div>");
+			result.append("</div>");
+		}
+		
+		return result.toString();
+	}
+
+	private String teamToString(List<User> team, UserWithPassword selectedUser) {
+		StringBuilder teamString = new StringBuilder();
+		
+		boolean currentUserContained = false;
+		Iterator<User> teamOneIterator = team.iterator();
+		
+		while(teamOneIterator.hasNext()){
+			
+			User next = teamOneIterator.next();
+			if (next.getKey().equals(selectedUser.getKey())){
+				currentUserContained= true;
+			}
+			teamString.append(next.getSurname());
+			teamString.append(", ");
+			teamString.append(next.getFirstname());
+			
+			if (teamOneIterator.hasNext()){
+				teamString.append(" | ");
+			}
+			
+		}
+		if(currentUserContained){
+			return "<strong>"+teamString.toString()+"</strong>";
+		}
+		return teamString.toString();
+	}
+
 }

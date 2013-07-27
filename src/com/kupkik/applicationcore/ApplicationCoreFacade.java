@@ -138,7 +138,7 @@ public class ApplicationCoreFacade
 	 * @param pUserPasswordMd5 pUserPasswordMd5
 	 * @return the result of trying to create a Season
 	 */
-	public CreateSeasonAnswer createSeason( final String pSeasonName, final String pUserName, final String pUserPasswordMd5 )
+	public CreateSeasonAnswer createSeason( final String pSeasonName, final String pUserName, final String pUserPasswordMd5, List<String> gameType )
 	{
 		if( pSeasonName.length() > MAX_MATCHDAY_NAME_SIZE )
 		{
@@ -163,7 +163,7 @@ public class ApplicationCoreFacade
 			return CreateSeasonAnswer.SEASON_USER_CREDENTIALS_INVALID;
 		}
 
-		PFCommonSaver.saveNewSeason(pSeasonName, pUserName);
+		PFCommonSaver.saveNewSeason(pSeasonName, pUserName, gameType);
 
 		return CreateSeasonAnswer.SEASON_OK;
 	}
@@ -370,15 +370,19 @@ public class ApplicationCoreFacade
 		 return PFCommonGetter.getAllMatchDays();
 	 }
 
-	 public List<Season> getAllSeasonsForUser(UserWithPassword currentUser) {
+	 public static List<Season> getAllSeasonsForUser(UserWithPassword currentUser) {
 		 return PFCommonGetter.getAllSeasonsForUser(currentUser.getName());
 	 }
+	 
+	 public static Season getSeasonsByKey(Key season) {
+		 return PFCommonGetter.getSeasonByKey(season);
+	 }
 
-	 public UserWithPassword getUserWithPasswordByName(String currentUser) {
+	 public static UserWithPassword getUserWithPasswordByName(String currentUser) {
 		 return PFCommonGetter.getUserByName(currentUser);
 	 }
 
-	 public List<MatchDay> getAllMatchDaysOfUser(String userName) {
+	 public static List<MatchDay> getAllMatchDaysOfUser(String userName) {
 		 return PFCommonGetter.getAllMatchDaysOfUser(userName);
 	 }
 

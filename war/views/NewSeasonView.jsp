@@ -40,6 +40,13 @@
 				%>"></div>
 				<div class="span4">Create a new season (e.g. Badminton 2013)</div>
 			</div>
+			
+			<div class="row-fluid">
+				<div class="span12">
+				<input type="checkbox" name="gameType" value="BadmintonSingle">Badminton Single<br>
+				<input type="checkbox" name="gameType" value="BadmintonDouble">Badminton Double<br>
+			</div>
+			</div>
 			<div class="row-fluid">
 				<div class="span2"><input type="submit" value=" Absenden "></div>
 				<div class="span5">&nbsp;</div>

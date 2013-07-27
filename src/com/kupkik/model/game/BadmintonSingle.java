@@ -1,5 +1,6 @@
 package com.kupkik.model.game;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -64,6 +65,20 @@ public class BadmintonSingle implements IGame {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	@Override
+	public List<User> getTeamOne() {
+		List<User> teamOne = new ArrayList<User>();
+		teamOne.add(playerOne);
+		return teamOne;
+	}
+
+	@Override
+	public List<User> getTeamTwo() {
+		List<User> teamTwo = new ArrayList<User>();
+		teamTwo.add(playerTwo);
+		return teamTwo;
 	}
 
 

@@ -1,5 +1,6 @@
 package com.kupkik.model.game;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,16 +29,16 @@ public class BadmintonDouble implements IGame {
 	}
 
 
-	public List<User> getTeam1() {
+	@Override
+	public List<User> getTeamOne() {
 		return team1;
 	}
 
+	@Override
+	public List<User> getTeamTwo() {
 
-
-	public List<User>  getTeam2() {
 		return team2;
 	}
-
 
 
 	public int getResultTwo() {
