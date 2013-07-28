@@ -117,7 +117,7 @@ public class ViewHelper
 		pHtmlContent.append(createLiveGridSpan(12, content.toString()));
 		//Live Grid End
 		pHtmlContent.append(" </div>");
-		pHtmlContent.append("	<div class=\"container-fluid\">");
+		pHtmlContent.append("	<div class=\"container\">");
 	}
 
 	/**
@@ -327,7 +327,7 @@ public class ViewHelper
 		StringBuilder footer = new StringBuilder();
 		footer.append("<div class=\"row footer custom_footer\">");
 		footer.append("<div class=\"col-lg-12\">");
-		footer.append("<div class=\"container-fluid\">");
+		footer.append("<div class=\"container\">");
 		footer.append("<div class=\"row\">");
 
 		footer.append("<div class=\"col-lg-1\">");
