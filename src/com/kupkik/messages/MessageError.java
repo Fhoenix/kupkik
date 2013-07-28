@@ -37,9 +37,21 @@ public class MessageError {
     + " Zeichen lang sein und darf nur Buchstaben, Zahlen, Leerzeichen " + " oder Unterstriche enthalten!";
 	public static final String MATCHDAY_SEASON_DOES_NOT_EXIST = "Season does not exist";
 	public static final String MATCHDAY_WITH_THAT_NAME_EXISTS = "Es existiert bereits ein Turnier mit diesem Namen!";
-	public static final String MATCHDAY_SUCCESSFULLY_ADDED = "Matchday successfully added!";
+
 
 	//Badminton Single
 	public static final String BADMINTON_SINGLE_MIN_POINTS_NOT_REACHED = "Keines der Spiele hat die minimale Punktezahlt "+ ApplicationCoreFacade.MIN_END_RESULT + "erreicht!";
 	public static final String BADMINTON_RESULT_INVALID = "Die Ergebnisse nicht nicht valide! PunkteAbstand stimmt nicht!";
+	public static final String BADMINTON_SINGLE_USER_EQUALS_EACH_OTHER = "USER EQUALS EACH OTHER";
+	public static final String BADMINTON_SINGLE_USER_NOT_LOGGED_IN = "Nur eingeloggte Nutzer können Spiele anlegen!";
+	
+	//Badminton Double
+	public static final String BADMINTON_DOUBLE_NOT_LOGGED_IN = "Nur eingeloggte Nutzer können Spiele anlegen!";
+	public static final String BADMINTON_DOUBLE_ERROR_WHILE_CREATING_GAME = "Das Spiel konnte nicht angelegt werden!";
+
+	//Profile
+	public static final String STATISTICS_NOT_LOGGED_IN = "Nur eingeloggte Nutzer können Statistiken sehen!";
+	
+	//Login
+	public static final String LOGIN_USER_ALREADY_EXISTS = "Es existiert kein Nutzer mit diesem Namen und Passwort.";
 }

@@ -5,6 +5,7 @@ encoding//src/com/kupkik/ui/html/HtmlRequestProcessor.java=UTF-8
 encoding//src/com/kupkik/ui/html/requesthandlers/CreateBadmintonDoubleGameHandler.java=UTF-8
 encoding//src/com/kupkik/ui/html/requesthandlers/CreateBadmintonSingleGameHandler.java=UTF-8
 encoding//src/com/kupkik/ui/html/requesthandlers/CreateMatchDayHandler.java=UTF-8
+encoding//src/com/kupkik/ui/html/requesthandlers/CreateMyProfileHandler.java=UTF-8
 encoding//src/com/kupkik/ui/html/requesthandlers/RegisterUserHandler.java=UTF-8
 encoding//src/com/kupkik/ui/html/requesthandlers/ShowMyProfileViewHandler.java=UTF-8
 encoding//src/com/kupkik/ui/html/requesthandlers/ShowNewBadmintonDoubleGameViewHandler.java=UTF-8

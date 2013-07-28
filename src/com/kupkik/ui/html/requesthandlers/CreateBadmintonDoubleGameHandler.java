@@ -14,6 +14,8 @@ import com.kupkik.applicationcore.ApplicationCoreFacade;
 import com.kupkik.applicationcore.ApplicationCoreFacade.CreateGameAnswer;
 
 import com.kupkik.messages.HandlerMessagesEnum;
+import com.kupkik.messages.MessageError;
+import com.kupkik.messages.MessageSuccess;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
@@ -30,7 +32,7 @@ public class CreateBadmintonDoubleGameHandler  implements IHtmlRequestHandler{
 
 		if( currentUser.getName().equals(HtmlRequestProcessor.GUEST_USER.getName()) )
 		{
-			pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), "Nur eingeloggte Nutzer können Spiele anlegen!");
+			pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.BADMINTON_DOUBLE_NOT_LOGGED_IN );
 			return "NewBadmintonDoubleGameView";
 		}
 
@@ -68,10 +70,10 @@ public class CreateBadmintonDoubleGameHandler  implements IHtmlRequestHandler{
 
         if( createGameAnswer == CreateGameAnswer.GAME_NOK )
         {
-            pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), "Das Spiel konnte nicht angelegt werden!");
+            pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.BADMINTON_DOUBLE_ERROR_WHILE_CREATING_GAME);
             return "NewBadmintonDoubleGameView";
         }else{
-        	pRequest.setAttribute(HandlerMessagesEnum.SUCCESS.toString(), "Das Spiel wurde angelegt!");
+        	pRequest.setAttribute(HandlerMessagesEnum.SUCCESS.toString(), MessageSuccess.BADMINTON_DOUBLE_SUCCESSFULLY_ADDED);
         }
 
 

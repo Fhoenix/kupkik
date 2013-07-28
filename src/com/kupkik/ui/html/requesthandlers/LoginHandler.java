@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import com.kupkik.applicationcore.ApplicationCoreFacade;
 import com.kupkik.messages.HandlerMessagesEnum;
+import com.kupkik.messages.MessageError;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 import com.kupkik.utils.CredentialsUtils;
@@ -31,7 +32,7 @@ implements IHtmlRequestHandler
         {
             // user does not exist
 
-            pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), "Es existiert kein Nutzer mit diesem Namen und Passwort.");
+            pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.LOGIN_USER_ALREADY_EXISTS);
             return "RegisterView";
         }
 

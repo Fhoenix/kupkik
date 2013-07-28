@@ -12,9 +12,12 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.kupkik.applicationcore.ApplicationCoreFacade;
 import com.kupkik.applicationcore.ApplicationCoreFacade.CreateSeasonAnswer;
 import com.kupkik.applicationcore.ApplicationCoreFacade.CreateMatchDayAnswer;
+import com.kupkik.messages.HandlerMessagesEnum;
+import com.kupkik.messages.MessageError;
 import com.kupkik.model.DisplaySkillGraph;
 import com.kupkik.model.Season;
 import com.kupkik.model.UserWithPassword;
+import com.kupkik.persistence.EntityNameStore;
 import com.kupkik.persistence.common.PFCommonGetter;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
@@ -30,7 +33,7 @@ public class CreateMyProfileHandler implements IHtmlRequestHandler
 
         if( currentUser.getName().equals(HtmlRequestProcessor.GUEST_USER.getName()) )
         {
-            pRequest.setAttribute("errorMessage", "Nur eingeloggte Nutzer k?nnen Turniere anlegen!");
+            pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.STATISTICS_NOT_LOGGED_IN);
             return "NewSeasonView";
         }
         
@@ -52,20 +55,15 @@ public class CreateMyProfileHandler implements IHtmlRequestHandler
         
         List<String> gameTypes = seasonsByKey.getGameTypes();
         for (String string : gameTypes) {
-			if (string.equals("BadmintonSingle")){
+			if (string.equals(EntityNameStore.BADMINTON_SINGLE_GAME)){
 				  DisplaySkillGraph allGamesInSeasonBadmintonSingle = ApplicationCoreFacade.getAllBadmintonSingleGamesInSeason(seasonKey,userKey);
 			        pRequest.setAttribute("displaySkillGraph",allGamesInSeasonBadmintonSingle);
 			}
-			if(string.equals("BadmintonDouble")){
+			if(string.equals(EntityNameStore.BADMINTON_DOUBLE_GAME)){
 			     DisplaySkillGraph allGamesInSeasonBadmintonDouble = ApplicationCoreFacade.getAllBadmintonDoubleGamesInSeason(seasonKey,userKey);
 			        pRequest.setAttribute("displaySkillGraphDouble",allGamesInSeasonBadmintonDouble);
 			}
 		}
-        
-        
-      
-   
-
         
         return "MyProfileView";
     }

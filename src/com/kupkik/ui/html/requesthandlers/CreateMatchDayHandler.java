@@ -10,6 +10,7 @@ import com.kupkik.applicationcore.ApplicationCoreFacade;
 import com.kupkik.applicationcore.ApplicationCoreFacade.CreateMatchDayAnswer;
 import com.kupkik.messages.HandlerMessagesEnum;
 import com.kupkik.messages.MessageError;
+import com.kupkik.messages.MessageSuccess;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
@@ -58,7 +59,7 @@ public class CreateMatchDayHandler implements IHtmlRequestHandler
             pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.MATCHDAY_SEASON_DOES_NOT_EXIST);
             return "NewMatchDayView";
         }else{
-        	 pRequest.setAttribute(HandlerMessagesEnum.SUCCESS.toString(), MessageError.MATCHDAY_SUCCESSFULLY_ADDED);
+        	 pRequest.setAttribute(HandlerMessagesEnum.SUCCESS.toString(), MessageSuccess.MATCHDAY_SUCCESSFULLY_ADDED);
              return "NewMatchDayView";
         }
 

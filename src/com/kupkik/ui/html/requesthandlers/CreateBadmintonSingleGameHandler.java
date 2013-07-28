@@ -14,6 +14,7 @@ import com.kupkik.applicationcore.ApplicationCoreFacade.CreateGameAnswer;
 
 import com.kupkik.messages.HandlerMessagesEnum;
 import com.kupkik.messages.MessageError;
+import com.kupkik.messages.MessageSuccess;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
@@ -30,7 +31,7 @@ public class CreateBadmintonSingleGameHandler  implements IHtmlRequestHandler{
 
 		if( currentUser.getName().equals(HtmlRequestProcessor.GUEST_USER.getName()) )
 		{
-			pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), "Nur eingeloggte Nutzer können Spiele anlegen!");
+			pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.BADMINTON_SINGLE_USER_NOT_LOGGED_IN);
 			return "NewBadmintonSingleGameView";
 		}
 
@@ -63,10 +64,10 @@ public class CreateBadmintonSingleGameHandler  implements IHtmlRequestHandler{
 			pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.BADMINTON_RESULT_INVALID);
 			return "NewBadmintonSingleGameView";
 		}else if(createBadmintonSingleAnswer == CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_USER_EQUAL_EACH_OTHER ){
-			pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), "USER EQUALS EACH OTHER");
+			pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.BADMINTON_SINGLE_USER_EQUALS_EACH_OTHER);
 			return "NewBadmintonSingleGameView";
 		}else{
-			pRequest.setAttribute(HandlerMessagesEnum.SUCCESS.toString(), "Das Spiel wurde angelegt!");
+			pRequest.setAttribute(HandlerMessagesEnum.SUCCESS.toString(), MessageSuccess.BADMINTON_SINGLE_SUCCESSFULLY_ADDED);
 			return "NewBadmintonSingleGameView";
 		}
 
