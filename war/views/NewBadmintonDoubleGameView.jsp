@@ -34,19 +34,19 @@
 <form action="/" method="post">
 	<input type="hidden" name="action" value="CreateBadmintonDoubleGame">
 
-	<div class="row-fluid">
-		<div class="span6">
+	<div class="row">
+		<div class="col-lg-6">
 			<h1>ScoreIT</h1>
 
-			<div class="row-fluid">
-				<div class="span12">&nbsp;</div>
+			<div class="row">
+				<div class="col-lg-12">&nbsp;</div>
 			</div>
 
-			<div class="row-fluid">
-				<div class="span4"><%=viewHelper.createLabel("MatchDay Name", "label",
+			<div class="row">
+				<div class="col-lg-4"><%=viewHelper.createLabel("MatchDay Name", "label",
 					"matchDayKey")%></div>
-				<div class="span8">
-					<select id="matchDayKey" name="matchDayKey">
+				<div class="col-lg-8">
+					<select class="form-control" id="matchDayKey" name="matchDayKey">
 						<%
 							for (MatchDay item : matchDays) {
 												out.println("	 <option value=\""
@@ -59,16 +59,16 @@
 				</div>
 			</div>
 
-			<div class="row-fluid">
-				<div class="span12">&nbsp;</div>
+			<div class="row">
+				<div class="col-lg-12">&nbsp;</div>
 			</div>
 
 
-			<div class="row-fluid">
-				<div class="span2">Team 1</div>
-				<div class="span3">
+			<div class="row">
+				<div class="col-lg-2">Team 1</div>
+				<div class="col-lg-3">
 
-					<select id="teamOne-One" name="teamOne-One">
+					<select class="form-control" id="teamOne-One" name="teamOne-One">
 
 						<%
 							for (User item : users) {
@@ -80,9 +80,9 @@
 
 
 				</div>
-					<div class="span3">
+					<div class="col-lg-3">
 
-					<select id="teamOne-Two" name="teamOne-Two">
+					<select class="form-control" id="teamOne-Two" name="teamOne-Two">
 
 						<%
 							for (User item : users) {
@@ -95,19 +95,19 @@
 
 				</div>
 				
-				<div class="span4">
-					<input class="fillLayout"  id="resultOne" placeholder="Result" name="resultOne" type="text">
+				<div class="col-lg-4">
+					<input class="form-control" class="fillLayout"  id="resultOne" placeholder="Result" name="resultOne" type="text">
 				</div>
 			</div>
 
 
 
 
-			<div class="row-fluid">
-				<div class="span2">Player 2</div>
-				<div class="span3">
+			<div class="row">
+				<div class="col-lg-2">Player 2</div>
+				<div class="col-lg-3">
 
-					<select id="teamTwo-One" style="width: 100%;" name="teamTwo-One">
+					<select class="form-control" id="teamTwo-One" style="width: 100%;" name="teamTwo-One">
 
 						<%
 							for (User item : users) {
@@ -118,9 +118,9 @@
 					</select>
 
 				</div>
-					<div class="span3">
+					<div class="col-lg-3">
 
-					<select id="teamTwo-Two" style="width: 100%;" name="teamTwo-Two">
+					<select class="form-control" id="teamTwo-Two" style="width: 100%;" name="teamTwo-Two">
 
 						<%
 							for (User item : users) {
@@ -132,26 +132,26 @@
 
 				</div>
 			
-				<div class="span4">
-					<input class="fillLayout" id="resultTwo" placeholder="Result" name="resultTwo" type="text">
+				<div class="col-lg-4">
+					<input class="form-control" id="resultTwo" placeholder="Result" name="resultTwo" type="text">
 
 				</div>
 			</div>
-			<div class="row-fluid">
-				<div class="span12">
-					<div class="row-fluid">
-						<div class="span6">
-							<input type="submit" value=" Absenden">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="row">
+						<div class="col-lg-6">
+							<input class="btn btn-default" type="submit" value=" Absenden">
 						</div>
-						<div class="span6">
+						<div class="col-lg-6">
 							&nbsp;
 						</div>
 					</div>
-					<div class="span6"></div>
+					<div class="col-lg-6"></div>
 				</div>
 			</div>
 		</div>
-		<div class="span6">
+		<div class="col-lg-6">
 			<h1>Badminton Double</h1>
 			
 Beschreibung Turnier Beschreibung Turnier

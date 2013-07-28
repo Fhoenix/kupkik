@@ -63,49 +63,41 @@ public class ViewHelper
 		pHtmlContent.append("<div class=\"row\">");
 
 		content.append("<div class=\"navbar\">");
-		content.append("	<div class=\"navbar-inner\">");
+	
 		content.append("		<div class=\"container\">");
-		content.append(" 			<a class=\"btn btn-navbar\" data-toggle=\"collapse\" data-target=\".navbar-responsive-collapse\">");
+		content.append(" 			<button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-responsive-collapse\">");
 		content.append(" 				<span class=\"icon-bar\"></span>");
 		content.append(" 				<span class=\"icon-bar\"></span>");
 		content.append("  				<span class=\"icon-bar\"></span>");
-		content.append("  			</a>");
+		content.append("  			</button>");
 
 		if( !currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) ){
-			content.append("		<a class=\"brand\" href=\"#\"><img src=\"/res/images/logo_icon.png\" alt=\"logo\" />");
+			content.append("		<a class=\"navbar-brand\" href=\"#\"><img src=\"/res/images/logo_icon.png\" alt=\"logo\" />");
 			content.append(currentUser.getFirstname());
 		}else{
-			content.append("    	<a class=\"brand\" href=\"#\"><img src=\"/res/images/logo_icon.png\" alt=\"logo\" />");
+			content.append("    	<a class=\"navbar-brand\" href=\"#\"><img src=\"/res/images/logo_icon.png\" alt=\"logo\" />");
 		}
 		content.append(" 			</a>");
 		content.append("		<div class=\"nav-collapse navbar-responsive-collapse collapse\" style=\"height: 0px;\">");
-		content.append(" 			<ul class=\"nav\">");
+		content.append(" 			<ul class=\"nav navbar-nav\">");
 		content.append(" 	      		<li class=\"active\"><a href=\"/\">Home</a></li>");
 		if( currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) ){
 			content.append("			<li><a href=\"/?showView=RegisterView\">Register Here!</a></li>");
 			content.append(" 		</ul>");
-			content.append("		<form class=\"navbar-form pull-right\" action=\"/\" method=\"post\">");
+			content.append("		<form class=\"form-inline pull-right\" action=\"/\" method=\"post\">");
 			content.append("			<input type=\"hidden\" name=\"action\" value=\"Login\">");
-			content.append("			<input class=\"span2\" placeholder=\"Your E-Mail\" name=\"user_name\" type=\"email\" size=\"50\" maxlength=\"50\">");
-			content.append("			<input class=\"span2\" placeholder=\"Password\" name=\"password\" type=\"password\" size=\"12\" maxlength=\"12\">");
-			content.append("			<input class=\"btn\" type=\"submit\" value=\"Login\">");
+			content.append("			<input class=\"form-control\" style=\"width:200px\" placeholder=\"Your E-Mail\" name=\"user_name\" type=\"email\" size=\"50\" maxlength=\"50\">");
+			content.append("			<input class=\"form-control\" style=\"width:200px\" placeholder=\"Password\" name=\"password\" type=\"password\" size=\"12\" maxlength=\"12\">");
+			content.append("			<input class=\"btn btn-default navbar-btn\" type=\"submit\" value=\"Login\">");
 			content.append("		</form>");
 		}else{
 			content.append("			<li class=\"dropdown\">");
 			content.append("				<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">"+ MessageCommon.PROJECT_NAME +"<b class=\"caret\"></b></a>");
 			content.append("				<ul class=\"dropdown-menu\">");
-
-
 			content.append(" 					<li><a href=\"/?showView=NewSeasonView\">Create Season</a> </li>");
 			content.append(" 					<li><a href=\"/?showView=NewMatchDayView\">Create MatchDay</a> </li>");
-			content.append("					<li class=\"dropdown-submenu\">");
-			content.append("   					<a tabindex=\"-1\" href=\"#\">Score Game</a>");
-			content.append("						<ul class=\"dropdown-menu\">");
-			content.append("							<li><a href=\"/?showView=NewBadmintonSingleGameView\">Badminton Single</a> </li>");
-			content.append("							<li><a href=\"/?showView=NewBadmintonDoubleGameView\">Badminton Double</a> </li>");
-			content.append("						</ul>");
-			content.append("					</li>");
-
+			content.append("					<li><a href=\"/?showView=NewBadmintonSingleGameView\">Badminton Single</a> </li>");
+			content.append("					<li><a href=\"/?showView=NewBadmintonDoubleGameView\">Badminton Double</a> </li>");
 			content.append("				</ul>");
 			content.append("			</li>");
 			content.append("			<li class=\"dropdown\">");
@@ -120,7 +112,7 @@ public class ViewHelper
 		}
 		content.append(" 		</div>");
 		content.append(" 		</div>");
-		content.append(" 	</div>");
+	
 		content.append("</div>");
 		pHtmlContent.append(createLiveGridSpan(12, content.toString()));
 		//Live Grid End
@@ -210,7 +202,7 @@ public class ViewHelper
 	 */
 	private String createLiveGridSpan(int columns, String content){
 		final StringBuilder liveGridSpan = new StringBuilder();
-		liveGridSpan.append("<div class=\"span"+columns+"\">");
+		liveGridSpan.append("<div class=\"col-lg-"+columns+"\">");
 		liveGridSpan.append(content);
 		liveGridSpan.append("</div>");
 		return liveGridSpan.toString();
@@ -219,7 +211,7 @@ public class ViewHelper
 
 	public String createFormLayout(String content, String description){
 		StringBuilder result = new StringBuilder();
-		result.append("<div class=\"row-fluid\">");
+		result.append("<div class=\"row\">");
 		result.append(createLiveGridSpan(9, content));
 		result.append(createLiveGridSpan(3, description));
 		result.append("</div>");
@@ -234,18 +226,19 @@ public class ViewHelper
 		UserWithPassword currentUser = (UserWithPassword) mSession.getAttribute("currentUser");
 		StringBuilder mainSiteIntroArea = new StringBuilder();
 		//Start the LiveGridRow
-		mainSiteIntroArea.append("<div class=\"row-fluid\">");
-		mainSiteIntroArea.append("<div class=\"span12\">");
-		mainSiteIntroArea.append("<div class=\"span6\">");
-		mainSiteIntroArea.append("<img src=\"/res/images/logo.png\" />");
+		mainSiteIntroArea.append("<div class=\"row\">");
+		mainSiteIntroArea.append("<div class=\"col-lg-12\">");
+		mainSiteIntroArea.append("<div class=\"row\">");
+		mainSiteIntroArea.append("<div class=\"col-lg-6\">");
+		mainSiteIntroArea.append("<img src=\"/res/images/logo.png\" style=\"width:100%\"/>");
 		mainSiteIntroArea.append("</div>");
-		mainSiteIntroArea.append("<div class=\"span6\">");
+		mainSiteIntroArea.append("<div class=\"col-lg-6\">");
 		mainSiteIntroArea.append("<h2>"+ MessageCommon.PROJECT_NAME + "</h2>");
 
 		if( currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) ){
 			mainSiteIntroArea.append(MessagesHome.WELCOME_GUEST_USER);
-			mainSiteIntroArea.append("<div class=\"row-fluid\">");
-			mainSiteIntroArea.append("<div class=\"span12\">");
+			mainSiteIntroArea.append("<div class=\"row\">");
+			mainSiteIntroArea.append("<div class=\"col-lg-12\">");
 			mainSiteIntroArea.append("<a href=\"?showView=RegisterView\"><button class=\"btn btn-large btn-primary\" type=\"button\">Register</button></a>");
 			mainSiteIntroArea.append("</div>");
 		}else{
@@ -253,12 +246,13 @@ public class ViewHelper
 			mainSiteIntroArea.append(currentUser.getFirstname());
 			mainSiteIntroArea.append(", <br />");
 			mainSiteIntroArea.append(MessagesHome.WELCOME_REGISTERED_USER);
-			mainSiteIntroArea.append("<div class=\"row-fluid\">");
-			mainSiteIntroArea.append("<div class=\"span12\">");
+			mainSiteIntroArea.append("<div class=\"row\">");
+			mainSiteIntroArea.append("<div class=\"col-lg-12\">");
 			mainSiteIntroArea.append("<a href=\"?showView=NewSeasonView\"><button class=\"btn btn-large btn-primary\" type=\"button\">Create Your First Season</button></a>");
 			mainSiteIntroArea.append("</div>");
 
 		}
+		mainSiteIntroArea.append("</div>");
 		mainSiteIntroArea.append("</div>");
 		mainSiteIntroArea.append("</div>");
 		mainSiteIntroArea.append("</div>");
@@ -273,58 +267,54 @@ public class ViewHelper
 		StringBuilder newsThumbnails = new StringBuilder();
 
 		//Start the LiveGridRow
-		newsThumbnails.append("<div class=\"row-fluid\">");
-		newsThumbnails.append("<ul class=\"thumbnails\">");
-		newsThumbnails.append("<li class=\"span4\">");
-		newsThumbnails.append("<div class=\"thumbnail\">");
-		newsThumbnails.append("<img src=\"/res/images/logo.png\" style=\"width: 300px; height: 200px;\" />");
-		newsThumbnails.append("<div class=\"caption\">");
-		newsThumbnails.append("<h3>"+ MessagesHome.NEWS_BOXES_1 +"</h3>");
-		newsThumbnails.append("<table class=\"table table-striped\">");
-		for (MatchDay item : matchDays){
-			newsThumbnails.append("<tr> <td>");
-			newsThumbnails.append(item.getName());
-			newsThumbnails.append("</td> </tr>");							
-		}
-		newsThumbnails.append("</table>");
+		newsThumbnails.append("<div class=\"row\">");
+			newsThumbnails.append("<div class=\"col-lg-4\">");
+				newsThumbnails.append("<div class=\"thumbnail\">");
+						newsThumbnails.append("<img src=\"/res/images/logo.png\" style=\"width: 300px; height: 200px;\" />");
+						newsThumbnails.append("<div class=\"caption\">");
+							newsThumbnails.append("<h3>"+ MessagesHome.NEWS_BOXES_1 +"</h3>");
+							newsThumbnails.append("<table class=\"table table-striped\">");
+							for (MatchDay item : matchDays){
+							newsThumbnails.append("<tr> <td>");
+							newsThumbnails.append(item.getName());
+							newsThumbnails.append("</td> </tr>");							
+							}
+							newsThumbnails.append("</table>");
+						newsThumbnails.append("</div>");
+				newsThumbnails.append("</div>");
+			newsThumbnails.append("</div>");
+
+			newsThumbnails.append("<div class=\"col-lg-8\">");
+				newsThumbnails.append("<div class=\"thumbnail\">");
+					newsThumbnails.append("<img src=\"/res/images/logo.png\" style=\"width: 300px; height: 200px;\" />");
+					newsThumbnails.append("<div class=\"caption\">");
+						newsThumbnails.append("<h3>" + MessagesHome.NEWS_BOXES_2 +"</h3>");
+						newsThumbnails.append("<table class=\"table table-striped\">");
+						newsThumbnails.append("<thead> <th> TEAM 1</th> <th> TEAM 2</th>  <th> RESULT</th> <th> RESULT</th>  </thead>");
+			for (Game item : badmintonSingle){
+	
+						newsThumbnails.append("<tr> <td>");
+						newsThumbnails.append(item.getPlayerOne().get(0).getSurname()+", "+ item.getPlayerOne().get(0).getFirstname());
+			
+						newsThumbnails.append("</td> <td>");
+						newsThumbnails.append(item.getPlayerTwo().get(0).getSurname()+", "+ item.getPlayerTwo().get(0).getFirstname());
+			
+						newsThumbnails.append("</td> <td>");
+						newsThumbnails.append(item.getResultOne());
+			
+						newsThumbnails.append("</td> <td>");
+						newsThumbnails.append(item.getResultTwo());
+			
+						newsThumbnails.append("</td> </tr>");							
+			}
+	
+						newsThumbnails.append("</table>");
+					newsThumbnails.append("</div>");
+				newsThumbnails.append("</div>");
+			newsThumbnails.append("</div>");
 		newsThumbnails.append("</div>");
-		newsThumbnails.append("</div>");
-		newsThumbnails.append("</li>");
-
-		newsThumbnails.append("<li class=\"span8\">");
-		newsThumbnails.append("<div class=\"thumbnail\">");
-		newsThumbnails.append("<img src=\"/res/images/logo.png\" style=\"width: 300px; height: 200px;\" />");
-		newsThumbnails.append("<div class=\"caption\">");
-		newsThumbnails.append("<h3>" + MessagesHome.NEWS_BOXES_2 +"</h3>");
-		newsThumbnails.append("<table class=\"table table-striped\">");
-		newsThumbnails.append("<thead> <th> TEAM 1</th> <th> TEAM 2</th>  <th> RESULT</th> <th> RESULT</th>  </thead>");
-		for (Game item : badmintonSingle){
-
-			newsThumbnails.append("<tr> <td>");
-			newsThumbnails.append(item.getPlayerOne().get(0).getSurname()+", "+ item.getPlayerOne().get(0).getFirstname());
-
-			newsThumbnails.append("</td> <td>");
-			newsThumbnails.append(item.getPlayerTwo().get(0).getSurname()+", "+ item.getPlayerTwo().get(0).getFirstname());
-
-			newsThumbnails.append("</td> <td>");
-			newsThumbnails.append(item.getResultOne());
-
-			newsThumbnails.append("</td> <td>");
-			newsThumbnails.append(item.getResultTwo());
-
-			newsThumbnails.append("</td> </tr>");							
-		}
-
-		newsThumbnails.append("</table>");
-		newsThumbnails.append("</div>");
-		newsThumbnails.append("</div>");
-		newsThumbnails.append("</li>");
-
-
-
-
-		newsThumbnails.append("</ul>");
-		newsThumbnails.append("</div>");	
+		
+		
 		return newsThumbnails.toString();
 	}
 
@@ -335,12 +325,12 @@ public class ViewHelper
 
 	public String createFooter(){
 		StringBuilder footer = new StringBuilder();
-		footer.append("<div class=\"row-fluid footer custom_footer\">");
-		footer.append("<div class=\"span12\">");
+		footer.append("<div class=\"row footer custom_footer\">");
+		footer.append("<div class=\"col-lg-12\">");
 		footer.append("<div class=\"container-fluid\">");
-		footer.append("<div class=\"row-fluid\">");
+		footer.append("<div class=\"row\">");
 
-		footer.append("<div class=\"span1\">");
+		footer.append("<div class=\"col-lg-1\">");
 		footer.append("		<img src=\"/res/images/logo_icon.png\" alt=\"logo\" />");
 		footer.append("</div>");	
 
@@ -386,8 +376,8 @@ public class ViewHelper
 		double percentageLost = 100.00 - percentageWon;
 		DecimalFormat decimalFormat = new DecimalFormat("##.##");
 		htmlSuccessBar.append("<div class=\"progress\">");
-		htmlSuccessBar.append("		<div class=\"bar bar-success\" style=\"width:"+ decimalFormat.format(percentageWon) +"%\">"+ decimalFormat.format(percentageWon) +"%</div>");
-		htmlSuccessBar.append("		<div class=\"bar bar-danger\" style=\"width:"+ decimalFormat.format(percentageLost) +"%\">"+ decimalFormat.format(percentageLost) +"%</div>");
+		htmlSuccessBar.append("		<div class=\"progress-bar progress-bar-success\" style=\"width:"+ decimalFormat.format(percentageWon) +"%\">"+ decimalFormat.format(percentageWon) +"%</div>");
+		htmlSuccessBar.append("		<div class=\"progress-bar progress-bar-danger\" style=\"width:"+ decimalFormat.format(percentageLost) +"%\">"+ decimalFormat.format(percentageLost) +"%</div>");
 		htmlSuccessBar.append("</div>");
 		}else{
 			htmlSuccessBar.append("No Games Played");
@@ -456,8 +446,8 @@ public class ViewHelper
 	public  String printAllGamesForMatchDays(List<MatchDay> matchDays, UserWithPassword selectedUser){
 		StringBuilder result = new StringBuilder();
 		
-		result.append("<div class=\"row-fluid\">");
-		result.append("<div class=\"span12\">");
+		result.append("<div class=\"row\">");
+		result.append("<div class=\"col-lg-12\">");
 		result.append("<h3>Games Played Grouped by MatchDays</h3>");
 		result.append("</div>");
 		result.append("</div>");
@@ -468,8 +458,8 @@ public class ViewHelper
 		
 		
 		for (MatchDay  matchDay: matchDays){
-			result.append("<div class=\"row-fluid\">");
-			result.append("<div class=\"span8\">");
+			result.append("<div class=\"row\">");
+			result.append("<div class=\"col-lg-8\">");
 		
 			result.append("<table class=\"table table-striped\">");
 			result.append("<thead> <th colspan=\"2\" style=\"width:50%\"><div>" + matchDay.getName() + " | Games Played: " +  matchDay.getGamesPlayed()  + " Games Won: "+ matchDay.getGamesWon() + "</div></th> <th colspan=\"2\" style=\"width:50%\"> "+ this.createSuccessBar(matchDay.getGamesWon(), matchDay.getGamesPlayed()) + " </th>  </thead>");
@@ -507,11 +497,11 @@ public class ViewHelper
 			result.append("</table>");
 			result.append("</div>");
 			
-			result.append("<div class=\"span4\"></div>");
+			result.append("<div class=\"col-lg-4\"></div>");
 			result.append("</div>");
 			
-			result.append("<div class=\"row-fluid\">");
-			result.append("<div class=\"span12\">&nbsp;</div>");
+			result.append("<div class=\"row\">");
+			result.append("<div class=\"col-lg-12\">&nbsp;</div>");
 			result.append("</div>");
 		}
 		

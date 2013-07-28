@@ -24,17 +24,17 @@
 %>
 
 <%=viewHelper.createHtmlBegin("Ranking Factory")%>
-<div class="row-fluid">
-	<div class="span12">
+<div class="row">
+	<div class="col-lg-12">
 		<h1>Ranking Factory</h1>
 		<form action="/" method="post">
-			<input class="fillLayout" type="hidden" name="action"
+			<input class="form-control" type="hidden" name="action"
 				value="CreateRanking">
 
-			<div class="row-fluid">
-				<div class="span2">Choose a Season</div>
-				<div class="span8">
-					<select name="seasonKey">
+			<div class="row">
+				<div class="col-lg-2">Choose a Season</div>
+				<div class="col-lg-8">
+					<select class="form-control" name="seasonKey">
 						<%
 							for (Season item : seasons) {
 
@@ -48,8 +48,8 @@
 
 				</div>
 				
-				<div class="span2">
-					<input type="submit" value="Create Ranking">
+				<div class="col-lg-2">
+					<input class="btn btn-default" type="submit" value="Create Ranking">
 				</div>
 			</div>
 

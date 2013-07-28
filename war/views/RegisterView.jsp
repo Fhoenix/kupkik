@@ -34,42 +34,42 @@
 <form action="/" method="post">
 	<input type="hidden" name="action" value="RegisterUser">
 
-	<div class="row-fluid">
-		<div class="span6">
+	<div class="row">
+		<div class="col-lg-6">
 			<h1>Register</h1>
 
-			<div class="row-fluid">
-				<div class="span12">&nbsp;</div>
+			<div class="row">
+				<div class="col-lg-12">&nbsp;</div>
 			</div>
 
-			<div class="row-fluid">
-				<div class="span4">E-Mail</div>
-				<div class="span8">  <input class="fillLayout" placeholder="email@example.com" name="user_name" type="email" size="50" maxlength="50" value="<%=initializeUserName%>"></div>
+			<div class="row">
+				<div class="col-lg-4">E-Mail</div>
+				<div class="col-lg-8">  <input class="form-control" placeholder="email@example.com" name="user_name" type="email" size="50" maxlength="50" value="<%=initializeUserName%>"></div>
 			</div>
-			<div class="row-fluid">
-				<div class="span4">Firstname</div>
-				<div class="span8">  <input class="fillLayout" placeholder="Your Firstname" name="firstname" type="text" size="50" maxlength="50"></div>
+			<div class="row">
+				<div class="col-lg-4">Firstname</div>
+				<div class="col-lg-8">  <input class="form-control" placeholder="Your Firstname" name="firstname" type="text" size="50" maxlength="50"></div>
 			</div>
-			<div class="row-fluid">
-				<div class="span4">Lastname</div>
-				<div class="span8">  <input class="fillLayout" placeholder="Your Lastname" name="surname" type="text" size="50" maxlength="50"></div>
-			</div>
-
-			<div class="row-fluid">
-					<div class="span4">Password</div>
-					<div class="span8"><input class="fillLayout" placeholder="Please Enter Your Password here" name="password1" type="password" size="12" maxlength="12"></div>
+			<div class="row">
+				<div class="col-lg-4">Lastname</div>
+				<div class="col-lg-8">  <input class="form-control" placeholder="Your Lastname" name="surname" type="text" size="50" maxlength="50"></div>
 			</div>
 
-			<div class="row-fluid">
-				<div class="span4">Password repeat</div>
-				<div class="span8"><input class="fillLayout" placeholder="Confirm It" name="password2" type="password" size="12" maxlength="12"></div>
+			<div class="row">
+					<div class="col-lg-4">Password</div>
+					<div class="col-lg-8"><input class="form-control" placeholder="Please Enter Your Password here" name="password1" type="password" size="12" maxlength="12"></div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-4">Password repeat</div>
+				<div class="col-lg-8"><input class="form-control" placeholder="Confirm It" name="password2" type="password" size="12" maxlength="12"></div>
 			</div>
 			
-			<div class="row-fluid">
-				<div class="span12"> <input type="submit" value=" Absenden "></div>
+			<div class="row">
+				<div class="col-lg-12"> <input class="btn btn-default" type="submit" value=" Absenden "></div>
 			</div>
 		</div>
-		<div class="span6">
+		<div class="col-lg-6">
 			<h1>REGISTER USER </h1>
 			
 			REGISTER USER REGISTER USER REGISTER USER REGISTER USER 

@@ -23,17 +23,17 @@
 %>
 
 <%=viewHelper.createHtmlBegin("Statistics Factory")%>
-<div class="row-fluid">
-	<div class="span12">
+<div class="row">
+	<div class="col-lg-12">
 		<h1>Profile Crawler</h1>
 		<form action="/" method="post">
-			<input class="fillLayout" type="hidden" name="action"
+			<input class="form-control" type="hidden" name="action"
 				value="CreateStatistics">
 
-			<div class="row-fluid">
-				<div class="span2">Choose a Season</div>
-				<div class="span3">
-					<select name="seasonKey">
+			<div class="row">
+				<div class="col-lg-2">Choose a Season</div>
+				<div class="col-lg-3">
+					<select class="form-control" name="seasonKey">
 						<%
 							for (Season item : seasons) {
 
@@ -46,9 +46,9 @@
 					</select>
 
 				</div>
-				<div class="span2">Choose a Player</div>
-				<div class="span3">
-					<select id="userprofile" name="userprofile">
+				<div class="col-lg-2">Choose a Player</div>
+				<div class="col-lg-3">
+					<select class="form-control" id="userprofile" name="userprofile">
 
 						<%
 							for (User item : users) {
@@ -59,8 +59,8 @@
 						%>
 					</select>
 				</div>
-				<div class="span2">
-					<input type="submit" value="Create Statistics">
+				<div class="col-lg-2">
+					<input class="btn btn-default" type="submit" value="Create Statistics">
 				</div>
 			</div>
 
@@ -74,11 +74,11 @@
 				UserWithPassword selectedUser =	(UserWithPassword) request.getAttribute("selectedUser");
 			if (displaySkillGraph != null) {
 		%>
-		<div class="row-fluid">
-			<div class="span12"><h2>Profile <%= selectedUser.getSurname() +", "+selectedUser.getFirstname() %></h2></div>
+		<div class="row">
+			<div class="col-lg-12"><h2>Profile <%= selectedUser.getSurname() +", "+selectedUser.getFirstname() %></h2></div>
 		</div>
-		<div class="row-fluid">
-			<div class="span12"><h3>Badminton Single Games</h3></div>
+		<div class="row">
+			<div class="col-lg-12"><h3>Badminton Single Games</h3></div>
 		</div>
 		<%
 			StringBuilder skillTable = new StringBuilder();
@@ -115,15 +115,15 @@
 
 				skillTable.append("</table>");
 
-				out.println("<div class=\"row-fluid\">");
-				out.println("<div class=\"span12\">");
+				out.println("<div class=\"row\">");
+				out.println("<div class=\"col-lg-12\">");
 				out.println(skillTable.toString());
 				out.println("</div>");
 
 				out.println("</div>");
 
-				out.println("<div class=\"row-fluid\">");
-				out.println("<div  class=\"span12\">");
+				out.println("<div class=\"row\">");
+				out.println("<div  class=\"col-lg-12\">");
 				out.println("<div id=\"SkillGraphCanvasSingle\" style=\"width:100%\">");
 
 				out.println(viewHelper.createLineChart(displaySkillGraph
@@ -151,8 +151,8 @@
 		<%
 			if (displaySkillGraphDouble != null) {
 		%>
-		<div class="row-fluid">
-			<div class="span12"><h3>Badminton Double Games</h3></div>
+		<div class="row">
+			<div class="col-lg-12"><h3>Badminton Double Games</h3></div>
 		</div>
 		<%
 			StringBuilder skillTable = new StringBuilder();
@@ -191,15 +191,15 @@
 
 				skillTable.append("</table>");
 
-				out.println("<div class=\"row-fluid\">");
-				out.println("<div class=\"span12\">");
+				out.println("<div class=\"row\">");
+				out.println("<div class=\"col-lg-12\">");
 				out.println(skillTable.toString());
 				out.println("</div>");
 
 				out.println("</div>");
 
-				out.println("<div class=\"row-fluid\">");
-				out.println("<div  class=\"span12\">");
+				out.println("<div class=\"row\">");
+				out.println("<div  class=\"col-lg-12\">");
 				out.println("<div id=\"SkillGraphCanvasDouble\" style=\"width:100%\">");
 
 				out.println(viewHelper.createLineChart(displaySkillGraphDouble

@@ -26,20 +26,20 @@
  %>    
       
       
-   <div class="row-fluid">
-		<div class="span6">
+   <div class="row">
+		<div class="col-lg-6">
 			<h1>New MatchDay</h1>
  			<form action="/" method="post">
  			 <input type="hidden" name="action" value="CreateMatchDay">
-				<div class="row-fluid">
-					<div class="span12">&nbsp;</div>
+				<div class="row">
+					<div class="col-lg-12">&nbsp;</div>
 				</div>
 	
-				<div class="row-fluid">
-					<div class="span4"><%=viewHelper.createLabel("Select a Season", "label",
+				<div class="row">
+					<div class="col-lg-4"><%=viewHelper.createLabel("Select a Season", "label",
 					"seasonKey")%>	</div>
-					<div class="span8">  
-						<select id="seasonKey" name="seasonKey">
+					<div class="col-lg-8">  
+						<select class="form-control" id="seasonKey" name="seasonKey">
             				<% for (Season item : seasons){
             					out.println("	 <option value=\"" +KeyFactory.keyToString(item.getKey()) + "\">"+ item.getName()+"</option>");
        						 } %>	
@@ -47,17 +47,17 @@
 					</div>
 				</div>
 				
-				<div class="row-fluid">
-					<div class="span12"> <input class="fillLayout"  placeholder="MatchDay Name" name="name" type="text"></div>
+				<div class="row">
+					<div class="col-lg-12"> <input class="form-control"  placeholder="MatchDay Name" name="name" type="text"></div>
 				</div>
 				
-				<div class="row-fluid">
-					<div class="span12"><input type="submit" value="Absenden"></div>
+				<div class="row">
+					<div class="col-lg-12"><input class="btn btn-default" type="submit" value="Absenden"></div>
 				</div>
 				  
 			 </form>
 		</div>	
-		<div class="span6">
+		<div class="col-lg-6">
 			<h1>Whats a MatchDay</h1>
 			
 					Beschreibung Turnier Beschreibung Turnier
