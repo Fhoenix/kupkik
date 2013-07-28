@@ -16,12 +16,12 @@ public class PFBadmintonSaver {
 
 
 
-	public static void saveNewBadmintonSingleGame(final Key matchDayKey, final Key playerOne, final Key playerTwo, final int resultOne, final int resultTwo, final Date date){
+	public static void saveNewBadmintonSingleGame(final Key matchDayKey, final List<Key> playerOne, final List<Key> playerTwo, final int resultOne, final int resultTwo, final Date date){
 	
 		Entity badmintonSingleGame = new Entity(EntityNameStore.BADMINTON_SINGLE_GAME, matchDayKey);
 		
-		badmintonSingleGame.setProperty("playerOne", playerOne);
-		badmintonSingleGame.setProperty("playerTwo", playerTwo);
+		badmintonSingleGame.setProperty("teamOne", playerOne);
+		badmintonSingleGame.setProperty("teamTwo", playerTwo);
 		badmintonSingleGame.setProperty("resultOne", resultOne);
 		badmintonSingleGame.setProperty("resultTwo", resultTwo);
 		

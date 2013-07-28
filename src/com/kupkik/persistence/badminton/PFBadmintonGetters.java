@@ -49,26 +49,31 @@ public class PFBadmintonGetters {
 		List<BadmintonSingle> matches = new ArrayList<BadmintonSingle>();
 		for( Entity currentEntity : matchesEntities )
 		{
-			Key playerOne = (Key) currentEntity.getProperties().get("playerOne");
-			Key playerTwo = (Key) currentEntity.getProperties().get("playerTwo");
+			List<Key> playerOne = (List<Key>) currentEntity.getProperties().get("teamOne");
+			List<Key>  playerTwo = (List<Key>) currentEntity.getProperties().get("teamTwo");
 			int resultOne = Integer.parseInt(currentEntity.getProperties().get("resultOne").toString());
 			int resultTwo =  Integer.parseInt(currentEntity.getProperties().get("resultTwo").toString());
 			String matchDayName = currentEntity.getParent().getName();
 			Date date = (Date) currentEntity.getProperties().get("date");
 
-			User userPlayerOne = null;
-			User userPlayerTwo = null;
+			List<User> userTeam1 = new ArrayList<>();
+			List<User> userTeam2 = new ArrayList<>();
 			List<UserWithPassword> allUsers = PFCommonGetter.getAllUsers();
 			for (UserWithPassword userWithPassword : allUsers) {
-				if(userWithPassword.getKey().equals(playerOne)){
-					userPlayerOne = userWithPassword;
+				for (Key team1item : playerOne){
+					if(userWithPassword.getKey().equals(team1item)){
+						userTeam1.add(userWithPassword);
+					}
 				}
-				if(userWithPassword.getKey().equals(playerTwo)){
-					userPlayerTwo = userWithPassword;
+				
+				for (Key team2item : playerTwo){
+					if(userWithPassword.getKey().equals(team2item)){
+						userTeam2.add(userWithPassword);
+					}
 				}
 			}
 			
-			BadmintonSingle currentBadmintonGame = new BadmintonSingle(userPlayerOne,userPlayerTwo,resultOne,resultTwo,date,matchDayName);
+			BadmintonSingle currentBadmintonGame = new BadmintonSingle(userTeam1,userTeam2,resultOne,resultTwo,date,matchDayName);
 			matches.add(currentBadmintonGame);
 		}
 
@@ -104,40 +109,56 @@ public class PFBadmintonGetters {
 			List<IGame> badmintonSingleGames = new ArrayList<IGame>();
 			for(Entity game : games){
 				totalNumberGames++;
-				Key playerOne = (Key) game.getProperty("playerOne");
-				Key playerTwo = (Key) game.getProperty("playerTwo");
+				List<Key> playerOne = (List<Key>) game.getProperty("teamOne");
+				List<Key> playerTwo = (List<Key>) game.getProperty("teamTwo");
 				
 				int resultOne = Integer.parseInt(game.getProperty("resultOne").toString());
 				int resultTwo = Integer.parseInt(game.getProperty("resultTwo").toString());
 				//Date date = (Date) game.getProperty("date");
 				String matchDayName = game.getParent().getName();
 				
-				User userPlayerOne = null;
-				User userPlayerTwo = null;
+				List<User> userTeam1 = new ArrayList<>();
+				List<User> userTeam2 = new ArrayList<>();
 				List<UserWithPassword> allUsers = PFCommonGetter.getAllUsers();
 				for (UserWithPassword userWithPassword : allUsers) {
-					if(userWithPassword.getKey().equals(playerOne)){
-						userPlayerOne = userWithPassword;
+					for (Key team1item : playerOne){
+						if(userWithPassword.getKey().equals(team1item)){
+							userTeam1.add(userWithPassword);
+						}
 					}
-					if(userWithPassword.getKey().equals(playerTwo)){
-						userPlayerTwo = userWithPassword;
+					
+					for (Key team2item : playerTwo){
+						if(userWithPassword.getKey().equals(team2item)){
+							userTeam2.add(userWithPassword);
+						}
+					}
+					
+				
+				}
+				
+				badmintonSingleGames.add(new BadmintonSingle(userTeam1, userTeam2, resultOne, resultTwo, null, matchDayName));
+				
+				
+				for (User user : userTeam1) {
+					if(user.getKey().equals(userName)){
+						gamesPlayed++;
+						totalGamesPlayed++;
+						if(resultOne > resultTwo){
+							gamesWon++;
+							totalGamesWon++;
+						}
 					}
 				}
 				
-				badmintonSingleGames.add(new BadmintonSingle(userPlayerOne, userPlayerTwo, resultOne, resultTwo, null, matchDayName));
 				
-				
-				if (playerOne.equals(userName)
-						|| playerTwo.equals(userName)){
-					totalGamesPlayed++;
-					gamesPlayed++;
-
-				
-
-					if((playerOne.equals(userName) && resultTwo < resultOne) 
-							|| (playerTwo.equals(userName) && resultOne < resultTwo) ){
-						totalGamesWon++;
-						gamesWon++;
+				for (User user : userTeam2) {
+					if(user.getKey().equals(userName)){
+						gamesPlayed++;
+						totalGamesPlayed++;
+						if( resultTwo > resultOne){
+							gamesWon++;
+							totalGamesWon++;
+						}
 					}
 				}
 			}
@@ -197,18 +218,20 @@ public  static DisplaySkillGraph getAllBadmintonDoubleGamesInSeason(Key season, 
 				List<User> userTeam2 = new ArrayList<>();
 				List<UserWithPassword> allUsers = PFCommonGetter.getAllUsers();
 				for (UserWithPassword userWithPassword : allUsers) {
-					if(userWithPassword.getKey().equals(team1.get(0))){
-						userTeam1.add(userWithPassword);
+				
+					for (Key team1item : team1){
+						if(userWithPassword.getKey().equals(team1item)){
+							userTeam1.add(userWithPassword);
+						}
 					}
-					if(userWithPassword.getKey().equals(team1.get(1))){
-						userTeam1.add(userWithPassword);
+					
+					for (Key team2item : team2){
+						if(userWithPassword.getKey().equals(team2item)){
+							userTeam2.add(userWithPassword);
+						}
 					}
-					if(userWithPassword.getKey().equals(team2.get(0))){
-						userTeam2.add(userWithPassword);
-					}
-					if(userWithPassword.getKey().equals(team2.get(1))){
-						userTeam2.add(userWithPassword);
-					}
+					
+					
 				}
 				
 				
@@ -221,22 +244,29 @@ public  static DisplaySkillGraph getAllBadmintonDoubleGamesInSeason(Key season, 
 				badmintonDoubleGames.add(new BadmintonDouble(userTeam1,userTeam2,matchDayName,resultOne,resultTwo, null));
 				
 				
-				if (team1.get(0).equals(userName)
-						|| team1.get(1).equals(userName)
-						||team2.get(0).equals(userName)
-						||team2.get(1).equals(userName)){
-					totalGamesPlayed++;
-					gamesPlayed++;
-
-				
-
-					if(((team1.get(0).equals(userName) || team1.get(1).equals(userName) ) && resultTwo < resultOne) 
-							|| 
-							((team2.get(0).equals(userName) || team2.get(1).equals(userName) )  && resultOne < resultTwo)){
-						totalGamesWon++;
-						gamesWon++;
+			
+				for (User user : userTeam1) {
+					if(user.getKey().equals(userName)){
+						gamesPlayed++;
+						totalGamesPlayed++;
+						if(resultOne > resultTwo){
+							gamesWon++;
+							totalGamesWon++;
+						}
 					}
 				}
+				
+				
+				for (User user : userTeam2) {
+					if(user.getKey().equals(userName)){
+						gamesPlayed++;
+						totalGamesPlayed++;
+						if( resultTwo > resultOne){
+							gamesWon++;
+							totalGamesWon++;
+						}
+					}
+				}			
 			}
 			MatchDay t = new MatchDay(matchDay.getKey().getName(), matchDay.getKey(), matchDay.getParent());
 			t.setGames(badmintonDoubleGames);

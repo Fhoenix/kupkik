@@ -1,6 +1,8 @@
 package com.kupkik.ui.html.requesthandlers;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +39,13 @@ public class CreateBadmintonSingleGameHandler  implements IHtmlRequestHandler{
 
 		Key playerOne = KeyFactory.stringToKey(pRequest.getParameter("playerOne"));
 		Key playerTwo = KeyFactory.stringToKey(pRequest.getParameter("playerTwo"));
-
+		
+		List<Key> playerOneList = new ArrayList<Key>();
+		List<Key> playerTwoList = new ArrayList<Key>();
+		
+		playerOneList.add(playerOne);
+		playerTwoList.add(playerTwo);
+		
 		if (pRequest.getParameter("resultOne").toString().isEmpty() || pRequest.getParameter("resultTwo").toString().isEmpty() ){
 			pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.BADMINTON_RESULT_INVALID);
 			return "NewBadmintonSingleGameView";		
@@ -51,8 +59,8 @@ public class CreateBadmintonSingleGameHandler  implements IHtmlRequestHandler{
 		Date date = new Date();
 
 
-		CreateBadmintonSingleGameAnswer createBadmintonSingleAnswer = pApplicationCoreFacade.createBadmintonSingleGame(KeyFactory.stringToKey(pMatchDayKey), playerOne, 
-				playerTwo, 
+		CreateBadmintonSingleGameAnswer createBadmintonSingleAnswer = pApplicationCoreFacade.createBadmintonSingleGame(KeyFactory.stringToKey(pMatchDayKey), playerOneList, 
+				playerTwoList, 
 				resultOne,
 				resultTwo,
 				date);

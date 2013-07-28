@@ -113,6 +113,7 @@ public class ViewHelper
 			content.append("				<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Statistics<b class=\"caret\"></b></a>");
 			content.append("				<ul class=\"dropdown-menu\">");
 			content.append(" 					<li><a href=\"/?showView=StatisticsView\">Statistics</a> </li>");
+			content.append(" 					<li><a href=\"/?showView=RankingView\">Ranking</a> </li>");
 			content.append("				</ul>");
 			content.append("			</li>");
 			content.append(" 			<li><a href=\"/?action=Logoff\">Logout</a> </li>");
@@ -301,10 +302,10 @@ public class ViewHelper
 		for (BadmintonSingle item : badmintonSingle){
 
 			newsThumbnails.append("<tr> <td>");
-			newsThumbnails.append(item.getPlayerOne().getSurname()+", "+ item.getPlayerOne().getFirstname());
+			newsThumbnails.append(item.getPlayerOne().get(0).getSurname()+", "+ item.getPlayerOne().get(0).getFirstname());
 
 			newsThumbnails.append("</td> <td>");
-			newsThumbnails.append(item.getPlayerTwo().getSurname()+", "+ item.getPlayerTwo().getFirstname());
+			newsThumbnails.append(item.getPlayerTwo().get(0).getSurname()+", "+ item.getPlayerTwo().get(0).getFirstname());
 
 			newsThumbnails.append("</td> <td>");
 			newsThumbnails.append(item.getResultOne());

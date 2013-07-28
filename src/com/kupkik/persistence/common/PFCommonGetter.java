@@ -13,10 +13,13 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
+import com.kupkik.model.DisplaySkillGraph;
 import com.kupkik.model.Season;
 import com.kupkik.model.MatchDay;
 import com.kupkik.model.User;
 import com.kupkik.model.UserWithPassword;
+import com.kupkik.model.game.BadmintonDouble;
+import com.kupkik.model.game.IGame;
 import com.kupkik.persistence.EntityNameStore;
 
 public class PFCommonGetter {
@@ -218,6 +221,63 @@ public class PFCommonGetter {
 		        }
 		
 		return seasons;	
+	}
+	
+	public static List<MatchDay> getMatchDaysForSeason(Key season, String gameType){
+	
+		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
+		Query getMatchDaysbySeasonKey = new Query(EntityNameStore.MATCHDAY).setAncestor(season);
+		PreparedQuery PQMatchDays = dataStore.prepare(getMatchDaysbySeasonKey);
+		List<Entity> matchDayEntity = PQMatchDays.asList(FetchOptions.Builder.withDefaults());
+	
+
+		List<MatchDay> matchDays = new ArrayList<MatchDay>();
+		for (Entity matchDay: matchDayEntity){
+		
+			DatastoreService dataStore2 = DatastoreServiceFactory.getDatastoreService();
+			Query getGamesForMatchDay = new Query(gameType).setAncestor(matchDay.getKey());
+			PreparedQuery PQGames = dataStore2.prepare(getGamesForMatchDay);
+			List<Entity> games = PQGames.asList(FetchOptions.Builder.withDefaults());	
+			
+			
+			List<IGame> iGames = new ArrayList<IGame>();
+			
+			for(Entity game : games){
+				List<Key> team1 = (List<Key>) game.getProperty("teamOne");
+				List<Key> team2 = (List<Key>) game.getProperty("teamTwo");
+			
+				List<User> userTeam1 = new ArrayList<User>();
+				List<User> userTeam2 = new ArrayList<User>();
+				List<UserWithPassword> allUsers = PFCommonGetter.getAllUsers();
+				for (UserWithPassword userWithPassword : allUsers) {
+					for (Key team1item : team1){
+						if(userWithPassword.getKey().equals(team1item)){
+							userTeam1.add(userWithPassword);
+						}
+					}
+					
+					for (Key team2item : team2){
+						if(userWithPassword.getKey().equals(team2item)){
+							userTeam2.add(userWithPassword);
+						}
+					}
+				}
+				
+				
+				int resultOne = Integer.parseInt(game.getProperty("resultOne").toString());
+				int resultTwo = Integer.parseInt(game.getProperty("resultTwo").toString());
+				//Date date = (Date) game.getProperty("date");
+				String matchDayName = game.getParent().getName();
+				
+				//TODO  COS THIS MUST BE GENERIC
+				iGames.add(new BadmintonDouble(userTeam1,userTeam2,matchDayName,resultOne,resultTwo, null));
+			}
+			MatchDay tmp =  new MatchDay(matchDay.getKey().getName(), matchDay.getKey(), matchDay.getParent());
+			tmp.setGames(iGames);
+			matchDays.add(tmp);
+			
+		}
+		return matchDays;
 	}
 
 }

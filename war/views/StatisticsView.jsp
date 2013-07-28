@@ -22,7 +22,7 @@
 			.getAttribute("displaySkillGraphDouble");
 %>
 
-<%=viewHelper.createHtmlBegin("My Profile")%>
+<%=viewHelper.createHtmlBegin("Statistics Factory")%>
 <div class="row-fluid">
 	<div class="span12">
 		<h1>Profile Crawler</h1>
@@ -60,7 +60,7 @@
 					</select>
 				</div>
 				<div class="span2">
-					<input type="submit" value="Crawl Profile">
+					<input type="submit" value="Create Statistics">
 				</div>
 			</div>
 

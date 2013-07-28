@@ -10,36 +10,36 @@ public class BadmintonSingle implements IGame {
 
 
 
-	private User playerOne;
-	private User playerTwo;
+	private List<User> team1;
+	private List<User> team2;
 	private int resultTwo;
 	private int resultOne;
 	private Date date;
 	private String matchDay;
 
-	public BadmintonSingle(final User playerOne, final User playerTwo, final int resultOne, final int resultTwo, final Date date, final String matchDay){
-		this.playerOne = playerOne;
-		this.playerTwo = playerTwo;
+	public BadmintonSingle(final List<User> team1, final List<User> team2, final int resultOne, final int resultTwo, final Date date, final String matchDay){
+		this.team1 = team1;
+		this.team2 = team2;
 		this.resultOne = resultOne;
 		this.resultTwo = resultTwo;
 		this.matchDay = matchDay;
 		this.date = date;
 	}
 
-	public User getPlayerOne() {
-		return playerOne;
+	public List<User> getPlayerOne() {
+		return team1;
 	}
 
-	public void setPlayerOne(User playerOne) {
-		this.playerOne = playerOne;
+	public void setPlayerOne(List<User> playerOne) {
+		this.team1 = playerOne;
 	}
 
-	public User getPlayerTwo() {
-		return playerTwo;
+	public List<User> getPlayerTwo() {
+		return team2;
 	}
 
-	public void setPlayerTwo(User playerTwo) {
-		this.playerTwo = playerTwo;
+	public void setPlayerTwo(List<User> playerTwo) {
+		this.team2 = playerTwo;
 	}
 
 	public int getResultTwo() {
@@ -69,16 +69,14 @@ public class BadmintonSingle implements IGame {
 
 	@Override
 	public List<User> getTeamOne() {
-		List<User> teamOne = new ArrayList<User>();
-		teamOne.add(playerOne);
-		return teamOne;
+	
+		return team1;
 	}
 
 	@Override
 	public List<User> getTeamTwo() {
-		List<User> teamTwo = new ArrayList<User>();
-		teamTwo.add(playerTwo);
-		return teamTwo;
+
+		return team2;
 	}
 
 

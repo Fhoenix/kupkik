@@ -10,11 +10,14 @@ import com.kupkik.model.Season;
 import com.kupkik.model.MatchDay;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.model.game.BadmintonSingle;
+import com.kupkik.model.ranking.TypedWinLooseRanking;
+import com.kupkik.model.ranking.WinLooseRanking;
 import com.kupkik.persistence.badminton.PFBadmintonGetters;
 import com.kupkik.persistence.badminton.PFBadmintonSaver;
 import com.kupkik.persistence.common.PFCommonGetter;
 import com.kupkik.persistence.common.PFCommonSaver;
 import com.kupkik.persistence.common.PFCommonTester;
+import com.kupkik.persistence.ranking.PFRankingGetters;
 import com.kupkik.utils.CredentialsUtils;
 
 /**
@@ -103,7 +106,7 @@ public class ApplicationCoreFacade
 
 
 
-	public CreateBadmintonSingleGameAnswer createBadmintonSingleGame(final Key matchDayKey, final Key playerOne, final Key playerTwo, final int resultOne, final int resultTwo, final Date date){
+	public CreateBadmintonSingleGameAnswer createBadmintonSingleGame(final Key matchDayKey, final List<Key> playerOne, final List<Key> playerTwo, final int resultOne, final int resultTwo, final Date date){
 		
 		if(playerOne.equals(playerTwo)){
 			return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_USER_EQUAL_EACH_OTHER;
@@ -399,5 +402,10 @@ public class ApplicationCoreFacade
 	 public List<Season> getAllSeasons() {
 		 return PFCommonGetter.getAllSeasons();
 	 }
+
+	public static WinLooseRanking getWinLoosRanking(Key seasonKey) {
+		
+		return PFRankingGetters.getWinLoosRanking(seasonKey);
+	}
 
 }
