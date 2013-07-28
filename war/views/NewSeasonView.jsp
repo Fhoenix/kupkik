@@ -26,6 +26,7 @@
  %> 
 
 	<div class="row">
+	<div class="col-lg-12">
 		<form action="/" method="post">
 			<input type="hidden" name="action" value="CreateSeason">
 	        <h1>Create New Season</h1>
@@ -56,6 +57,7 @@
 				<div class="col-lg-5">&nbsp;</div>
 			</div>
 		</form>
+	</div>
 	</div>
 
 <%= viewHelper.createHtmlEnd()  %> 
