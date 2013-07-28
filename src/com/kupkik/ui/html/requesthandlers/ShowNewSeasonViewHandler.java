@@ -13,7 +13,7 @@ import com.kupkik.model.Season;
 import com.kupkik.model.MatchDay;
 import com.kupkik.model.User;
 import com.kupkik.model.UserWithPassword;
-import com.kupkik.model.game.BadmintonSingle;
+import com.kupkik.model.game.Game;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 

@@ -16,8 +16,7 @@ import com.kupkik.messages.MessagesHome;
 import com.kupkik.model.MatchDay;
 import com.kupkik.model.User;
 import com.kupkik.model.UserWithPassword;
-import com.kupkik.model.game.BadmintonSingle;
-import com.kupkik.model.game.IGame;
+import com.kupkik.model.game.Game;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 
 /**
@@ -270,7 +269,7 @@ public class ViewHelper
 	/**Creates the three thumbnails at the MainPage	
 	 * @param matchDays The List of matchDays to be displayed
 	 */
-	public String newsThumbnails(List<MatchDay> matchDays, List<BadmintonSingle> badmintonSingle){
+	public String newsThumbnails(List<MatchDay> matchDays, List<Game> badmintonSingle){
 		StringBuilder newsThumbnails = new StringBuilder();
 
 		//Start the LiveGridRow
@@ -299,7 +298,7 @@ public class ViewHelper
 		newsThumbnails.append("<h3>" + MessagesHome.NEWS_BOXES_2 +"</h3>");
 		newsThumbnails.append("<table class=\"table table-striped\">");
 		newsThumbnails.append("<thead> <th> TEAM 1</th> <th> TEAM 2</th>  <th> RESULT</th> <th> RESULT</th>  </thead>");
-		for (BadmintonSingle item : badmintonSingle){
+		for (Game item : badmintonSingle){
 
 			newsThumbnails.append("<tr> <td>");
 			newsThumbnails.append(item.getPlayerOne().get(0).getSurname()+", "+ item.getPlayerOne().get(0).getFirstname());
@@ -477,11 +476,12 @@ public class ViewHelper
 			
 			
 
-			List<IGame> iGames = matchDay.getGames();
+			List<Game> iGames = matchDay.getGames();
 			if (iGames.size() == 0){
 				result.append("<tr> <td colspan=\"4\">No Games Played</td></tr>");
+			
 			}else{
-				for( IGame iGame : iGames){
+				for( Game iGame : iGames){
 					
 					
 					if(iGame.getResultOne() > iGame.getResultTwo() ){
@@ -500,14 +500,15 @@ public class ViewHelper
 						result.append("</tr>");
 					}
 				}
-				result.append("</table>");
-				result.append("</div>");
-				
-				result.append("<div class=\"span4\"></div>");
-				result.append("</div>");
+			
 				
 			}
 			
+			result.append("</table>");
+			result.append("</div>");
+			
+			result.append("<div class=\"span4\"></div>");
+			result.append("</div>");
 			
 			result.append("<div class=\"row-fluid\">");
 			result.append("<div class=\"span12\">&nbsp;</div>");

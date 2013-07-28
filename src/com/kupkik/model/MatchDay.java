@@ -5,14 +5,15 @@ import java.util.Collections;
 import java.util.List;
 
 import com.google.appengine.api.datastore.Key;
-import com.kupkik.model.game.IGame;
+import com.kupkik.model.game.Game;
+
 
 public class MatchDay
 {
 	private String name;
 	private Key key;
 	private Key parentKey;
-	private List<IGame> games = new ArrayList<IGame>();
+	private List<Game> games = new ArrayList<Game>();
 	private int gamesWon;
 	private int gamesPlayed;
 
@@ -61,13 +62,13 @@ public class MatchDay
 	{
 		name = pName;
 	}
-	public List<IGame> getGames() {
+	public List<Game> getGames() {
 		return Collections.unmodifiableList(games);
 	}
 	
 	
 	
-	public void setGames(List<IGame> games) {
+	public void setGames(List<Game> games) {
 		this.games = games;
 	}
 

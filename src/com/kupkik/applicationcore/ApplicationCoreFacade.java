@@ -9,7 +9,7 @@ import com.kupkik.model.DisplaySkillGraph;
 import com.kupkik.model.Season;
 import com.kupkik.model.MatchDay;
 import com.kupkik.model.UserWithPassword;
-import com.kupkik.model.game.BadmintonSingle;
+import com.kupkik.model.game.Game;
 import com.kupkik.model.ranking.TypedWinLooseRanking;
 import com.kupkik.model.ranking.WinLooseRanking;
 import com.kupkik.persistence.badminton.PFBadmintonGetters;
@@ -359,7 +359,7 @@ public class ApplicationCoreFacade
 		 return PFCommonGetter.getAllUsers();
 	 }
 
-	 public List<BadmintonSingle> getLatestBadmintonSingleGames(int count){
+	 public List<Game> getLatestBadmintonSingleGames(int count){
 		 return PFBadmintonGetters.getLatestBadmintonSingleGames(count);
 	 }
 

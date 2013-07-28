@@ -1,6 +1,7 @@
 package com.kupkik.persistence.common;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.google.appengine.api.datastore.DatastoreService;
@@ -18,8 +19,7 @@ import com.kupkik.model.Season;
 import com.kupkik.model.MatchDay;
 import com.kupkik.model.User;
 import com.kupkik.model.UserWithPassword;
-import com.kupkik.model.game.BadmintonDouble;
-import com.kupkik.model.game.IGame;
+import com.kupkik.model.game.Game;
 import com.kupkik.persistence.EntityNameStore;
 
 public class PFCommonGetter {
@@ -240,7 +240,7 @@ public class PFCommonGetter {
 			List<Entity> games = PQGames.asList(FetchOptions.Builder.withDefaults());	
 			
 			
-			List<IGame> iGames = new ArrayList<IGame>();
+			List<Game> iGames = new ArrayList<Game>();
 			
 			for(Entity game : games){
 				List<Key> team1 = (List<Key>) game.getProperty("teamOne");
@@ -266,11 +266,11 @@ public class PFCommonGetter {
 				
 				int resultOne = Integer.parseInt(game.getProperty("resultOne").toString());
 				int resultTwo = Integer.parseInt(game.getProperty("resultTwo").toString());
-				//Date date = (Date) game.getProperty("date");
+				Date date = (Date) game.getProperty("date");
 				String matchDayName = game.getParent().getName();
 				
 				//TODO  COS THIS MUST BE GENERIC
-				iGames.add(new BadmintonDouble(userTeam1,userTeam2,matchDayName,resultOne,resultTwo, null));
+				iGames.add(new Game(userTeam1,userTeam2, date,resultOne,resultTwo,matchDayName));
 			}
 			MatchDay tmp =  new MatchDay(matchDay.getKey().getName(), matchDay.getKey(), matchDay.getParent());
 			tmp.setGames(iGames);

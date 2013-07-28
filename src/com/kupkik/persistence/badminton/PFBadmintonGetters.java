@@ -21,9 +21,7 @@ import com.kupkik.model.DisplaySkillGraph;
 import com.kupkik.model.MatchDay;
 import com.kupkik.model.User;
 import com.kupkik.model.UserWithPassword;
-import com.kupkik.model.game.BadmintonDouble;
-import com.kupkik.model.game.BadmintonSingle;
-import com.kupkik.model.game.IGame;
+import com.kupkik.model.game.Game;
 import com.kupkik.persistence.EntityNameStore;
 import com.kupkik.persistence.common.PFCommonGetter;
 
@@ -36,7 +34,7 @@ public class PFBadmintonGetters {
 	 * @param count
 	 * @return
 	 */
-	public static List<BadmintonSingle> getLatestBadmintonSingleGames(int count){
+	public static List<Game> getLatestBadmintonSingleGames(int count){
 
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
@@ -46,7 +44,7 @@ public class PFBadmintonGetters {
 
 		List<Entity> matchesEntities = getLatestBadmintonSingleMatchesPreparedQuery.asList(FetchOptions.Builder.withLimit(count));
 
-		List<BadmintonSingle> matches = new ArrayList<BadmintonSingle>();
+		List<Game> matches = new ArrayList<Game>();
 		for( Entity currentEntity : matchesEntities )
 		{
 			List<Key> playerOne = (List<Key>) currentEntity.getProperties().get("teamOne");
@@ -73,7 +71,7 @@ public class PFBadmintonGetters {
 				}
 			}
 			
-			BadmintonSingle currentBadmintonGame = new BadmintonSingle(userTeam1,userTeam2,resultOne,resultTwo,date,matchDayName);
+			Game currentBadmintonGame = new Game(userTeam1,userTeam2,date,resultOne,resultTwo,matchDayName);
 			matches.add(currentBadmintonGame);
 		}
 
@@ -106,7 +104,7 @@ public class PFBadmintonGetters {
 			PreparedQuery PQGames = dataStore2.prepare(getGamesForMatchDay);
 			List<Entity> games = PQGames.asList(FetchOptions.Builder.withDefaults());	
 			
-			List<IGame> badmintonSingleGames = new ArrayList<IGame>();
+			List<Game> badmintonSingleGames = new ArrayList<Game>();
 			for(Entity game : games){
 				totalNumberGames++;
 				List<Key> playerOne = (List<Key>) game.getProperty("teamOne");
@@ -136,7 +134,7 @@ public class PFBadmintonGetters {
 				
 				}
 				
-				badmintonSingleGames.add(new BadmintonSingle(userTeam1, userTeam2, resultOne, resultTwo, null, matchDayName));
+				badmintonSingleGames.add(new Game(userTeam1, userTeam2,null, resultOne, resultTwo,  matchDayName));
 				
 				
 				for (User user : userTeam1) {
@@ -208,7 +206,7 @@ public  static DisplaySkillGraph getAllBadmintonDoubleGamesInSeason(Key season, 
 			PreparedQuery PQGames = dataStore2.prepare(getGamesForMatchDay);
 			List<Entity> games = PQGames.asList(FetchOptions.Builder.withDefaults());	
 			
-			List<IGame> badmintonDoubleGames = new ArrayList<IGame>();
+			List<Game> gameList = new ArrayList<Game>();
 			for(Entity game : games){
 				totalNumberGames++;
 				List<Key> team1 = (List<Key>) game.getProperty("teamOne");
@@ -237,11 +235,11 @@ public  static DisplaySkillGraph getAllBadmintonDoubleGamesInSeason(Key season, 
 				
 				int resultOne = Integer.parseInt(game.getProperty("resultOne").toString());
 				int resultTwo = Integer.parseInt(game.getProperty("resultTwo").toString());
-				//Date date = (Date) game.getProperty("date");
+				Date date = (Date) game.getProperty("date");
 				String matchDayName = game.getParent().getName();
 				
 				
-				badmintonDoubleGames.add(new BadmintonDouble(userTeam1,userTeam2,matchDayName,resultOne,resultTwo, null));
+				gameList.add(new Game(userTeam1,userTeam2, date ,resultOne,resultTwo, matchDayName));
 				
 				
 			
@@ -269,7 +267,7 @@ public  static DisplaySkillGraph getAllBadmintonDoubleGamesInSeason(Key season, 
 				}			
 			}
 			MatchDay t = new MatchDay(matchDay.getKey().getName(), matchDay.getKey(), matchDay.getParent());
-			t.setGames(badmintonDoubleGames);
+			t.setGames(gameList);
 			t.setGamesWon(gamesWon);
 			t.setGamesPlayed(gamesPlayed);
 			

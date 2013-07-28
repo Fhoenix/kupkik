@@ -11,7 +11,7 @@ import com.kupkik.applicationcore.ApplicationCoreFacade;
 import com.kupkik.model.MatchDay;
 import com.kupkik.model.User;
 import com.kupkik.model.UserWithPassword;
-import com.kupkik.model.game.BadmintonSingle;
+import com.kupkik.model.game.Game;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 
 public class ShowMainViewHandler
@@ -30,7 +30,7 @@ public class ShowMainViewHandler
         Collections.sort(tournaments, new MatchDayComparator());
         pRequest.setAttribute("matchDays", tournaments);
 
-        List<BadmintonSingle> badmintonSingle = pApplicationCoreFacade.getLatestBadmintonSingleGames(5);
+        List<Game> badmintonSingle = pApplicationCoreFacade.getLatestBadmintonSingleGames(5);
        
         pRequest.setAttribute("badmintonSingle", badmintonSingle);
         

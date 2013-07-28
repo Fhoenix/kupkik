@@ -18,7 +18,7 @@ import com.kupkik.model.MatchDay;
 import com.kupkik.model.Season;
 import com.kupkik.model.User;
 import com.kupkik.model.UserWithPassword;
-import com.kupkik.model.game.IGame;
+import com.kupkik.model.game.Game;
 import com.kupkik.model.ranking.TypedWinLooseRanking;
 import com.kupkik.model.ranking.WinLooseRanking;
 import com.kupkik.model.ranking.WinLooseRows;
@@ -60,8 +60,8 @@ public class PFRankingGetters {
 				//For all Users search 
 				for (MatchDay m : matchDaysForSeason){
 
-					List<IGame> games = m.getGames();
-					for (IGame iGame : games) {
+					List<Game> games = m.getGames();
+					for (Game iGame : games) {
 						totalNumberGames++;
 						List<User> teamOne = iGame.getTeamOne();
 						for (User user : teamOne) {

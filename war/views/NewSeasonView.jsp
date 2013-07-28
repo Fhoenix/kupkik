@@ -42,11 +42,14 @@
 			</div>
 			
 			<div class="row-fluid">
-				<div class="span12">
-				<input type="checkbox" name="gameType" value="BadmintonSingle">Badminton Single<br>
-				<input type="checkbox" name="gameType" value="BadmintonDouble">Badminton Double<br>
+				<div class="span1"><input type="checkbox" name="gameType" value="BadmintonSingle"></div>
+				<div class="span11">Badminton Single</div>
 			</div>
+			<div class="row-fluid">
+				<div class="span1"><input type="checkbox" name="gameType" value="BadmintonDouble"></div>
+				<div class="span11">Badminton Double</div>
 			</div>
+
 			<div class="row-fluid">
 				<div class="span2"><input type="submit" value=" Absenden "></div>
 				<div class="span5">&nbsp;</div>

@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.kupkik.model.User;
 
-public class BadmintonSingle implements IGame {
+public class Game {
 
 
 
@@ -17,7 +17,7 @@ public class BadmintonSingle implements IGame {
 	private Date date;
 	private String matchDay;
 
-	public BadmintonSingle(final List<User> team1, final List<User> team2, final int resultOne, final int resultTwo, final Date date, final String matchDay){
+	public Game(final List<User> team1, final List<User> team2, final Date date, final int resultOne, final int resultTwo,  final String matchDay){
 		this.team1 = team1;
 		this.team2 = team2;
 		this.resultOne = resultOne;
@@ -58,7 +58,6 @@ public class BadmintonSingle implements IGame {
 		this.resultOne = resultOne;
 	}
 
-	@Override
 	public Date getDate() {
 		return date;
 	}
@@ -67,19 +66,22 @@ public class BadmintonSingle implements IGame {
 		this.date = date;
 	}
 
-	@Override
+
 	public List<User> getTeamOne() {
-	
 		return team1;
 	}
 
-	@Override
-	public List<User> getTeamTwo() {
 
+	public List<User> getTeamTwo() {
 		return team2;
 	}
 
-
+	/**
+	 * @return the matchDay
+	 */
+	public String getMatchDay() {
+		return matchDay;
+	}
 
 
 }

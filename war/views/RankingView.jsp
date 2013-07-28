@@ -1,7 +1,7 @@
 <%@page import="com.kupkik.model.ranking.WinLooseRows"%>
 <%@page import="com.kupkik.model.ranking.TypedWinLooseRanking"%>
 <%@page import="com.kupkik.model.ranking.WinLooseRanking"%>
-<%@page import="com.kupkik.model.game.IGame"%>
+<%@page import="com.kupkik.model.game.Game"%>
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@page import="com.sun.org.apache.xerces.internal.impl.xpath.regex.Match"%>
 <%@ page import="com.kupkik.model.*"%>
