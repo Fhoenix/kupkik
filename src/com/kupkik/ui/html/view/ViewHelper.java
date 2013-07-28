@@ -110,9 +110,9 @@ public class ViewHelper
 			content.append("				</ul>");
 			content.append("			</li>");
 			content.append("			<li class=\"dropdown\">");
-			content.append("				<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">My Profile<b class=\"caret\"></b></a>");
+			content.append("				<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Statistics<b class=\"caret\"></b></a>");
 			content.append("				<ul class=\"dropdown-menu\">");
-			content.append(" 					<li><a href=\"/?showView=MyProfileView\">MyProfile</a> </li>");
+			content.append(" 					<li><a href=\"/?showView=StatisticsView\">Statistics</a> </li>");
 			content.append("				</ul>");
 			content.append("			</li>");
 			content.append(" 			<li><a href=\"/?action=Logoff\">Logout</a> </li>");

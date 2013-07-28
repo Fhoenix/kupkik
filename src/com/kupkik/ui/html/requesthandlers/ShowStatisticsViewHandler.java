@@ -20,7 +20,7 @@ import com.kupkik.model.UserWithPassword;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 
 
-public class ShowMyProfileViewHandler implements IHtmlRequestHandler
+public class ShowStatisticsViewHandler implements IHtmlRequestHandler
 {
 
 	@Override

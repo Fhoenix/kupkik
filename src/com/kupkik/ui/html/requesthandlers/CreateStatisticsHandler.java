@@ -22,7 +22,7 @@ import com.kupkik.persistence.common.PFCommonGetter;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 
-public class CreateMyProfileHandler implements IHtmlRequestHandler
+public class CreateStatisticsHandler implements IHtmlRequestHandler
 {
 
     @Override
@@ -65,6 +65,6 @@ public class CreateMyProfileHandler implements IHtmlRequestHandler
 			}
 		}
         
-        return "MyProfileView";
+        return "StatisticsView";
     }
 }

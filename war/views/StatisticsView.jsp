@@ -28,7 +28,7 @@
 		<h1>Profile Crawler</h1>
 		<form action="/" method="post">
 			<input class="fillLayout" type="hidden" name="action"
-				value="CreateMyProfile">
+				value="CreateStatistics">
 
 			<div class="row-fluid">
 				<div class="span2">Choose a Season</div>
