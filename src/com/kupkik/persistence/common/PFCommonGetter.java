@@ -103,6 +103,28 @@ public class PFCommonGetter {
 
 		return matchDays;
 	}
+	
+	/**
+	 * Get all MatchDays in database
+	 * 
+	 * @return all MatchDays, not ordered
+	 */
+	public static List<MatchDay> getLatestMatchDays(int count)
+	{
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		Query getAllMatchDaysQuery = new Query(EntityNameStore.MATCHDAY);
+		PreparedQuery getAllMatchDaysPreparedQuery = datastore.prepare(getAllMatchDaysQuery);
+
+		List<Entity> userEntities = getAllMatchDaysPreparedQuery.asList(FetchOptions.Builder.withLimit(count));
+		List<MatchDay> matchDays = new ArrayList<MatchDay>();
+		for( Entity currentMatchDayEntity : userEntities )
+		{
+			MatchDay currentMatchDay = new MatchDay(currentMatchDayEntity.getKey().getName(), currentMatchDayEntity.getKey(), currentMatchDayEntity.getParent());
+			matchDays.add(currentMatchDay);
+		}
+
+		return matchDays;
+	}
 
 	/**
 	 * Get MatchDay by MatchDay Key

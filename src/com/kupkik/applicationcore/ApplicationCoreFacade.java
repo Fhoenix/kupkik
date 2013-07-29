@@ -373,6 +373,11 @@ public class ApplicationCoreFacade
 		 return PFCommonGetter.getAllMatchDays();
 	 }
 
+	 public List<MatchDay> getLatestMatchDays(int count)
+	 {
+		 return PFCommonGetter.getLatestMatchDays(count);
+	 }
+	 
 	 public static List<Season> getAllSeasonsForUser(UserWithPassword currentUser) {
 		 return PFCommonGetter.getAllSeasonsForUser(currentUser.getName());
 	 }

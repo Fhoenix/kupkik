@@ -26,7 +26,7 @@ public class ShowMainViewHandler
         Collections.sort(users, new UserComparator());
         pRequest.setAttribute("users", users);
         
-        List<MatchDay> tournaments = pApplicationCoreFacade.getAllMatchDays();
+        List<MatchDay> tournaments = pApplicationCoreFacade.getLatestMatchDays(5);
         Collections.sort(tournaments, new MatchDayComparator());
         pRequest.setAttribute("matchDays", tournaments);
 

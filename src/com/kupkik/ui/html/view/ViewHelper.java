@@ -62,7 +62,7 @@ public class ViewHelper
 		//Start the LiveGridRow
 		pHtmlContent.append("<div class=\"row\">");
 
-		content.append("<div class=\"navbar\">");
+		content.append("<div class=\"navbar custom_navbar\">");
 	
 		content.append("		<div class=\"container\">");
 		content.append(" 			<button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-responsive-collapse\">");
@@ -73,7 +73,7 @@ public class ViewHelper
 
 		if( !currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) ){
 			content.append("		<a class=\"navbar-brand\" href=\"#\"><img src=\"/res/images/logo_icon.png\" alt=\"logo\" />");
-			content.append(currentUser.getFirstname());
+			content.append(" " + currentUser.getFirstname());
 		}else{
 			content.append("    	<a class=\"navbar-brand\" href=\"#\"><img src=\"/res/images/logo_icon.png\" alt=\"logo\" />");
 		}
@@ -82,7 +82,7 @@ public class ViewHelper
 		content.append(" 			<ul class=\"nav navbar-nav\">");
 		content.append(" 	      		<li class=\"active\"><a href=\"/\">Home</a></li>");
 		if( currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) ){
-			content.append("			<li><a href=\"/?showView=RegisterView\">Register Here!</a></li>");
+			content.append("			<li><a href=\"/?showView=RegisterView\">REGISTER HERE!</a></li>");
 			content.append(" 		</ul>");
 			content.append("		<form class=\"form-inline pull-right\" action=\"/\" method=\"post\">");
 			content.append("			<input type=\"hidden\" name=\"action\" value=\"Login\">");
@@ -101,13 +101,13 @@ public class ViewHelper
 			content.append("				</ul>");
 			content.append("			</li>");
 			content.append("			<li class=\"dropdown\">");
-			content.append("				<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Statistics<b class=\"caret\"></b></a>");
+			content.append("				<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">STATISTICS<b class=\"caret\"></b></a>");
 			content.append("				<ul class=\"dropdown-menu\">");
 			content.append(" 					<li><a href=\"/?showView=StatisticsView\">Statistics</a> </li>");
 			content.append(" 					<li><a href=\"/?showView=RankingView\">Ranking</a> </li>");
 			content.append("				</ul>");
 			content.append("			</li>");
-			content.append(" 			<li><a href=\"/?action=Logoff\">Logout</a> </li>");
+			content.append(" 			<li><a href=\"/?action=Logoff\">LOGOUT</a> </li>");
 			content.append(" 		</ul>");
 		}
 		content.append(" 		</div>");
