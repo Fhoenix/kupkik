@@ -1,7 +1,7 @@
 /* CUSTOM CSS FILE */
 div .custom_footer {
-	min-height: 40px;
-	padding: 10px 0px 0px 0px;
+	min-height: 55px;
+	padding: 10px 0px 0px 10px;
 	margin: 30px 0px 30px 0px;
 	font-weight:  bold;
 	background-color: #fafafa;
@@ -25,7 +25,7 @@ div .custom_footer {
 
 
 div .custom_navbar {
-	min-height: 40px;
+	min-height: 55px;
 	padding: 0px 20px 0px 20px;
 	margin: 0px 0px 30px 0px;
 	font-weight:  bold;

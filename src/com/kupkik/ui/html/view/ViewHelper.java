@@ -325,19 +325,10 @@ public class ViewHelper
 
 	public String createFooter(){
 		StringBuilder footer = new StringBuilder();
-		footer.append("<div class=\"row footer custom_footer\">");
 		footer.append("<div class=\"col-lg-12\">");
-		footer.append("<div class=\"container\">");
-		footer.append("<div class=\"row\">");
-
-		footer.append("<div class=\"col-lg-1\">");
-		footer.append("		<img src=\"/res/images/logo_icon.png\" alt=\"logo\" />");
-		footer.append("</div>");	
-
-		footer.append("<div style=\"vertical-align: middle;\"class=\"span11\">");
+		footer.append("<div class=\"row footer custom_footer\">");
+		footer.append("<div style=\"vertical-align: middle;\">");
 		footer.append( MessagesFooter.FOOTER_SIGNITURE);
-		footer.append("</div>");	
-		footer.append("</div>");
 		footer.append("</div>");
 		footer.append("</div>");
 		footer.append("</div>");
