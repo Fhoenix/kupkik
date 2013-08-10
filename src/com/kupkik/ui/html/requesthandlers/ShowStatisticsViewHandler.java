@@ -18,6 +18,8 @@ import com.kupkik.model.User;
 import com.kupkik.model.UserWithPassword;
 
 import com.kupkik.ui.html.IHtmlRequestHandler;
+import com.kupkik.ui.html.comperators.ComparatorSeason;
+import com.kupkik.ui.html.comperators.ComparatorUser;
 
 
 public class ShowStatisticsViewHandler implements IHtmlRequestHandler
@@ -33,12 +35,12 @@ public class ShowStatisticsViewHandler implements IHtmlRequestHandler
 		
 		
 		List<UserWithPassword> users = pApplicationCoreFacade.getAllUsers();
-		Collections.sort(users, new UserComparator());
+		Collections.sort(users, new ComparatorUser());
 		pRequest.setAttribute("users", users);
 
 
 		List<Season> seasons = pApplicationCoreFacade.getAllSeasons();
-		Collections.sort(seasons, new SeasonsComparator());
+		Collections.sort(seasons, new ComparatorSeason());
 
 		if (seasons != null){
 			pRequest.setAttribute("seasons", seasons);
@@ -49,23 +51,7 @@ public class ShowStatisticsViewHandler implements IHtmlRequestHandler
 		return null;
 	}
 
-	private class UserComparator
-	implements Comparator<User>
-	{
-		@Override
-		public int compare( User pUser1, User pUser2 )
-		{
-			return pUser1.getName().compareTo(pUser2.getName());
-		}
-	}
-	private class SeasonsComparator implements Comparator<Season>{
 
-		@Override
-		public int compare(Season season1, Season season2) {
 
-			return season1.getName().compareTo(season2.getName());
-		}
-
-	}
 
 }

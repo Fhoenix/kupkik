@@ -16,28 +16,21 @@ import com.kupkik.model.UserWithPassword;
 import com.kupkik.model.game.Game;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
+import com.kupkik.ui.html.comperators.ComparatorSeason;
 
 public class ShowNewMatchDayViewHandler implements IHtmlRequestHandler
 {
 
     
-    private class SeasonsComparator implements Comparator<Season>{
 
-		@Override
-		public int compare(Season season1, Season season2) {
-			
-			return season1.getName().compareTo(season2.getName());
-		}
-    	
-    }
 
 	@Override
 	public String performActionAndGetNextView(HttpServletRequest pRequest,
 			HttpSession pSession, ApplicationCoreFacade pApplicationCoreFacade) {
     	
 		UserWithPassword currentUser = (UserWithPassword) pRequest.getSession().getAttribute("currentUser");
-        List<Season> seasons = pApplicationCoreFacade.getAllSeasonsForUser(currentUser);
-        Collections.sort(seasons, new SeasonsComparator());
+        List<Season> seasons = pApplicationCoreFacade.getAllSeasonsForUser(currentUser.getKey());
+        Collections.sort(seasons, new ComparatorSeason());
         
         if (seasons != null){
         	pRequest.setAttribute("seasons", seasons);

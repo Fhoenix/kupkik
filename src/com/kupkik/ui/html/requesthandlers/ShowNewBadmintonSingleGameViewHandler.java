@@ -13,6 +13,8 @@ import com.kupkik.model.User;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
+import com.kupkik.ui.html.comperators.ComparatorMatchDay;
+import com.kupkik.ui.html.comperators.ComparatorUser;
 
 public class ShowNewBadmintonSingleGameViewHandler implements IHtmlRequestHandler {
 
@@ -25,34 +27,18 @@ public class ShowNewBadmintonSingleGameViewHandler implements IHtmlRequestHandle
 
         UserWithPassword currentUser = (UserWithPassword) pRequest.getSession().getAttribute("currentUser");
         List<UserWithPassword> users = pApplicationCoreFacade.getAllUsers();
-        Collections.sort(users, new UserComparator());
+        Collections.sort(users, new ComparatorUser());
         pRequest.setAttribute("users", users);
         
-        List<MatchDay> matchDays = pApplicationCoreFacade.getAllMatchDaysOfUser(currentUser.getName());
-        Collections.sort(matchDays, new MatchDayComparator());
+        List<MatchDay> matchDays = pApplicationCoreFacade.getAllMatchDaysOfUser(currentUser.getKey());
+        Collections.sort(matchDays, new ComparatorMatchDay());
         pRequest.setAttribute("matchDays", matchDays);
 
         return null;
     }
 
-    private class MatchDayComparator
-            implements Comparator<MatchDay>
-    {
-        @Override
-        public int compare( MatchDay matchDay1, MatchDay matchDay2 )
-        {
-            return matchDay1.getName().compareTo(matchDay2.getName());
-        }
-    }
 
-    private class UserComparator
-            implements Comparator<User>
-    {
-        @Override
-        public int compare( User pUser1, User pUser2 )
-        {
-            return pUser1.getName().compareTo(pUser2.getName());
-        }
-    }
+
+
 
 }

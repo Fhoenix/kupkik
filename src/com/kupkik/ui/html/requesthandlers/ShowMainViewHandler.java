@@ -13,6 +13,8 @@ import com.kupkik.model.User;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.model.game.Game;
 import com.kupkik.ui.html.IHtmlRequestHandler;
+import com.kupkik.ui.html.comperators.ComparatorMatchDay;
+import com.kupkik.ui.html.comperators.ComparatorUser;
 
 public class ShowMainViewHandler
         implements IHtmlRequestHandler
@@ -23,11 +25,11 @@ public class ShowMainViewHandler
             final ApplicationCoreFacade pApplicationCoreFacade )
     {
         List<UserWithPassword> users = pApplicationCoreFacade.getAllUsers();
-        Collections.sort(users, new UserComparator());
+        Collections.sort(users, new ComparatorUser());
         pRequest.setAttribute("users", users);
         
         List<MatchDay> tournaments = pApplicationCoreFacade.getLatestMatchDays(5);
-        Collections.sort(tournaments, new MatchDayComparator());
+        Collections.sort(tournaments, new ComparatorMatchDay());
         pRequest.setAttribute("matchDays", tournaments);
 
         List<Game> badmintonSingle = pApplicationCoreFacade.getLatestBadmintonSingleGames(5);
@@ -37,24 +39,6 @@ public class ShowMainViewHandler
         return null;
     }
 
-    private class MatchDayComparator
-            implements Comparator<MatchDay>
-    {
-        @Override
-        public int compare( MatchDay pTournament1, MatchDay pTournament2 )
-        {
-            return pTournament1.getName().compareTo(pTournament2.getName());
-        }
-    }
-
-    private class UserComparator
-            implements Comparator<User>
-    {
-        @Override
-        public int compare( User pUser1, User pUser2 )
-        {
-            return pUser1.getName().compareTo(pUser2.getName());
-        }
-    }
+ 
 
 }

@@ -33,6 +33,16 @@ public class ViewHelper
 		mSession = pSession;
 	}
 
+	public String createCheckBox(String name, String value, String valueToShow){
+		StringBuilder checkBox = new StringBuilder();
+		
+		checkBox.append("<div class=\"checkbox\">");
+		checkBox.append("<label> <input type=\"checkbox\" name=\""+name+"\"");
+		checkBox.append("	value=\""+ value + "\">"+ valueToShow+"");
+		checkBox.append("</label>");
+		checkBox.append("</div>");
+		return  checkBox.toString();
+	}
 	/**
 	 * Converts text, so that it can be displayd in a html-site.
 	 * 

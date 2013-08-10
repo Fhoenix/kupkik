@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.kupkik.applicationcore.ApplicationCoreFacade;
 import com.kupkik.applicationcore.ApplicationCoreFacade.CreateSeasonAnswer;
 import com.kupkik.applicationcore.ApplicationCoreFacade.CreateMatchDayAnswer;
@@ -29,27 +30,31 @@ public class CreateSeasonHandler implements IHtmlRequestHandler
         // the chosen season-name
         String seasonName = pRequest.getParameter("name");
         String[] gameType = pRequest.getParameterValues("gameType");
+        String[] users = pRequest.getParameterValues("users");
         
+    	UserWithPassword currentUser = (UserWithPassword) pRequest.getAttribute("currentUser");
+    	
         if (gameType == null){
             pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.SEASON_NEEDS_GAMETYPES);
             return "NewSeasonView";
         }
 
-        UserWithPassword currentUser = (UserWithPassword) pRequest.getSession().getAttribute("currentUser");
+       
         if( currentUser.getName().equals(HtmlRequestProcessor.GUEST_USER.getName()) )
         {
             pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.SEASON_USER_NOT_LOGGED_IN);
             return "NewSeasonView";
         }
         
-        List<String> gameTypeList = new ArrayList<String>();
         
-        for (String item : gameType) {
-        	gameTypeList.add(item);
-		}
+
+        List<String> gameTypeList = UtilHelper.convertStringArrayToListArray(gameType);
+        List<String> usersToEditSeason =  UtilHelper.convertStringArrayToListArray(users);
+        usersToEditSeason.add(KeyFactory.keyToString(currentUser.getKey()));
+   
         // try to create MatchDay
         CreateSeasonAnswer createSeasonAnswer = pApplicationCoreFacade.createSeason(seasonName, currentUser.getName(),
-        		currentUser.getPasswordMd5(), gameTypeList);
+        		currentUser.getPasswordMd5(), gameTypeList, usersToEditSeason);
 
         if( createSeasonAnswer == CreateSeasonAnswer.SEASON_NAME_INVALID ){
             pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.SEASON_NAME_INVALID);

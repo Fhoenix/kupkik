@@ -3,6 +3,7 @@ package com.kupkik.ui.html.requesthandlers;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,9 @@ import com.kupkik.model.UserWithPassword;
 import com.kupkik.model.game.Game;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
+import com.kupkik.ui.html.comperators.ComparatorSeason;
+import com.kupkik.ui.html.comperators.ComparatorUser;
+
 
 public class ShowNewSeasonViewHandler implements IHtmlRequestHandler
 {
@@ -27,8 +31,8 @@ public class ShowNewSeasonViewHandler implements IHtmlRequestHandler
     	
         UserWithPassword currentUser = (UserWithPassword) pRequest.getSession().getAttribute("currentUser");
         
-        List<Season> seasons = pApplicationCoreFacade.getAllSeasonsForUser(currentUser);
-        Collections.sort(seasons, new SeasonsComparator());
+        List<Season> seasons = pApplicationCoreFacade.getAllSeasonsForUser(currentUser.getKey());
+        Collections.sort(seasons, new ComparatorSeason());
         
         if (seasons != null){
         	pRequest.setAttribute("seasons", seasons);
@@ -36,21 +40,24 @@ public class ShowNewSeasonViewHandler implements IHtmlRequestHandler
         	pRequest.setAttribute("seasons", new ArrayList<Season>());
         }
         
+        List<UserWithPassword> users = pApplicationCoreFacade.getAllUsers();
         
+        //Remove current User from the list
+        Iterator<UserWithPassword> iterator = users.iterator();
+        while(iterator.hasNext()){
+        	UserWithPassword user = iterator.next();
+        	if(user.getKey().equals(currentUser.getKey())){
+        		iterator.remove();
+        	}
+        }
+    
+		Collections.sort(users, new ComparatorUser());
+		pRequest.setAttribute("users", users);
 
         
         return null;
     }
 
-    
-    private class SeasonsComparator implements Comparator<Season>{
 
-		@Override
-		public int compare(Season season1, Season season2) {
-			
-			return season1.getName().compareTo(season2.getName());
-		}
-    	
-    }
 
 }

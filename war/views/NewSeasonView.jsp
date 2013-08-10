@@ -4,12 +4,15 @@
 <%@ page import="com.kupkik.model.*"%>
 <%@ page import="com.kupkik.ui.html.view.*"%>
 <%@ page import="com.kupkik.messages.HandlerMessagesEnum"%>
+<%@ page import="java.util.List" %>
+<%@ page import="com.google.appengine.api.datastore.KeyFactory"%>
 <%@ page
 	import="com.sun.corba.se.impl.protocol.giopmsgheaders.MessageHandler"%>
 
 
 <%
 	ViewHelper viewHelper = (ViewHelper)request.getAttribute("viewHelper");
+List<User> users = (List<User>) request.getAttribute("users");
 %>
 
 
@@ -61,9 +64,30 @@
 								</label>
 							</div>
 						</div>
+						
+						<div class="form-group">
+						<label >Users that can score games</label>
+						
+								<%
+							for (User item : users) {
+								String name = item.getSurname() +", "+ item.getFirstname();
+								out.println(viewHelper.createCheckBox("users", KeyFactory.keyToString(item.getKey()), name));
+							}
+							%>
+						
+				
+						
+						
+						
 						<input class="btn btn-info form-control" type="submit"
 							value=" Absenden ">
 					</fieldset>
+					
+					
+					
+					
+					
+					
 				</div>
 				<div class="col-lg-6">
 					<h3>Whats a Season?</h3>
