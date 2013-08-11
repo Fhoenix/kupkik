@@ -30,99 +30,73 @@
 	}
 %> 
 
-
 <form action="/" method="post">
 	<input type="hidden" name="action" value="CreateBadmintonSingleGame">
 
 	<div class="row">
 		<div class="col-lg-6">
-			<h1>ScoreIT</h1>
-
-			<div class="row">
-				<div class="col-lg-12">&nbsp;</div>
-			</div>
-
-			<div class="row">
-				<div class="col-lg-4"><%=viewHelper.createLabel("Matchday Name", "label",
-					"matchDayKey")%></div>
-				<div class="col-lg-8">
-					<select class="form-control" id="matchDayKey" name="matchDayKey">
-						<%
+		
+		
+		
+				<fieldset>
+					<legend>Score Badminton Double</legend>
+					<div class="form-group">
+							<label>Matchday</label>
+							<select class="form-control" id="matchDayKey" name="matchDayKey">
+							<%
 							for (MatchDay item : matchDays) {
 												out.println("	 <option value=\""
 														+ KeyFactory.keyToString(item.getKey()) + "\">"
 														+ item.getName() + " | "
 														+ item.getParentKey().getName() + "</option>");
 											}
-						%>
-					</select>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-lg-12">&nbsp;</div>
-			</div>
-
-
-			<div class="row">
-				<div class="col-lg-2">Player 1</div>
-				<div class="col-lg-6">
-
-					<select class="form-control" id="playerOne" name="playerOne">
-
-						<%
-							for (User item : users) {
-								out.println("	 <option value=\"" + KeyFactory.keyToString(item.getKey())+ "\">"
-										+ item.getSurname() + ", "+ item.getFirstname()+"</option>");
-							}
-						%>
-					</select>
-
-
-				</div>
-				
-				<div class="col-lg-4">
-					<input class="form-control"  id="resultOne" placeholder="Result" name="resultOne" type="number">
-				</div>
-			</div>
-
-
-
-
-			<div class="row">
-				<div class="col-lg-2">Player 2</div>
-				<div class="col-lg-6">
-
-					<select class="form-control" id="playerTwo" style="width: 100%;" name="playerTwo">
-
-						<%
-							for (User item : users) {
-								out.println("	 <option value=\"" + KeyFactory.keyToString(item.getKey())+ "\">"
-										+ item.getSurname() + ", "+ item.getFirstname()+"</option>");
-							}
-						%>
-					</select>
-
-				</div>
-			
-				<div class="col-lg-4">
-					<input class="form-control" id="resultTwo" placeholder="Result" name="resultTwo" type="number">
-
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="row">
-						<div class="col-lg-6">
-							<input class="btn btn-default" type="submit" value=" Absenden">
-						</div>
-						<div class="col-lg-6">
-							&nbsp;
-						</div>
+							%>
+							</select>
 					</div>
-					<div class="col-lg-6"></div>
-				</div>
-			</div>
+					
+					
+					
+					<div class="form-group">
+							<label>Player 1</label>
+							<select class="form-control" id="playerOne" name="playerOne">
+
+							<%
+							for (User item : users) {
+								out.println("	 <option value=\"" + KeyFactory.keyToString(item.getKey())+ "\">"
+										+ item.getSurname() + ", "+ item.getFirstname()+"</option>");
+							}
+							%>
+							</select>
+							
+							<input class="form-control"  id="resultOne" placeholder="Result" name="resultOne" type="number">
+							
+					</div>
+					
+					
+					<div class="form-group">
+							<label>Player 2</label>
+							<select class="form-control" id="playerTwo" style="width: 100%;" name="playerTwo">
+
+							<%
+							for (User item : users) {
+								out.println("	 <option value=\"" + KeyFactory.keyToString(item.getKey())+ "\">"
+										+ item.getSurname() + ", "+ item.getFirstname()+"</option>");
+							}
+							%>
+							</select>
+							<input class="form-control" id="resultTwo" placeholder="Result" name="resultTwo" type="number">
+							
+					</div>
+					
+					<div class="form-group">
+							<input class="btn btn-info form-control" type="submit" value=" Absenden">
+					</div>
+					
+					
+					
+				</fieldset>
+		
+		
 		</div>
 		<div class="col-lg-6">
 			<h1>Badminton Single</h1>
@@ -154,6 +128,5 @@ Beschreibung Turnier Beschreibung Turnier
 
 
 </form>
-
 
 <%=viewHelper.createHtmlEnd()%>

@@ -29,7 +29,7 @@ public class CreateSeasonHandler implements IHtmlRequestHandler
     {
         // the chosen season-name
         String seasonName = pRequest.getParameter("name");
-        String[] gameType = pRequest.getParameterValues("gameType");
+        String gameType = pRequest.getParameter("gameType");
         String[] users = pRequest.getParameterValues("users");
         
     	UserWithPassword currentUser = (UserWithPassword) pRequest.getAttribute("currentUser");
@@ -48,13 +48,12 @@ public class CreateSeasonHandler implements IHtmlRequestHandler
         
         
 
-        List<String> gameTypeList = UtilHelper.convertStringArrayToListArray(gameType);
         List<String> usersToEditSeason =  UtilHelper.convertStringArrayToListArray(users);
         usersToEditSeason.add(KeyFactory.keyToString(currentUser.getKey()));
    
         // try to create MatchDay
         CreateSeasonAnswer createSeasonAnswer = pApplicationCoreFacade.createSeason(seasonName, currentUser.getName(),
-        		currentUser.getPasswordMd5(), gameTypeList, usersToEditSeason);
+        		currentUser.getPasswordMd5(), gameType, usersToEditSeason);
 
         if( createSeasonAnswer == CreateSeasonAnswer.SEASON_NAME_INVALID ){
             pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.SEASON_NAME_INVALID);

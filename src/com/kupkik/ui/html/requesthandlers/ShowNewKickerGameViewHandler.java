@@ -17,28 +17,25 @@ import com.kupkik.ui.html.IHtmlRequestHandler;
 import com.kupkik.ui.html.comperators.ComparatorMatchDay;
 import com.kupkik.ui.html.comperators.ComparatorUser;
 
-public class ShowNewBadmintonSingleGameViewHandler implements IHtmlRequestHandler {
+public class ShowNewKickerGameViewHandler implements IHtmlRequestHandler {
 
 
     @Override
     public String performActionAndGetNextView( final HttpServletRequest pRequest, final HttpSession pSession,
             final ApplicationCoreFacade pApplicationCoreFacade )
     {
-    	
 
         UserWithPassword currentUser = (UserWithPassword) pRequest.getSession().getAttribute("currentUser");
         List<UserWithPassword> users = pApplicationCoreFacade.getAllUsers();
         Collections.sort(users, new ComparatorUser());
         pRequest.setAttribute("users", users);
         
-        List<MatchDay> matchDays = pApplicationCoreFacade.getAllMatchDaysOfUser(currentUser.getKey(), EntityNameStore.BADMINTON_SINGLE_GAME);
-        Collections.sort(matchDays, new ComparatorMatchDay());
-        pRequest.setAttribute("matchDays", matchDays);
+        List<MatchDay> matchDay = pApplicationCoreFacade.getAllMatchDaysOfUser(currentUser.getKey(), EntityNameStore.KICKER_GAME);
+        Collections.sort(matchDay, new ComparatorMatchDay());
+        pRequest.setAttribute("matchDays", matchDay);
 
         return null;
     }
-
-
 
 
 

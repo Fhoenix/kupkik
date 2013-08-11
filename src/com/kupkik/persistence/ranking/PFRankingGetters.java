@@ -38,15 +38,14 @@ public class PFRankingGetters {
 
 		//Get the GameTypes for a Season
 		Season seasonByKey = PFCommonGetter.getSeasonByKey(seasonKey);
-		List<String> gameTypes = seasonByKey.getGameTypes();
+		String gameType = seasonByKey.getGameType();
 
 		List<TypedWinLooseRanking> overallRanking = new ArrayList<TypedWinLooseRanking>();
 
 
-		for (String string : gameTypes) {
 			List<WinLooseRows> winLooseRow = new ArrayList<WinLooseRows>();
 			//Get all MatchDays for the Season
-			List<MatchDay> matchDaysForSeason = PFCommonGetter.getMatchDaysForSeason(seasonKey, string);
+			List<MatchDay> matchDaysForSeason = PFCommonGetter.getMatchDaysForSeason(seasonKey, gameType);
 
 
 			for (UserWithPassword userWithPassword : allUsers) {
@@ -93,9 +92,8 @@ public class PFRankingGetters {
 
 
 			Collections.sort(winLooseRow,  new WinLooseRowComperator());
-			overallRanking.add( new TypedWinLooseRanking(winLooseRow,string));
+			overallRanking.add( new TypedWinLooseRanking(winLooseRow,gameType));
 
-		}
 
 		return  new WinLooseRanking(overallRanking);
 

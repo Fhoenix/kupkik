@@ -31,12 +31,12 @@
 %> 
 
 <form action="/" method="post">
-	<input type="hidden" name="action" value="CreateBadmintonDoubleGame">
+	<input type="hidden" name="action" value="CreateKickerGame">
 
 	<div class="row">
 		<div class="col-lg-6">
 				<fieldset>
-						<legend>Score Badminton Double</legend>
+						<legend>Score Kicker Double</legend>
 						<div class="form-group">
 							<label>Matchday</label>
 							<select class="form-control" id="matchDayKey" name="matchDayKey">
@@ -134,7 +134,7 @@
 			</fieldset>
 		</div>
 		<div class="col-lg-6">
-			<h1>Badminton Double</h1>
+			<h1>Kicker</h1>
 			
 Beschreibung Turnier Beschreibung Turnier
 					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier

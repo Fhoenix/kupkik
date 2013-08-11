@@ -52,7 +52,7 @@ public class PFCommonSaver {
 	 * @param pUserName
 	 *            the name of the user, who creates the season
 	 */
-	public static void saveNewSeason( final String pSeasonName, final String pUserName, final List<String> gameType , final List<String> usersAllowedToEditSeason)
+	public static void saveNewSeason( final String pSeasonName, final String pUserName, final String gameType , final List<String> usersAllowedToEditSeason)
 	{
 	    Key userKey = KeyFactory.createKey(EntityNameStore.USER, pUserName);
 	    Entity season = new Entity("Season", pSeasonName, userKey);

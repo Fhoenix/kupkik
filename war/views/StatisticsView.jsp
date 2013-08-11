@@ -20,6 +20,9 @@
 
 	DisplaySkillGraph displaySkillGraphDouble = (DisplaySkillGraph) request
 			.getAttribute("displaySkillGraphDouble");
+	
+	DisplaySkillGraph displaySkillGraphKicker = (DisplaySkillGraph) request
+			.getAttribute("displaySkillGraphKicker");
 %>
 
 <%=viewHelper.createHtmlBegin("Statistics Factory")%>
@@ -81,70 +84,8 @@
 			<div class="col-lg-12"><h3>Badminton Single Games</h3></div>
 		</div>
 		<%
-			StringBuilder skillTable = new StringBuilder();
-				skillTable.append("<table class=\"table table-striped\">");
-				skillTable
-						.append("<thead> <th style=\"width:30%\"> Description</th> <th style=\"width:70%\"> Value </th>  </thead>");
-				skillTable.append("<tr> <td>WL-RATE (WIN-LOOSE)</td><td>");
-				skillTable.append(viewHelper.createSuccessBar(
-						displaySkillGraph.getTotalNumberWon(),
-						displaySkillGraph.getTotalNumberPlayed()));
-				skillTable.append("</td> </tr>");
-
-				skillTable.append("<tr> <td>Participation Rate</td><td>");
-				skillTable.append(viewHelper.createSuccessBar(
-						displaySkillGraph.getTotalNumberPlayed(),
-						displaySkillGraph.getTotalNumberGames()));
-				skillTable.append("</td> </tr>");
-
-				skillTable.append("<tr> <td>Games Won</td><td>");
-				skillTable.append(displaySkillGraph.getTotalNumberWon());
-				skillTable.append("</td> </tr>");
-
-				skillTable.append("<tr> <td>Games Played</td><td>");
-				skillTable.append(displaySkillGraph.getTotalNumberPlayed());
-				skillTable.append("</td> </tr>");
-
-				skillTable.append("<tr> <td>Games Lost</td><td>");
-				skillTable.append(displaySkillGraph.getTotalNumberLost());
-				skillTable.append("</td> </tr>");
-
-				skillTable.append("<tr> <td>Games Total</td><td>");
-				skillTable.append(displaySkillGraph.getTotalNumberGames());
-				skillTable.append("</td> </tr>");
-
-				skillTable.append("</table>");
-
-				out.println("<div class=\"row\">");
-				out.println("<div class=\"col-lg-12\">");
-				out.println(skillTable.toString());
-				out.println("</div>");
-
-				out.println("</div>");
-
-				out.println("<div class=\"row\">");
-				out.println("<div  class=\"col-lg-12\">");
-				out.println("<div id=\"SkillGraphCanvasSingle\" style=\"width:100%\">");
-
-				out.println(viewHelper.createLineChart(displaySkillGraph
-						.getMatchDayNames(), displaySkillGraph
-						.getWinRateInPercentForEachMatchDay(),
-						displaySkillGraph
-								.getLooseRateInPercentForEachMatchDay(),
-						"BadmintonsingleCanvas", "SkillGraphCanvasSingle"));
-				out.println("</div>");
-				out.println("</div>");
-
-				out.println("</div>");
-				
-				
-				
-				List<MatchDay> matchDays = displaySkillGraph.getMatchDays();
-				out.println(viewHelper.printAllGamesForMatchDays(matchDays,selectedUser) );
-				
+		out.println(viewHelper.createStatistics(displaySkillGraph, "SkillGraphCanvasSingle", "BadmintonsingleCanvas", selectedUser));
 			}
-		
-		
 		%>
 
 
@@ -155,71 +96,21 @@
 			<div class="col-lg-12"><h3>Badminton Double Games</h3></div>
 		</div>
 		<%
-			StringBuilder skillTable = new StringBuilder();
-			skillTable.append("<table class=\"table table-striped\">");
-		skillTable
-				.append("<thead> <th style=\"width:30%\"> Description</th> <th style=\"width:70%\"> Value </th>  </thead>");
-		skillTable.append("<tr> <td>WL-RATE (WIN-LOOSE)</td><td>");
-				skillTable.append(viewHelper.createSuccessBar(
-						displaySkillGraphDouble.getTotalNumberWon(),
-						displaySkillGraphDouble.getTotalNumberPlayed()));
-				skillTable.append("</td> </tr>");
-
-				skillTable.append("<tr> <td>Participation Rate</td><td>");
-				skillTable.append(viewHelper.createSuccessBar(
-						displaySkillGraphDouble.getTotalNumberPlayed(),
-						displaySkillGraphDouble.getTotalNumberGames()));
-				skillTable.append("</td> </tr>");
-
-				skillTable.append("<tr> <td>Games Won</td><td>");
-				skillTable.append(displaySkillGraphDouble.getTotalNumberWon());
-				skillTable.append("</td> </tr>");
-
-				skillTable.append("<tr> <td>Games Played</td><td>");
-				skillTable.append(displaySkillGraphDouble
-						.getTotalNumberPlayed());
-				skillTable.append("</td> </tr>");
-
-				skillTable.append("<tr> <td>Games Lost</td><td>");
-				skillTable.append(displaySkillGraphDouble.getTotalNumberLost());
-				skillTable.append("</td> </tr>");
-
-				skillTable.append("<tr> <td>Games Total</td><td>");
-				skillTable
-						.append(displaySkillGraphDouble.getTotalNumberGames());
-				skillTable.append("</td> </tr>");
-
-				skillTable.append("</table>");
-
-				out.println("<div class=\"row\">");
-				out.println("<div class=\"col-lg-12\">");
-				out.println(skillTable.toString());
-				out.println("</div>");
-
-				out.println("</div>");
-
-				out.println("<div class=\"row\">");
-				out.println("<div  class=\"col-lg-12\">");
-				out.println("<div id=\"SkillGraphCanvasDouble\" style=\"width:100%\">");
-
-				out.println(viewHelper.createLineChart(displaySkillGraphDouble
-						.getMatchDayNames(), displaySkillGraphDouble
-						.getWinRateInPercentForEachMatchDay(),
-						displaySkillGraphDouble
-								.getLooseRateInPercentForEachMatchDay(),
-						"BadmintondoubleCanvas", "SkillGraphCanvasDouble"));
-				out.println("</div>");
-				out.println("</div>");
-
-				out.println("</div>");
-				
-				
-				
-				List<MatchDay> matchDays = displaySkillGraphDouble.getMatchDays();
-				out.println(viewHelper.printAllGamesForMatchDays(matchDays, selectedUser));
+		out.println(viewHelper.createStatistics(displaySkillGraphDouble, "SkillGraphCanvasDouble", "BadmintondoubleCanvas", selectedUser));
 			}
 		%>
 
+
+<%
+			if (displaySkillGraphKicker != null) {
+		%>
+		<div class="row">
+			<div class="col-lg-12"><h3>Kicker Games</h3></div>
+		</div>
+		<%
+		out.println(viewHelper.createStatistics(displaySkillGraphKicker, "SkillGraphCanvasKicker", "KickerCanvas", selectedUser));
+			}
+		%>
 	</div>
 </div>
 <%

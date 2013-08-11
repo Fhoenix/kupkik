@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import com.google.appengine.api.datastore.Key;
+import com.kupkik.applicationcore.ApplicationCoreFacade.CreateGameAnswer;
 import com.kupkik.model.DisplaySkillGraph;
 import com.kupkik.model.Season;
 import com.kupkik.model.MatchDay;
@@ -12,6 +13,7 @@ import com.kupkik.model.UserWithPassword;
 import com.kupkik.model.game.Game;
 import com.kupkik.model.ranking.TypedWinLooseRanking;
 import com.kupkik.model.ranking.WinLooseRanking;
+import com.kupkik.persistence.EntityNameStore;
 import com.kupkik.persistence.badminton.PFBadmintonGetters;
 import com.kupkik.persistence.badminton.PFBadmintonSaver;
 import com.kupkik.persistence.common.PFCommonGetter;
@@ -141,7 +143,7 @@ public class ApplicationCoreFacade
 	 * @param pUserPasswordMd5 pUserPasswordMd5
 	 * @return the result of trying to create a Season
 	 */
-	public CreateSeasonAnswer createSeason( final String pSeasonName, final String pUserName, final String pUserPasswordMd5, List<String> gameType,  List<String> usersAllowedToEditSeason )
+	public CreateSeasonAnswer createSeason( final String pSeasonName, final String pUserName, final String pUserPasswordMd5, String gameType,  List<String> usersAllowedToEditSeason )
 	{
 		if( pSeasonName.length() > MAX_MATCHDAY_NAME_SIZE )
 		{
@@ -390,16 +392,16 @@ public class ApplicationCoreFacade
 		 return PFCommonGetter.getUserByName(currentUser);
 	 }
 
-	 public static List<MatchDay> getAllMatchDaysOfUser(Key userKey) {
-		 return PFCommonGetter.getAllMatchDaysOfUser(userKey);
+	 public static List<MatchDay> getAllMatchDaysOfUser(Key userKey, String gameType) {
+		 return PFCommonGetter.getAllMatchDaysOfUser(userKey, gameType);
 	 }
 
 	 public  static DisplaySkillGraph getAllBadmintonSingleGamesInSeason(Key season, Key userName){
-		 return PFBadmintonGetters.getAllBadmintonSingleGamesInSeason( season,  userName);
+		 return PFCommonGetter.getAllGamesInSeason( EntityNameStore.BADMINTON_SINGLE_GAME, season,  userName);
 	 }
 
 	 public  static DisplaySkillGraph getAllBadmintonDoubleGamesInSeason(Key season, Key userName){
-		 return PFBadmintonGetters.getAllBadmintonDoubleGamesInSeason( season,  userName);
+		 return PFCommonGetter.getAllGamesInSeason( EntityNameStore.BADMINTON_DOUBLE_GAME, season,  userName);
 	 }
 
 	 /** Returns all Seasons in a List<Seasons> */
@@ -411,6 +413,17 @@ public class ApplicationCoreFacade
 	public static WinLooseRanking getWinLoosRanking(Key seasonKey) {
 		
 		return PFRankingGetters.getWinLoosRanking(seasonKey);
+	}
+
+	public CreateGameAnswer createKickerGame(Key matchDayKey, List<Key> team1,
+			List<Key> team2, int resultOne, int resultTwo, Date date) {
+		PFBadmintonSaver.saveNewKickerGame(matchDayKey, team1, team2, resultOne, resultTwo, date);
+		return CreateGameAnswer.GAME_OK;
+	}
+
+	public static DisplaySkillGraph getAllKickerGamesInSeason(Key seasonKey,
+			Key userKey) {
+		return PFCommonGetter.getAllGamesInSeason( EntityNameStore.KICKER_GAME, seasonKey,  userKey);
 	}
 
 }

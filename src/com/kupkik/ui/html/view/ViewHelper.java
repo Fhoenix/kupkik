@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import com.kupkik.messages.MessageCommon;
 import com.kupkik.messages.MessagesFooter;
 import com.kupkik.messages.MessagesHome;
+import com.kupkik.model.DisplaySkillGraph;
 import com.kupkik.model.MatchDay;
 import com.kupkik.model.User;
 import com.kupkik.model.UserWithPassword;
@@ -108,6 +109,7 @@ public class ViewHelper
 			content.append(" 					<li><a href=\"/?showView=NewMatchDayView\">Create MatchDay</a> </li>");
 			content.append("					<li><a href=\"/?showView=NewBadmintonSingleGameView\">Badminton Single</a> </li>");
 			content.append("					<li><a href=\"/?showView=NewBadmintonDoubleGameView\">Badminton Double</a> </li>");
+			content.append("					<li><a href=\"/?showView=NewKickerGameView\">Kicker</a> </li>");
 			content.append("				</ul>");
 			content.append("			</li>");
 			content.append("			<li class=\"dropdown\">");
@@ -203,7 +205,7 @@ public class ViewHelper
 			createMenuBar(htmlBegin);
 		}
 
-
+		htmlBegin.append("<div class=\"col-lg-12\">");
 		return htmlBegin.toString();
 	}
 
@@ -335,11 +337,10 @@ public class ViewHelper
 
 	public String createFooter(){
 		StringBuilder footer = new StringBuilder();
-		footer.append("<div class=\"col-lg-12\">");
+		footer.append("</div>");
 		footer.append("<div class=\"row footer custom_footer\">");
 		footer.append("<div style=\"vertical-align: middle;\">");
 		footer.append( MessagesFooter.FOOTER_SIGNITURE);
-		footer.append("</div>");
 		footer.append("</div>");
 		footer.append("</div>");
 
@@ -534,6 +535,75 @@ public class ViewHelper
 			return "<strong>"+teamString.toString()+"</strong>";
 		}
 		return teamString.toString();
+	}
+	
+	public String createStatistics(	DisplaySkillGraph dataSkillGraph, String canvasId, String canvasName, UserWithPassword selectedUser){
+		StringBuilder skillTable = new StringBuilder();
+		skillTable.append("<table class=\"table table-striped\">");
+	skillTable
+			.append("<thead> <th style=\"width:30%\"> Description</th> <th style=\"width:70%\"> Value </th>  </thead>");
+	skillTable.append("<tr> <td>WL-RATE (WIN-LOOSE)</td><td>");
+			skillTable.append(createSuccessBar(
+					dataSkillGraph.getTotalNumberWon(),
+					dataSkillGraph.getTotalNumberPlayed()));
+			skillTable.append("</td> </tr>");
+
+			skillTable.append("<tr> <td>Participation Rate</td><td>");
+			skillTable.append(createSuccessBar(
+					dataSkillGraph.getTotalNumberPlayed(),
+					dataSkillGraph.getTotalNumberGames()));
+			skillTable.append("</td> </tr>");
+
+			skillTable.append("<tr> <td>Games Won</td><td>");
+			skillTable.append(dataSkillGraph.getTotalNumberWon());
+			skillTable.append("</td> </tr>");
+
+			skillTable.append("<tr> <td>Games Played</td><td>");
+			skillTable.append(dataSkillGraph
+					.getTotalNumberPlayed());
+			skillTable.append("</td> </tr>");
+
+			skillTable.append("<tr> <td>Games Lost</td><td>");
+			skillTable.append(dataSkillGraph.getTotalNumberLost());
+			skillTable.append("</td> </tr>");
+
+			skillTable.append("<tr> <td>Games Total</td><td>");
+			skillTable
+					.append(dataSkillGraph.getTotalNumberGames());
+			skillTable.append("</td> </tr>");
+
+			skillTable.append("</table>");
+
+			
+			StringBuilder skillCanvas = new StringBuilder();
+			skillCanvas.append("<div class=\"row\">");
+			skillCanvas.append("<div class=\"col-lg-12\">");
+			skillCanvas.append(skillTable.toString());
+			skillCanvas.append("</div>");
+
+			skillCanvas.append("</div>");
+
+			skillCanvas.append("<div class=\"row\">");
+			skillCanvas.append("<div  class=\"col-lg-12\">");
+			skillCanvas.append("<div id=\""+canvasId+"\" style=\"width:100%\">");
+
+			skillCanvas.append(createLineChart(dataSkillGraph
+					.getMatchDayNames(), dataSkillGraph
+					.getWinRateInPercentForEachMatchDay(),
+					dataSkillGraph
+							.getLooseRateInPercentForEachMatchDay(),
+							canvasName, canvasId));
+			skillCanvas.append("</div>");
+			skillCanvas.append("</div>");
+
+			skillCanvas.append("</div>");
+			
+			
+			
+			List<MatchDay> matchDays = dataSkillGraph.getMatchDays();
+			skillCanvas.append(printAllGamesForMatchDays(matchDays, selectedUser));
+	
+			return skillCanvas.toString();
 	}
 
 }

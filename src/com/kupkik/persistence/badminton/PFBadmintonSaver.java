@@ -46,4 +46,20 @@ public class PFBadmintonSaver {
 	       datastore.put(badmintonSingleGame);
 		
 	}
+
+
+	public static void saveNewKickerGame(Key matchDayKey, List<Key> teamOne,
+			List<Key> teamTwo, int resultOne, int resultTwo, Date date) {
+	Entity kickerGame = new Entity(EntityNameStore.KICKER_GAME, matchDayKey);
+		
+	kickerGame.setProperty("teamOne", teamOne);
+	kickerGame.setProperty("teamTwo", teamTwo);
+	kickerGame.setProperty("resultOne", resultOne);
+	kickerGame.setProperty("resultTwo", resultTwo);
+		
+	kickerGame.setProperty("date", date);
+		   DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	       datastore.put(kickerGame);
+		
+	}
 }

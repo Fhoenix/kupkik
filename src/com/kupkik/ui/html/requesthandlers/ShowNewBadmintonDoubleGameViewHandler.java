@@ -11,6 +11,7 @@ import com.kupkik.applicationcore.ApplicationCoreFacade;
 import com.kupkik.model.MatchDay;
 import com.kupkik.model.User;
 import com.kupkik.model.UserWithPassword;
+import com.kupkik.persistence.EntityNameStore;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 import com.kupkik.ui.html.comperators.ComparatorMatchDay;
@@ -29,7 +30,7 @@ public class ShowNewBadmintonDoubleGameViewHandler implements IHtmlRequestHandle
         Collections.sort(users, new ComparatorUser());
         pRequest.setAttribute("users", users);
         
-        List<MatchDay> matchDay = pApplicationCoreFacade.getAllMatchDaysOfUser(currentUser.getKey());
+        List<MatchDay> matchDay = pApplicationCoreFacade.getAllMatchDaysOfUser(currentUser.getKey(), EntityNameStore.BADMINTON_DOUBLE_GAME);
         Collections.sort(matchDay, new ComparatorMatchDay());
         pRequest.setAttribute("matchDays", matchDay);
 

@@ -53,14 +53,19 @@ List<User> users = (List<User>) request.getAttribute("users");
 						</div>
 						<div class="form-group">
 						<label >Gametypes for Season</label>
-							<div class="checkbox">
-								<label> <input type="checkbox" name="gameType"
+							<div class="radio">
+								<label> <input type="radio" name="gameType"
 									value="BadmintonSingle">Badminton Single
 								</label>
 							</div>
-							<div class="checkbox">
-								<label> <input type="checkbox" name="gameType"
+							<div class="radio">
+								<label> <input type="radio" name="gameType"
 									value="BadmintonDouble">Badminton Double
+								</label>
+							</div>
+								<div class="radio">
+								<label> <input type="radio" name="gameType"
+									value="Kicker">Kicker
 								</label>
 							</div>
 						</div>
@@ -78,6 +83,7 @@ List<User> users = (List<User>) request.getAttribute("users");
 				
 						
 						
+						</div>
 						
 						<input class="btn btn-info form-control" type="submit"
 							value=" Absenden ">
