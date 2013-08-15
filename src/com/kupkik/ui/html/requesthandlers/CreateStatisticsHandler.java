@@ -55,15 +55,15 @@ public class CreateStatisticsHandler implements IHtmlRequestHandler
         
         String gameType = seasonsByKey.getGameType();
 
-			if (gameType.equals(EntityNameStore.BADMINTON_SINGLE_GAME)){
+			if (gameType.equals(EntityNameStore.BADMINTON_SINGLE_GAME.toString())){
 				  DisplaySkillGraph allGamesInSeasonBadmintonSingle = ApplicationCoreFacade.getAllBadmintonSingleGamesInSeason(seasonKey,userKey);
 			        pRequest.setAttribute("displaySkillGraph",allGamesInSeasonBadmintonSingle);
 			}
-			if(gameType.equals(EntityNameStore.BADMINTON_DOUBLE_GAME)){
+			if(gameType.equals(EntityNameStore.BADMINTON_DOUBLE_GAME.toString())){
 			     DisplaySkillGraph allGamesInSeasonBadmintonDouble = ApplicationCoreFacade.getAllBadmintonDoubleGamesInSeason(seasonKey,userKey);
 			        pRequest.setAttribute("displaySkillGraphDouble",allGamesInSeasonBadmintonDouble);
 			}
-			if(gameType.equals(EntityNameStore.KICKER_GAME)){
+			if(gameType.equals(EntityNameStore.KICKER_GAME.toString())){
 			     DisplaySkillGraph allGamesInSeasonKicker = ApplicationCoreFacade.getAllKickerGamesInSeason(seasonKey,userKey);
 			        pRequest.setAttribute("displaySkillGraphKicker",allGamesInSeasonKicker);
 			}

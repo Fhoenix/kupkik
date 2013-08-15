@@ -19,7 +19,7 @@ public class Game {
 	private String matchDay;
 	private String pictogramPath; 
 	public static final String PATH = "/res/images/";
-	public static final String FILE_EXTENSION = ".jpg";
+	public static final String FILE_EXTENSION = ".png";
 
 	public Game(final List<User> team1, final List<User> team2, final Date date, final int resultOne, final int resultTwo,  final String matchDay, String entityNameStore ){
 		this.team1 = team1;

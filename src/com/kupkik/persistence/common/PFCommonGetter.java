@@ -219,74 +219,80 @@ public class PFCommonGetter {
 			int gamesPlayed = 0;
 
 			DatastoreService dataStore2 = DatastoreServiceFactory.getDatastoreService();
-			Query getGamesForMatchDay = new Query(gameType).setAncestor(matchDay.getKey());
+			Query getGamesForMatchDay = new Query("Game").setAncestor(matchDay.getKey());
 			PreparedQuery PQGames = dataStore2.prepare(getGamesForMatchDay);
 			List<Entity> games = PQGames.asList(FetchOptions.Builder.withDefaults());	
 
+
+
+
+
 			List<Game> badmintonSingleGames = new ArrayList<Game>();
 			for(Entity game : games){
-				totalNumberGames++;
-				List<Key> playerOne = (List<Key>) game.getProperty("teamOne");
-				List<Key> playerTwo = (List<Key>) game.getProperty("teamTwo");
+				if(game.getProperty("gameType").equals(gameType)){
+					totalNumberGames++;
+					List<Key> playerOne = (List<Key>) game.getProperty("teamOne");
+					List<Key> playerTwo = (List<Key>) game.getProperty("teamTwo");
 
-				int resultOne = Integer.parseInt(game.getProperty("resultOne").toString());
-				int resultTwo = Integer.parseInt(game.getProperty("resultTwo").toString());
-				//Date date = (Date) game.getProperty("date");
-				String matchDayName = game.getParent().getName();
+					int resultOne = Integer.parseInt(game.getProperty("resultOne").toString());
+					int resultTwo = Integer.parseInt(game.getProperty("resultTwo").toString());
+					//Date date = (Date) game.getProperty("date");
+					String matchDayName = game.getParent().getName();
 
-				List<User> userTeam1 = new ArrayList<>();
-				List<User> userTeam2 = new ArrayList<>();
-				List<UserWithPassword> allUsers = PFCommonGetter.getAllUsers();
-				for (UserWithPassword userWithPassword : allUsers) {
-					for (Key team1item : playerOne){
-						if(userWithPassword.getKey().equals(team1item)){
-							userTeam1.add(userWithPassword);
+					List<User> userTeam1 = new ArrayList<>();
+					List<User> userTeam2 = new ArrayList<>();
+					List<UserWithPassword> allUsers = PFCommonGetter.getAllUsers();
+					for (UserWithPassword userWithPassword : allUsers) {
+						for (Key team1item : playerOne){
+							if(userWithPassword.getKey().equals(team1item)){
+								userTeam1.add(userWithPassword);
+							}
+						}
+
+						for (Key team2item : playerTwo){
+							if(userWithPassword.getKey().equals(team2item)){
+								userTeam2.add(userWithPassword);
+							}
+						}
+
+
+					}
+
+					badmintonSingleGames.add(new Game(userTeam1, userTeam2,null, resultOne, resultTwo,  matchDayName,gameType));
+
+
+					for (User user : userTeam1) {
+						if(user.getKey().equals(userName)){
+							gamesPlayed++;
+							totalGamesPlayed++;
+							if(resultOne > resultTwo){
+								gamesWon++;
+								totalGamesWon++;
+							}
 						}
 					}
 
-					for (Key team2item : playerTwo){
-						if(userWithPassword.getKey().equals(team2item)){
-							userTeam2.add(userWithPassword);
+
+					for (User user : userTeam2) {
+						if(user.getKey().equals(userName)){
+							gamesPlayed++;
+							totalGamesPlayed++;
+							if( resultTwo > resultOne){
+								gamesWon++;
+								totalGamesWon++;
+							}
 						}
 					}
+				MatchDay t = new MatchDay(matchDay.getKey().getName(), matchDay.getKey(), matchDay.getParent());
+				t.setGames(badmintonSingleGames);
+				t.setGamesWon(gamesWon);
+				t.setGamesPlayed(gamesPlayed);
 
+				matchDays.add(t);
 
 				}
 
-				badmintonSingleGames.add(new Game(userTeam1, userTeam2,null, resultOne, resultTwo,  matchDayName,gameType));
-
-
-				for (User user : userTeam1) {
-					if(user.getKey().equals(userName)){
-						gamesPlayed++;
-						totalGamesPlayed++;
-						if(resultOne > resultTwo){
-							gamesWon++;
-							totalGamesWon++;
-						}
-					}
-				}
-
-
-				for (User user : userTeam2) {
-					if(user.getKey().equals(userName)){
-						gamesPlayed++;
-						totalGamesPlayed++;
-						if( resultTwo > resultOne){
-							gamesWon++;
-							totalGamesWon++;
-						}
-					}
-				}
 			}
-			MatchDay t = new MatchDay(matchDay.getKey().getName(), matchDay.getKey(), matchDay.getParent());
-			t.setGames(badmintonSingleGames);
-			t.setGamesWon(gamesWon);
-			t.setGamesPlayed(gamesPlayed);
-
-			matchDays.add(t);
-
-
 		}
 		dataskillGraph = new DisplaySkillGraph(totalGamesPlayed, totalGamesWon, totalNumberGames,matchDays);
 		return dataskillGraph;
@@ -363,7 +369,7 @@ public class PFCommonGetter {
 		for (Entity matchDay: matchDayEntity){
 
 			DatastoreService dataStore2 = DatastoreServiceFactory.getDatastoreService();
-			Query getGamesForMatchDay = new Query(gameType).setAncestor(matchDay.getKey());
+			Query getGamesForMatchDay = new Query("Game").setAncestor(matchDay.getKey());
 			PreparedQuery PQGames = dataStore2.prepare(getGamesForMatchDay);
 			List<Entity> games = PQGames.asList(FetchOptions.Builder.withDefaults());	
 
@@ -371,34 +377,36 @@ public class PFCommonGetter {
 			List<Game> iGames = new ArrayList<Game>();
 
 			for(Entity game : games){
-				List<Key> team1 = (List<Key>) game.getProperty("teamOne");
-				List<Key> team2 = (List<Key>) game.getProperty("teamTwo");
+				if(game.getProperty("gameType").equals(gameType)){
+					List<Key> team1 = (List<Key>) game.getProperty("teamOne");
+					List<Key> team2 = (List<Key>) game.getProperty("teamTwo");
 
-				List<User> userTeam1 = new ArrayList<User>();
-				List<User> userTeam2 = new ArrayList<User>();
-				List<UserWithPassword> allUsers = PFCommonGetter.getAllUsers();
-				for (UserWithPassword userWithPassword : allUsers) {
-					for (Key team1item : team1){
-						if(userWithPassword.getKey().equals(team1item)){
-							userTeam1.add(userWithPassword);
+					List<User> userTeam1 = new ArrayList<User>();
+					List<User> userTeam2 = new ArrayList<User>();
+					List<UserWithPassword> allUsers = PFCommonGetter.getAllUsers();
+					for (UserWithPassword userWithPassword : allUsers) {
+						for (Key team1item : team1){
+							if(userWithPassword.getKey().equals(team1item)){
+								userTeam1.add(userWithPassword);
+							}
+						}
+
+						for (Key team2item : team2){
+							if(userWithPassword.getKey().equals(team2item)){
+								userTeam2.add(userWithPassword);
+							}
 						}
 					}
 
-					for (Key team2item : team2){
-						if(userWithPassword.getKey().equals(team2item)){
-							userTeam2.add(userWithPassword);
-						}
-					}
+
+					int resultOne = Integer.parseInt(game.getProperty("resultOne").toString());
+					int resultTwo = Integer.parseInt(game.getProperty("resultTwo").toString());
+					Date date = (Date) game.getProperty("date");
+					String matchDayName = game.getParent().getName();
+
+					//TODO  COS THIS MUST BE GENERIC
+					iGames.add(new Game(userTeam1,userTeam2, date,resultOne,resultTwo,matchDayName,gameType));
 				}
-
-
-				int resultOne = Integer.parseInt(game.getProperty("resultOne").toString());
-				int resultTwo = Integer.parseInt(game.getProperty("resultTwo").toString());
-				Date date = (Date) game.getProperty("date");
-				String matchDayName = game.getParent().getName();
-
-				//TODO  COS THIS MUST BE GENERIC
-				iGames.add(new Game(userTeam1,userTeam2, date,resultOne,resultTwo,matchDayName,gameType));
 			}
 			MatchDay tmp =  new MatchDay(matchDay.getKey().getName(), matchDay.getKey(), matchDay.getParent());
 			tmp.setGames(iGames);
