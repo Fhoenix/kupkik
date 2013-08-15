@@ -66,7 +66,7 @@
 			StringBuilder rankingTable = new StringBuilder();
 		for(TypedWinLooseRanking item : typed){
 			
-			rankingTable.append("<h1>"+item.getGameType() + "</h1>");
+			rankingTable.append("<h1><img src=\""+ item.getImagePath() + "\" /> "+item.getGameType() + "</h1>");
 			rankingTable.append("<table class=\"table table-striped\">");
 			rankingTable.append("<thead> <th>Name</th> <th>Total Games</th> <th>Total Games Participated</th> <th>Games Won</th><th>Win Loose Rate</th></thead>");
 

@@ -302,10 +302,13 @@ public class ViewHelper
 					newsThumbnails.append("<div class=\"caption\">");
 						newsThumbnails.append("<h3>" + MessagesHome.NEWS_BOXES_2 +"</h3>");
 						newsThumbnails.append("<table class=\"table table-striped\">");
-						newsThumbnails.append("<thead> <th> TEAM 1</th> <th> TEAM 2</th>  <th> RESULT</th> <th> RESULT</th>  </thead>");
+						newsThumbnails.append("<thead> <th> &nbsp; </th> <th> TEAM 1</th> <th> TEAM 2</th>  <th> RESULT</th> <th> RESULT</th>  </thead>");
 			for (Game item : badmintonSingle){
 	
 						newsThumbnails.append("<tr> <td>");
+						newsThumbnails.append("<img src=\""+item.getPictogramPath()+"\" />");
+						
+						newsThumbnails.append("</td> <td>");
 						newsThumbnails.append(item.getPlayerOne().get(0).getSurname()+", "+ item.getPlayerOne().get(0).getFirstname());
 			
 						newsThumbnails.append("</td> <td>");

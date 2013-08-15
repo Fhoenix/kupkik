@@ -30,7 +30,7 @@ public class ShowNewBadmintonDoubleGameViewHandler implements IHtmlRequestHandle
         Collections.sort(users, new ComparatorUser());
         pRequest.setAttribute("users", users);
         
-        List<MatchDay> matchDay = pApplicationCoreFacade.getAllMatchDaysOfUser(currentUser.getKey(), EntityNameStore.BADMINTON_DOUBLE_GAME);
+        List<MatchDay> matchDay = pApplicationCoreFacade.getAllMatchDaysOfUser(currentUser.getKey(), EntityNameStore.BADMINTON_DOUBLE_GAME.toString());
         Collections.sort(matchDay, new ComparatorMatchDay());
         pRequest.setAttribute("matchDays", matchDay);
 

@@ -108,7 +108,7 @@ public class ApplicationCoreFacade
 
 
 
-	public CreateBadmintonSingleGameAnswer createBadmintonSingleGame(final Key matchDayKey, final List<Key> playerOne, final List<Key> playerTwo, final int resultOne, final int resultTwo, final Date date){
+	public CreateBadmintonSingleGameAnswer createBadmintonSingleGame(final Key matchDayKey, final List<Key> playerOne, final List<Key> playerTwo, final int resultOne, final int resultTwo, final Date date, String gameType){
 		
 		if(playerOne.equals(playerTwo)){
 			return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_USER_EQUAL_EACH_OTHER;
@@ -123,14 +123,14 @@ public class ApplicationCoreFacade
 		}else if ((resultOne > MIN_END_RESULT || resultTwo > MIN_END_RESULT ) && !(Math.abs(resultOne-resultTwo) == MAX_WINNING_DISTANCE)){
 			return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_RESULTS_INVALID;
 		}
-		PFBadmintonSaver.saveNewBadmintonSingleGame(matchDayKey, playerOne, playerTwo, resultOne, resultTwo, date);
+		PFBadmintonSaver.saveGame(matchDayKey, playerOne, playerTwo, resultOne, resultTwo, date, gameType);
 		return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_OK;
 		
 		
 	}
 
-	public CreateGameAnswer createBadmintonDoubleGame(final Key matchDayKey, final List<Key> team1, final List<Key> team2, final int resultOne, final int resultTwo, final Date date){
-		PFBadmintonSaver.saveNewBadmintonDoubleGame(matchDayKey, team1, team2, resultOne, resultTwo, date);
+	public CreateGameAnswer createBadmintonDoubleGame(final Key matchDayKey, final List<Key> team1, final List<Key> team2, final int resultOne, final int resultTwo, final Date date, String gameType){
+		PFBadmintonSaver.saveGame(matchDayKey, team1, team2, resultOne, resultTwo, date, gameType);
 		return CreateGameAnswer.GAME_OK;
 	}
 
@@ -397,11 +397,11 @@ public class ApplicationCoreFacade
 	 }
 
 	 public  static DisplaySkillGraph getAllBadmintonSingleGamesInSeason(Key season, Key userName){
-		 return PFCommonGetter.getAllGamesInSeason( EntityNameStore.BADMINTON_SINGLE_GAME, season,  userName);
+		 return PFCommonGetter.getAllGamesInSeason( EntityNameStore.BADMINTON_SINGLE_GAME.toString(), season,  userName);
 	 }
 
 	 public  static DisplaySkillGraph getAllBadmintonDoubleGamesInSeason(Key season, Key userName){
-		 return PFCommonGetter.getAllGamesInSeason( EntityNameStore.BADMINTON_DOUBLE_GAME, season,  userName);
+		 return PFCommonGetter.getAllGamesInSeason( EntityNameStore.BADMINTON_DOUBLE_GAME.toString(), season,  userName);
 	 }
 
 	 /** Returns all Seasons in a List<Seasons> */
@@ -416,14 +416,14 @@ public class ApplicationCoreFacade
 	}
 
 	public CreateGameAnswer createKickerGame(Key matchDayKey, List<Key> team1,
-			List<Key> team2, int resultOne, int resultTwo, Date date) {
-		PFBadmintonSaver.saveNewKickerGame(matchDayKey, team1, team2, resultOne, resultTwo, date);
+			List<Key> team2, int resultOne, int resultTwo, Date date, String gameType) {
+		PFBadmintonSaver.saveGame(matchDayKey, team1, team2, resultOne, resultTwo, date, gameType);
 		return CreateGameAnswer.GAME_OK;
 	}
 
 	public static DisplaySkillGraph getAllKickerGamesInSeason(Key seasonKey,
 			Key userKey) {
-		return PFCommonGetter.getAllGamesInSeason( EntityNameStore.KICKER_GAME, seasonKey,  userKey);
+		return PFCommonGetter.getAllGamesInSeason( EntityNameStore.KICKER_GAME.toString(), seasonKey,  userKey);
 	}
 
 }

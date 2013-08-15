@@ -17,6 +17,7 @@ import com.kupkik.messages.HandlerMessagesEnum;
 import com.kupkik.messages.MessageError;
 import com.kupkik.messages.MessageSuccess;
 import com.kupkik.model.UserWithPassword;
+import com.kupkik.persistence.EntityNameStore;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 
@@ -66,7 +67,8 @@ public class CreateKickerGameHandler  implements IHtmlRequestHandler{
 				team2, 
 				resultOne,
 				resultTwo,
-				date);
+				date,
+				EntityNameStore.KICKER_GAME.toString());
 
         if( createGameAnswer == CreateGameAnswer.GAME_NOK )
         {

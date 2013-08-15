@@ -16,30 +16,15 @@ public class PFBadmintonSaver {
 
 
 
-	public static void saveNewBadmintonSingleGame(final Key matchDayKey, final List<Key> playerOne, final List<Key> playerTwo, final int resultOne, final int resultTwo, final Date date){
+	public static void saveGame(final Key matchDayKey, final List<Key> playerOne, final List<Key> playerTwo, final int resultOne, final int resultTwo, final Date date, String gameType){
 	
-		Entity badmintonSingleGame = new Entity(EntityNameStore.BADMINTON_SINGLE_GAME, matchDayKey);
+		Entity badmintonSingleGame = new Entity("Game", matchDayKey);
 		
 		badmintonSingleGame.setProperty("teamOne", playerOne);
 		badmintonSingleGame.setProperty("teamTwo", playerTwo);
 		badmintonSingleGame.setProperty("resultOne", resultOne);
 		badmintonSingleGame.setProperty("resultTwo", resultTwo);
-		
-		badmintonSingleGame.setProperty("date", date);
-		   DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-	       datastore.put(badmintonSingleGame);
-		
-	}
-	
-	
-	public static void saveNewBadmintonDoubleGame(final Key matchDayKey, final List<Key> teamOne, final List<Key> teamTwo, final int resultOne, final int resultTwo, final Date date){
-		
-		Entity badmintonSingleGame = new Entity(EntityNameStore.BADMINTON_DOUBLE_GAME, matchDayKey);
-		
-		badmintonSingleGame.setProperty("teamOne", teamOne);
-		badmintonSingleGame.setProperty("teamTwo", teamTwo);
-		badmintonSingleGame.setProperty("resultOne", resultOne);
-		badmintonSingleGame.setProperty("resultTwo", resultTwo);
+		badmintonSingleGame.setProperty("gameType", gameType);
 		
 		badmintonSingleGame.setProperty("date", date);
 		   DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -47,19 +32,4 @@ public class PFBadmintonSaver {
 		
 	}
 
-
-	public static void saveNewKickerGame(Key matchDayKey, List<Key> teamOne,
-			List<Key> teamTwo, int resultOne, int resultTwo, Date date) {
-	Entity kickerGame = new Entity(EntityNameStore.KICKER_GAME, matchDayKey);
-		
-	kickerGame.setProperty("teamOne", teamOne);
-	kickerGame.setProperty("teamTwo", teamTwo);
-	kickerGame.setProperty("resultOne", resultOne);
-	kickerGame.setProperty("resultTwo", resultTwo);
-		
-	kickerGame.setProperty("date", date);
-		   DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-	       datastore.put(kickerGame);
-		
-	}
 }

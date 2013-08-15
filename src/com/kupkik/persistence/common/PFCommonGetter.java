@@ -47,7 +47,7 @@ public class PFCommonGetter {
 	public static UserWithPassword getUserByKey(Key userKey){
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		Filter keyFilter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, FilterOperator.EQUAL, userKey);
-		Query getUserQuery = new Query(EntityNameStore.USER).setFilter(keyFilter);
+		Query getUserQuery = new Query(EntityNameStore.USER.toString()).setFilter(keyFilter);
 		PreparedQuery getUser = datastore.prepare(getUserQuery);
 
 
@@ -65,7 +65,7 @@ public class PFCommonGetter {
 	public static Season getSeasonByKey(Key season){
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		Filter keyFilter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, FilterOperator.EQUAL, season);
-		Query getUserQuery = new Query(EntityNameStore.SEASON).setFilter(keyFilter);
+		Query getUserQuery = new Query(EntityNameStore.SEASON.toString()).setFilter(keyFilter);
 		PreparedQuery getUser = datastore.prepare(getUserQuery);
 
 
@@ -91,7 +91,7 @@ public class PFCommonGetter {
 	public static List<MatchDay> getAllMatchDays()
 	{
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		Query getAllMatchDaysQuery = new Query(EntityNameStore.MATCHDAY);
+		Query getAllMatchDaysQuery = new Query(EntityNameStore.MATCHDAY.toString());
 		PreparedQuery getAllMatchDaysPreparedQuery = datastore.prepare(getAllMatchDaysQuery);
 
 		List<Entity> userEntities = getAllMatchDaysPreparedQuery.asList(FetchOptions.Builder.withDefaults());
@@ -113,7 +113,7 @@ public class PFCommonGetter {
 	public static List<MatchDay> getLatestMatchDays(int count)
 	{
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		Query getAllMatchDaysQuery = new Query(EntityNameStore.MATCHDAY);
+		Query getAllMatchDaysQuery = new Query(EntityNameStore.MATCHDAY.toString());
 		PreparedQuery getAllMatchDaysPreparedQuery = datastore.prepare(getAllMatchDaysQuery);
 
 		List<Entity> userEntities = getAllMatchDaysPreparedQuery.asList(FetchOptions.Builder.withLimit(count));
@@ -137,7 +137,7 @@ public class PFCommonGetter {
 		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
 		Filter filterName = new FilterPredicate("Key", FilterOperator.EQUAL,matchDayKey );
 
-		Query getMatchDayKey = new Query(EntityNameStore.MATCHDAY).setFilter(filterName);
+		Query getMatchDayKey = new Query(EntityNameStore.MATCHDAY.toString()).setFilter(filterName);
 		PreparedQuery pQGetMatchDay = dataStore.prepare(getMatchDayKey);
 
 		List<Entity> matchDaysEntity = pQGetMatchDay.asList(FetchOptions.Builder.withLimit(1));
@@ -157,7 +157,7 @@ public class PFCommonGetter {
 	public static List<UserWithPassword> getAllUsers()
 	{
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		Query getAllUsersQuery = new Query(EntityNameStore.USER);
+		Query getAllUsersQuery = new Query(EntityNameStore.USER.toString());
 		PreparedQuery getAllUsersPreparedQuery = datastore.prepare(getAllUsersQuery);
 
 		List<Entity> userEntities = getAllUsersPreparedQuery.asList(FetchOptions.Builder.withDefaults());
@@ -185,7 +185,7 @@ public class PFCommonGetter {
 		for(Season item :seasons){
 			if(item.getGameType().equals(gameType)){
 				DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();			
-				Query getMatchDayKey = new Query(EntityNameStore.MATCHDAY).setAncestor(item.getKey());
+				Query getMatchDayKey = new Query(EntityNameStore.MATCHDAY.toString()).setAncestor(item.getKey());
 
 				PreparedQuery pQGetSeason = dataStore.prepare(getMatchDayKey);
 				List<Entity> seasonEntity = pQGetSeason.asList(FetchOptions.Builder.withDefaults());
@@ -203,7 +203,7 @@ public class PFCommonGetter {
 
 		DisplaySkillGraph dataskillGraph = null;
 		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
-		Query getMatchDayBySeasonKey = new Query(EntityNameStore.MATCHDAY).setAncestor(season);
+		Query getMatchDayBySeasonKey = new Query(EntityNameStore.MATCHDAY.toString()).setAncestor(season);
 		PreparedQuery PQMatchDays = dataStore.prepare(getMatchDayBySeasonKey);
 
 		List<Entity> matchDayEntity = PQMatchDays.asList(FetchOptions.Builder.withDefaults());
@@ -253,7 +253,7 @@ public class PFCommonGetter {
 
 				}
 
-				badmintonSingleGames.add(new Game(userTeam1, userTeam2,null, resultOne, resultTwo,  matchDayName));
+				badmintonSingleGames.add(new Game(userTeam1, userTeam2,null, resultOne, resultTwo,  matchDayName,gameType));
 
 
 				for (User user : userTeam1) {
@@ -307,7 +307,7 @@ public class PFCommonGetter {
 
 
 		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();			
-		Query getSeasonKey = new Query(EntityNameStore.SEASON);
+		Query getSeasonKey = new Query(EntityNameStore.SEASON.toString());
 
 		PreparedQuery pQGetSeason = dataStore.prepare(getSeasonKey);
 		List<Entity> seasonEntity = pQGetSeason.asList(FetchOptions.Builder.withDefaults());
@@ -338,7 +338,7 @@ public class PFCommonGetter {
 
 
 		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();			
-		Query getSeasonKey = new Query(EntityNameStore.SEASON);
+		Query getSeasonKey = new Query(EntityNameStore.SEASON.toString());
 
 		PreparedQuery pQGetSeason = dataStore.prepare(getSeasonKey);
 		List<Entity> seasonEntity = pQGetSeason.asList(FetchOptions.Builder.withDefaults());
@@ -354,7 +354,7 @@ public class PFCommonGetter {
 	public static List<MatchDay> getMatchDaysForSeason(Key season, String gameType){
 
 		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
-		Query getMatchDaysbySeasonKey = new Query(EntityNameStore.MATCHDAY).setAncestor(season);
+		Query getMatchDaysbySeasonKey = new Query(EntityNameStore.MATCHDAY.toString()).setAncestor(season);
 		PreparedQuery PQMatchDays = dataStore.prepare(getMatchDaysbySeasonKey);
 		List<Entity> matchDayEntity = PQMatchDays.asList(FetchOptions.Builder.withDefaults());
 
@@ -398,7 +398,7 @@ public class PFCommonGetter {
 				String matchDayName = game.getParent().getName();
 
 				//TODO  COS THIS MUST BE GENERIC
-				iGames.add(new Game(userTeam1,userTeam2, date,resultOne,resultTwo,matchDayName));
+				iGames.add(new Game(userTeam1,userTeam2, date,resultOne,resultTwo,matchDayName,gameType));
 			}
 			MatchDay tmp =  new MatchDay(matchDay.getKey().getName(), matchDay.getKey(), matchDay.getParent());
 			tmp.setGames(iGames);

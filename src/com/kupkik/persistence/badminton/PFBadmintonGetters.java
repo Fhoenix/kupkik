@@ -37,14 +37,15 @@ public class PFBadmintonGetters {
 	public static List<Game> getLatestBadmintonSingleGames(int count){
 
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		List<Game> matches = new ArrayList<Game>();
 
-		Query getLatestBadmintonSingleMatchesQuery = new Query(EntityNameStore.BADMINTON_SINGLE_GAME);
+		Query getLatestBadmintonSingleMatchesQuery = new Query(EntityNameStore.BADMINTON_SINGLE_GAME.toString());
 		getLatestBadmintonSingleMatchesQuery.addSort("date", Query.SortDirection.DESCENDING);
 		PreparedQuery getLatestBadmintonSingleMatchesPreparedQuery = datastore.prepare(getLatestBadmintonSingleMatchesQuery);
 
 		List<Entity> matchesEntities = getLatestBadmintonSingleMatchesPreparedQuery.asList(FetchOptions.Builder.withLimit(count));
 
-		List<Game> matches = new ArrayList<Game>();
+		
 		for( Entity currentEntity : matchesEntities )
 		{
 			List<Key> playerOne = (List<Key>) currentEntity.getProperties().get("teamOne");
@@ -71,7 +72,7 @@ public class PFBadmintonGetters {
 				}
 			}
 			
-			Game currentBadmintonGame = new Game(userTeam1,userTeam2,date,resultOne,resultTwo,matchDayName);
+			Game currentBadmintonGame = new Game(userTeam1,userTeam2,date,resultOne,resultTwo,matchDayName, EntityNameStore.BADMINTON_SINGLE_GAME.toString());
 			matches.add(currentBadmintonGame);
 		}
 

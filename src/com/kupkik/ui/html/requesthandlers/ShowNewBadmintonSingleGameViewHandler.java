@@ -31,7 +31,7 @@ public class ShowNewBadmintonSingleGameViewHandler implements IHtmlRequestHandle
         Collections.sort(users, new ComparatorUser());
         pRequest.setAttribute("users", users);
         
-        List<MatchDay> matchDays = pApplicationCoreFacade.getAllMatchDaysOfUser(currentUser.getKey(), EntityNameStore.BADMINTON_SINGLE_GAME);
+        List<MatchDay> matchDays = pApplicationCoreFacade.getAllMatchDaysOfUser(currentUser.getKey(), EntityNameStore.BADMINTON_SINGLE_GAME.toString());
         Collections.sort(matchDays, new ComparatorMatchDay());
         pRequest.setAttribute("matchDays", matchDays);
 

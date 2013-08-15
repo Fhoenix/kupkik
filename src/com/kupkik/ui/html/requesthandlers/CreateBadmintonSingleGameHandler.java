@@ -18,6 +18,7 @@ import com.kupkik.messages.HandlerMessagesEnum;
 import com.kupkik.messages.MessageError;
 import com.kupkik.messages.MessageSuccess;
 import com.kupkik.model.UserWithPassword;
+import com.kupkik.persistence.EntityNameStore;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 
@@ -63,7 +64,8 @@ public class CreateBadmintonSingleGameHandler  implements IHtmlRequestHandler{
 				playerTwoList, 
 				resultOne,
 				resultTwo,
-				date);
+				date,
+				EntityNameStore.BADMINTON_SINGLE_GAME.toString());
 
 		if( createBadmintonSingleAnswer == CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_MIN_POINTS_NOT_REACHED ){
 			pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.BADMINTON_SINGLE_MIN_POINTS_NOT_REACHED);

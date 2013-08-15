@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.kupkik.model.User;
+import com.kupkik.persistence.EntityNameStore;
 
 public class Game {
 
@@ -16,14 +17,26 @@ public class Game {
 	private int resultOne;
 	private Date date;
 	private String matchDay;
+	private String pictogramPath; 
+	public static final String PATH = "/res/images/";
+	public static final String FILE_EXTENSION = ".jpg";
 
-	public Game(final List<User> team1, final List<User> team2, final Date date, final int resultOne, final int resultTwo,  final String matchDay){
+	public Game(final List<User> team1, final List<User> team2, final Date date, final int resultOne, final int resultTwo,  final String matchDay, String entityNameStore ){
 		this.team1 = team1;
 		this.team2 = team2;
 		this.resultOne = resultOne;
 		this.resultTwo = resultTwo;
 		this.matchDay = matchDay;
 		this.date = date;
+		this.pictogramPath = PATH + entityNameStore + FILE_EXTENSION;
+		
+	}
+
+	/**
+	 * @return the pictogramPath
+	 */
+	public String getPictogramPath() {
+		return pictogramPath;
 	}
 
 	public List<User> getPlayerOne() {

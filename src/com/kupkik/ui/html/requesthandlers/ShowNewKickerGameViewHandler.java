@@ -30,7 +30,7 @@ public class ShowNewKickerGameViewHandler implements IHtmlRequestHandler {
         Collections.sort(users, new ComparatorUser());
         pRequest.setAttribute("users", users);
         
-        List<MatchDay> matchDay = pApplicationCoreFacade.getAllMatchDaysOfUser(currentUser.getKey(), EntityNameStore.KICKER_GAME);
+        List<MatchDay> matchDay = pApplicationCoreFacade.getAllMatchDaysOfUser(currentUser.getKey(), EntityNameStore.KICKER_GAME.toString());
         Collections.sort(matchDay, new ComparatorMatchDay());
         pRequest.setAttribute("matchDays", matchDay);
 

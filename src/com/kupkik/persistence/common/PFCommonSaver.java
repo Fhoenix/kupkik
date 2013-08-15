@@ -19,7 +19,7 @@ public class PFCommonSaver {
 	 */
     public static void saveNewMatchDay( final String matchDayName, final Key seasonKey )
 	{
-	    Entity matchDay = new Entity(EntityNameStore.MATCHDAY, matchDayName, seasonKey);
+	    Entity matchDay = new Entity(EntityNameStore.MATCHDAY.toString(), matchDayName, seasonKey);
 	    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	    datastore.put(matchDay);
 	}
@@ -54,7 +54,7 @@ public class PFCommonSaver {
 	 */
 	public static void saveNewSeason( final String pSeasonName, final String pUserName, final String gameType , final List<String> usersAllowedToEditSeason)
 	{
-	    Key userKey = KeyFactory.createKey(EntityNameStore.USER, pUserName);
+	    Key userKey = KeyFactory.createKey(EntityNameStore.USER.toString(), pUserName);
 	    Entity season = new Entity("Season", pSeasonName, userKey);
 	    season.setProperty("GameType", gameType);
 	    season.setProperty("EditUser", usersAllowedToEditSeason);

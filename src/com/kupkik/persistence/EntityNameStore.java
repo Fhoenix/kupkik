@@ -1,12 +1,23 @@
 package com.kupkik.persistence;
 
-public  class EntityNameStore {
+public enum EntityNameStore {
 	
-	public static final String BADMINTON_SINGLE_GAME = "BadmintonSingle";
-	public static final String BADMINTON_DOUBLE_GAME = "BadmintonDouble";
-	public static final String KICKER_GAME = "Kicker";
-	public static final String USER = "User";
-	public static final String SEASON = "Season";
-	public static final String MATCHDAY = "MatchDay";
+	
+	BADMINTON_SINGLE_GAME("BadmintonSingle"),
+	BADMINTON_DOUBLE_GAME("BadmintonDouble"),
+	KICKER_GAME("Kicker"),
+	USER("User"),
+	SEASON ("Season"),
+	MATCHDAY ("MatchDay");
+	
+	private final String entityName;
+	
+	EntityNameStore(String entityName){
+		this.entityName = entityName;
+	}
+	
+	public String toString(){
+		return entityName;
+	}
 
 }
