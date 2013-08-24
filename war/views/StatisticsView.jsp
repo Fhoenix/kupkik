@@ -28,7 +28,7 @@
 <%=viewHelper.createHtmlBegin("Statistics Factory")%>
 <div class="row">
 	<div class="col-lg-12">
-		<h1>Profile Crawler</h1>
+		<h1>View Statistics</h1>
 		<form action="/" method="post">
 			<input class="form-control" type="hidden" name="action"
 				value="CreateStatistics">

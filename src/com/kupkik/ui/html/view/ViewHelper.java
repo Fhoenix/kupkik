@@ -106,7 +106,6 @@ public class ViewHelper
 			content.append("				<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">"+ MessageCommon.PROJECT_NAME +"<b class=\"caret\"></b></a>");
 			content.append("				<ul class=\"dropdown-menu\">");
 			content.append(" 					<li><a href=\"/?showView=NewSeasonView\">Create Season</a> </li>");
-			content.append(" 					<li><a href=\"/?showView=NewMatchDayView\">Create MatchDay</a> </li>");
 			content.append("					<li><a href=\"/?showView=NewBadmintonSingleGameView\">Badminton Single</a> </li>");
 			content.append("					<li><a href=\"/?showView=NewBadmintonDoubleGameView\">Badminton Double</a> </li>");
 			content.append("					<li><a href=\"/?showView=NewKickerGameView\">Kicker</a> </li>");
@@ -282,12 +281,13 @@ public class ViewHelper
 		newsThumbnails.append("<div class=\"row\">");
 			newsThumbnails.append("<div class=\"col-lg-4\">");
 				newsThumbnails.append("<div class=\"thumbnail\">");
-						newsThumbnails.append("<img src=\"/res/images/logo.png\" style=\"width: 300px; height: 200px;\" />");
 						newsThumbnails.append("<div class=\"caption\">");
 							newsThumbnails.append("<h3>"+ MessagesHome.NEWS_BOXES_1 +"</h3>");
 							newsThumbnails.append("<table class=\"table table-striped\">");
 							for (MatchDay item : matchDays){
 							newsThumbnails.append("<tr> <td>");
+							newsThumbnails.append("<img src=\""+item.getPictogramPath()+"\" />");
+							newsThumbnails.append("</td> <td>");
 							newsThumbnails.append(item.getName());
 							newsThumbnails.append("</td> </tr>");							
 							}
@@ -298,7 +298,6 @@ public class ViewHelper
 
 			newsThumbnails.append("<div class=\"col-lg-8\">");
 				newsThumbnails.append("<div class=\"thumbnail\">");
-					newsThumbnails.append("<img src=\"/res/images/logo.png\" style=\"width: 300px; height: 200px;\" />");
 					newsThumbnails.append("<div class=\"caption\">");
 						newsThumbnails.append("<h3>" + MessagesHome.NEWS_BOXES_2 +"</h3>");
 						newsThumbnails.append("<table class=\"table table-striped\">");
@@ -309,10 +308,11 @@ public class ViewHelper
 						newsThumbnails.append("<img src=\""+item.getPictogramPath()+"\" />");
 						
 						newsThumbnails.append("</td> <td>");
-						newsThumbnails.append(item.getPlayerOne().get(0).getSurname()+", "+ item.getPlayerOne().get(0).getFirstname());
+						
+						newsThumbnails.append(teamToString(item.getTeamOne()));
 			
 						newsThumbnails.append("</td> <td>");
-						newsThumbnails.append(item.getPlayerTwo().get(0).getSurname()+", "+ item.getPlayerTwo().get(0).getFirstname());
+						newsThumbnails.append(teamToString(item.getTeamTwo()));
 			
 						newsThumbnails.append("</td> <td>");
 						newsThumbnails.append(item.getResultOne());
@@ -342,7 +342,7 @@ public class ViewHelper
 		StringBuilder footer = new StringBuilder();
 		footer.append("</div>");
 		footer.append("<div class=\"row footer custom_footer\">");
-		footer.append("<div style=\"vertical-align: middle;\">");
+		footer.append("<div style=\"vertical-align: middle; text-align:center;\">");
 		footer.append( MessagesFooter.FOOTER_SIGNITURE);
 		footer.append("</div>");
 		footer.append("</div>");
@@ -537,6 +537,28 @@ public class ViewHelper
 		if(currentUserContained){
 			return "<strong>"+teamString.toString()+"</strong>";
 		}
+		return teamString.toString();
+	}
+	
+	private String teamToString(List<User> team) {
+		StringBuilder teamString = new StringBuilder();
+		
+		Iterator<User> teamOneIterator = team.iterator();
+		
+		while(teamOneIterator.hasNext()){
+			
+			User next = teamOneIterator.next();
+		
+			teamString.append(next.getSurname());
+			teamString.append(", ");
+			teamString.append(next.getFirstname());
+			
+			if (teamOneIterator.hasNext()){
+				teamString.append(" | ");
+			}
+			
+		}
+		
 		return teamString.toString();
 	}
 	

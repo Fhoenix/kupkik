@@ -1,5 +1,6 @@
 package com.kupkik.persistence.badminton;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -16,9 +17,9 @@ public class PFBadmintonSaver {
 
 
 
-	public static void saveGame(final Key matchDayKey, final List<Key> playerOne, final List<Key> playerTwo, final int resultOne, final int resultTwo, final Date date, String gameType){
+	public static void saveGame(final Key seasonKey, final List<Key> playerOne, final List<Key> playerTwo, final int resultOne, final int resultTwo, final Date date, String gameType){
 	
-		Entity badmintonSingleGame = new Entity("Game", matchDayKey);
+		Entity badmintonSingleGame = new Entity("Game", seasonKey);
 		
 		badmintonSingleGame.setProperty("teamOne", playerOne);
 		badmintonSingleGame.setProperty("teamTwo", playerTwo);
@@ -26,9 +27,16 @@ public class PFBadmintonSaver {
 		badmintonSingleGame.setProperty("resultTwo", resultTwo);
 		badmintonSingleGame.setProperty("gameType", gameType);
 		
-		badmintonSingleGame.setProperty("date", date);
-		   DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-	       datastore.put(badmintonSingleGame);
+		  // create SimpleDateFormat object with desired date format
+        SimpleDateFormat sdfDestination = new SimpleDateFormat(
+                "dd-MM-yyyy");
+
+        // parse the date into another format
+        String strDate = sdfDestination.format(date);
+		badmintonSingleGame.setProperty("date", strDate);
+		
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	    datastore.put(badmintonSingleGame);
 		
 	}
 

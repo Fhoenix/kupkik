@@ -8,7 +8,8 @@ public enum EntityNameStore {
 	KICKER_GAME("Kicker"),
 	USER("User"),
 	SEASON ("Season"),
-	MATCHDAY ("MatchDay");
+	GAME("Game");
+	
 	
 	private final String entityName;
 	

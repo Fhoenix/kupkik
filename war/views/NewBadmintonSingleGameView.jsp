@@ -11,8 +11,7 @@
 	ViewHelper viewHelper = (ViewHelper) request
 	.getAttribute("viewHelper");
 	List<User> users = (List<User>) request.getAttribute("users");
-	List<MatchDay> matchDays = (List<MatchDay>) request
-	.getAttribute("matchDays");
+	List<Season> seasons = (List<Season>) request.getAttribute("seasons");
 %>
 
 <%=viewHelper.createHtmlBegin("Turnier Erstellung")%>
@@ -37,22 +36,25 @@
 		<div class="col-lg-6">
 		
 		
-		
+			<h1>Score Badminton Single</h1>
 				<fieldset>
-					<legend>Score Badminton Double</legend>
-					<div class="form-group">
-							<label>Matchday</label>
-							<select class="form-control" id="matchDayKey" name="matchDayKey">
-							<%
-							for (MatchDay item : matchDays) {
-												out.println("	 <option value=\""
-														+ KeyFactory.keyToString(item.getKey()) + "\">"
-														+ item.getName() + " | "
-														+ item.getParentKey().getName() + "</option>");
-											}
-							%>
-							</select>
+					<legend></legend>
+					
+							<div class="form-group">
+							<label>Season</label>
+								<select class="form-control" id="seasonKey" name="seasonKey">
+
+					<%
+							for (Season item : seasons) {
+								out.println("	 <option value=\"" + KeyFactory.keyToString(item.getKey())+ "\">"
+										+ item.getName()+"</option>");
+							}
+						%>
+					</select>
+					
+					
 					</div>
+			
 					
 					
 					

@@ -12,17 +12,7 @@ import com.kupkik.persistence.EntityNameStore;
 
 public class PFCommonSaver {
 
-	/**
-	 * Saves a new MatchDay
-	 * @param matchDayName MatchDay Name
-	 * @param seasonKey The Parent key refering to the {@link Season}
-	 */
-    public static void saveNewMatchDay( final String matchDayName, final Key seasonKey )
-	{
-	    Entity matchDay = new Entity(EntityNameStore.MATCHDAY.toString(), matchDayName, seasonKey);
-	    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-	    datastore.put(matchDay);
-	}
+
     /**
 	 * Save a new user in the database.
 	 * 

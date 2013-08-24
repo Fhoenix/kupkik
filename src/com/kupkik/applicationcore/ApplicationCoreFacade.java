@@ -36,15 +36,14 @@ public class ApplicationCoreFacade
 	public static final int MAX_SURNAME_SIZE       		= 50;
 	public static final int MIN_PASSWORD_SIZE        	= 3;
 
-	public static final int MAX_MATCHDAY_NAME_SIZE		= 50;
-	public static final int MIN_MATCHDAY_NAME_SIZE 		= 5;
+
 
 	public static final int MAX_SEASON_NAME_SIZE 		= 50;
 	public static final int MIN_SEASON_NAME_SIZE 		= 5;
 
 	// Badminton Validation Rules
 	public static final int	MAX_WINNING_DISTANCE		= 2;
-	public static final int	MIN_END_RESULT					= 21;
+	public static final int	MIN_END_RESULT				= 21;
 	
 
 	public ApplicationCoreFacade()
@@ -129,10 +128,16 @@ public class ApplicationCoreFacade
 		
 	}
 
-	public CreateGameAnswer createBadmintonDoubleGame(final Key matchDayKey, final List<Key> team1, final List<Key> team2, final int resultOne, final int resultTwo, final Date date, String gameType){
-		PFBadmintonSaver.saveGame(matchDayKey, team1, team2, resultOne, resultTwo, date, gameType);
+	public CreateGameAnswer createBadmintonDoubleGame(final Key seasonKey, final List<Key> team1, final List<Key> team2, final int resultOne, final int resultTwo, final Date date, String gameType){
+	
+		if(GameValidator.anyUserSelectedTwice(team1, team2)){
+			return CreateGameAnswer.GAME_NOK;
+		}
+		PFBadmintonSaver.saveGame(seasonKey, team1, team2, resultOne, resultTwo, date, gameType);
 		return CreateGameAnswer.GAME_OK;
 	}
+	
+	
 
 	/**
 	 * create a new Season
@@ -145,11 +150,11 @@ public class ApplicationCoreFacade
 	 */
 	public CreateSeasonAnswer createSeason( final String pSeasonName, final String pUserName, final String pUserPasswordMd5, String gameType,  List<String> usersAllowedToEditSeason )
 	{
-		if( pSeasonName.length() > MAX_MATCHDAY_NAME_SIZE )
+		if( pSeasonName.length() > MAX_SEASON_NAME_SIZE )
 		{
 			return CreateSeasonAnswer.SEASON_NAME_INVALID;
 		}
-		if( pSeasonName.length() < MIN_MATCHDAY_NAME_SIZE )
+		if( pSeasonName.length() < MIN_SEASON_NAME_SIZE )
 		{
 			return CreateSeasonAnswer.SEASON_NAME_INVALID;
 		}
@@ -173,44 +178,6 @@ public class ApplicationCoreFacade
 		return CreateSeasonAnswer.SEASON_OK;
 	}
 
-
-	/**
-	 * create a new MatchDay
-	 * 
-	 * 
-	 * @param matchDayName
-	 *            the name of the new matchday
-	 * @return the result of trying to create a matchday
-	 */
-	public CreateMatchDayAnswer createMatchDay( final String matchDayName, Key seasonKey )
-	{
-		if( matchDayName.length() > MAX_MATCHDAY_NAME_SIZE )
-		{
-			return CreateMatchDayAnswer.MATCHDAY_NAME_INVALID;
-		}
-		if( matchDayName.length() < MIN_MATCHDAY_NAME_SIZE )
-		{
-			return CreateMatchDayAnswer.MATCHDAY_NAME_INVALID;
-		}
-		if( !matchDayName.matches("[0-9a-zA-Z_ ]*") )
-		{
-			return CreateMatchDayAnswer.MATCHDAY_NAME_INVALID;
-		}
-
-		if( PFCommonTester.doesMatchDayExistWithName(matchDayName) )
-		{
-			return CreateMatchDayAnswer.MATCHDAY_ALREADY_EXISTS;
-		}
-
-		if( !doesSeasonExists(seasonKey.getName()))
-		{
-			return CreateMatchDayAnswer.MATCHDAY_DOES_NOT_EXIST;
-		}
-
-		PFCommonSaver.saveNewMatchDay(matchDayName, seasonKey);
-
-		return CreateMatchDayAnswer.MATCHDAY_OK;
-	}
 
 	private boolean doesSeasonExists(String seasonName) {
 		// TODO COS IMPLEMENT METHOD
@@ -380,6 +347,9 @@ public class ApplicationCoreFacade
 		 return PFCommonGetter.getLatestMatchDays(count);
 	 }
 	 
+	 public static List<Season> getAllSeasonsForUserAndGameType(Key currentUser, String gameType) {
+		 return PFCommonGetter.getAllSeasonsForUserAndGameType(currentUser, gameType);
+	 }
 	 public static List<Season> getAllSeasonsForUser(Key currentUser) {
 		 return PFCommonGetter.getAllSeasonsForUser(currentUser);
 	 }
@@ -417,6 +387,9 @@ public class ApplicationCoreFacade
 
 	public CreateGameAnswer createKickerGame(Key matchDayKey, List<Key> team1,
 			List<Key> team2, int resultOne, int resultTwo, Date date, String gameType) {
+		if(GameValidator.anyUserSelectedTwice(team1, team2)){
+			return CreateGameAnswer.GAME_NOK;
+		}
 		PFBadmintonSaver.saveGame(matchDayKey, team1, team2, resultOne, resultTwo, date, gameType);
 		return CreateGameAnswer.GAME_OK;
 	}

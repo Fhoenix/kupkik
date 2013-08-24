@@ -52,8 +52,8 @@ public class PFBadmintonGetters {
 			List<Key>  playerTwo = (List<Key>) currentEntity.getProperties().get("teamTwo");
 			int resultOne = Integer.parseInt(currentEntity.getProperties().get("resultOne").toString());
 			int resultTwo =  Integer.parseInt(currentEntity.getProperties().get("resultTwo").toString());
-			String matchDayName = currentEntity.getParent().getName();
-			Date date = (Date) currentEntity.getProperties().get("date");
+			
+			String date = currentEntity.getProperty("date").toString();
 
 			List<User> userTeam1 = new ArrayList<>();
 			List<User> userTeam2 = new ArrayList<>();
@@ -72,7 +72,7 @@ public class PFBadmintonGetters {
 				}
 			}
 			
-			Game currentBadmintonGame = new Game(userTeam1,userTeam2,date,resultOne,resultTwo,matchDayName, currentEntity.getProperty("gameType").toString());
+			Game currentBadmintonGame = new Game(userTeam1,userTeam2,date,resultOne,resultTwo, currentEntity.getProperty("gameType").toString());
 			matches.add(currentBadmintonGame);
 		}
 

@@ -11,7 +11,6 @@ import com.kupkik.model.game.Game;
 public class MatchDay
 {
 	private String name;
-	private Key key;
 	private Key parentKey;
 	private List<Game> games = new ArrayList<Game>();
 	private int gamesWon;
@@ -19,12 +18,11 @@ public class MatchDay
 
 
 
-	public MatchDay(final String pName, final Key pKey, final Key pParentKey)
+	public MatchDay(final String pName, final Key pParentKey)
 	{
 		name = pName;
-		key = pKey;
 		parentKey = pParentKey;
-		
+
 	}
 
 
@@ -41,16 +39,6 @@ public class MatchDay
 
 
 
-	public Key getKey() {
-		return key;
-	}
-
-
-
-	public void setKey(Key key) {
-		this.key = key;
-	}
-
 
 
 	public String getName()
@@ -65,9 +53,9 @@ public class MatchDay
 	public List<Game> getGames() {
 		return Collections.unmodifiableList(games);
 	}
-	
-	
-	
+
+
+
 	public void setGames(List<Game> games) {
 		this.games = games;
 	}
@@ -95,5 +83,12 @@ public class MatchDay
 	public void setGamesPlayed(int gamesPlayed) {
 		this.gamesPlayed = gamesPlayed;
 	}
-	
+
+
+
+	public String getPictogramPath() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

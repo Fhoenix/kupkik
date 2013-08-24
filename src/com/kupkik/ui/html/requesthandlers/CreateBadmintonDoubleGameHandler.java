@@ -56,13 +56,13 @@ public class CreateBadmintonDoubleGameHandler  implements IHtmlRequestHandler{
 		
 		int resultOne = Integer.parseInt(pRequest.getParameter("resultOne"));
 		int resultTwo = Integer.parseInt(pRequest.getParameter("resultTwo"));
-		String pMatchDayKey = pRequest.getParameter("matchDayKey");
+		String seasonKey = pRequest.getParameter("seasonKey");
 		
 
 		Date date = new Date();
 
 
-		CreateGameAnswer createGameAnswer = pApplicationCoreFacade.createBadmintonDoubleGame(KeyFactory.stringToKey(pMatchDayKey), 
+		CreateGameAnswer createGameAnswer = pApplicationCoreFacade.createBadmintonDoubleGame(KeyFactory.stringToKey(seasonKey), 
 				team1, 
 				team2, 
 				resultOne,
