@@ -11,13 +11,14 @@ import javax.servlet.http.HttpSession;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.kupkik.applicationcore.ApplicationCoreFacade;
-import com.kupkik.applicationcore.ApplicationCoreFacade.CreateGameAnswer;
+import com.kupkik.applicationcore.answers.CreateGameAnswer;
 
 import com.kupkik.messages.HandlerMessagesEnum;
 import com.kupkik.messages.MessageError;
 import com.kupkik.messages.MessageSuccess;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.persistence.EntityNameStore;
+import com.kupkik.persistence.GameTypStore;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 
@@ -56,19 +57,19 @@ public class CreateKickerGameHandler  implements IHtmlRequestHandler{
 		
 		int resultOne = Integer.parseInt(pRequest.getParameter("resultOne"));
 		int resultTwo = Integer.parseInt(pRequest.getParameter("resultTwo"));
-		String pMatchDayKey = pRequest.getParameter("matchDayKey");
+		String seasonKey = pRequest.getParameter("seasonKey");
 		
 
 		Date date = new Date();
 
 
-		CreateGameAnswer createGameAnswer = pApplicationCoreFacade.createKickerGame(KeyFactory.stringToKey(pMatchDayKey), 
+		CreateGameAnswer createGameAnswer = pApplicationCoreFacade.createKickerGame(KeyFactory.stringToKey(seasonKey), 
 				team1, 
 				team2, 
 				resultOne,
 				resultTwo,
 				date,
-				EntityNameStore.KICKER_GAME.toString());
+				GameTypStore.KICKER_GAME.toString());
 
         if( createGameAnswer == CreateGameAnswer.GAME_NOK )
         {

@@ -22,14 +22,11 @@ import com.kupkik.model.User;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.model.game.Game;
 import com.kupkik.persistence.EntityNameStore;
+import com.kupkik.persistence.PropertiesStore;
 import com.google.appengine.api.datastore.PropertyProjection;
 import com.google.appengine.api.datastore.RawValue;
 
 public class PFCommonGetter {
-
-	//    private static final Logger sLogger = Logger.getLogger(HtmlStarterServlet.class.getName());
-
-
 
 	/**
 	 * Get a instance of {@link UserWithPassword}. Can return null.
@@ -46,18 +43,65 @@ public class PFCommonGetter {
 		return null;
 	}
 
+	/**
+	 * Get the Latest Games
+	 * @param count count of Games
+	 * @return List<Game>
+	 */
+	public static List<Game> getLatestGamesByCount(int count){
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		List<Game> matches = new ArrayList<Game>();
+
+		Query queryLatestGames = new Query(EntityNameStore.GAME.toString());
+		queryLatestGames.addSort(PropertiesStore.DATE.toString(), Query.SortDirection.DESCENDING);
+		PreparedQuery getLatestBadmintonSingleMatchesPreparedQuery = datastore.prepare(queryLatestGames);
+
+		List<Entity> matchesEntities = getLatestBadmintonSingleMatchesPreparedQuery.asList(FetchOptions.Builder.withLimit(count));
+		
+		for( Entity currentEntity : matchesEntities ){
+			List<Key> playerOne = (List<Key>) currentEntity.getProperties().get(PropertiesStore.TEAM_ONE.toString());
+			List<Key>  playerTwo = (List<Key>) currentEntity.getProperties().get(PropertiesStore.TEAM_TWO.toString());
+			int resultOne = Integer.parseInt(currentEntity.getProperties().get(PropertiesStore.RESULT_ONE.toString()).toString());
+			int resultTwo =  Integer.parseInt(currentEntity.getProperties().get(PropertiesStore.RESULT_TWO.toString()).toString());
+			
+			String date = currentEntity.getProperty(PropertiesStore.DATE.toString()).toString();
+
+			List<User> userTeam1 = new ArrayList<>();
+			List<User> userTeam2 = new ArrayList<>();
+			List<UserWithPassword> allUsers = PFCommonGetter.getAllUsers();
+			for (UserWithPassword userWithPassword : allUsers) {
+				for (Key team1item : playerOne){
+					if(userWithPassword.getKey().equals(team1item)){
+						userTeam1.add(userWithPassword);
+					}
+				}
+				
+				for (Key team2item : playerTwo){
+					if(userWithPassword.getKey().equals(team2item)){
+						userTeam2.add(userWithPassword);
+					}
+				}
+			}
+			
+			Game currentBadmintonGame = new Game(userTeam1,userTeam2,date,resultOne,resultTwo, currentEntity.getProperty(PropertiesStore.GAMETYPE.toString()).toString());
+			matches.add(currentBadmintonGame);
+		}
+
+		return matches;
+
+	}
+
+	
+	
 	public static UserWithPassword getUserByKey(Key userKey){
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		Filter keyFilter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, FilterOperator.EQUAL, userKey);
 		Query getUserQuery = new Query(EntityNameStore.USER.toString()).setFilter(keyFilter);
 		PreparedQuery getUser = datastore.prepare(getUserQuery);
-
-
 		List<Entity> userEntity = getUser.asList(FetchOptions.Builder.withLimit(1));
-
 		UserWithPassword userWithPassword = null;
 		for (Entity item: userEntity){
-			userWithPassword = new UserWithPassword(item.getKey().getName(),item.getProperty("passwordMd5").toString(),item.getKey(), item.getProperty("firstname").toString(),item.getProperty("surname").toString());
+			userWithPassword = new UserWithPassword(item.getKey().getName(),item.getProperty(PropertiesStore.PASSWORD_MD5.toString()).toString(),item.getKey(), item.getProperty(PropertiesStore.FIRSTNAME.toString()).toString(),item.getProperty(PropertiesStore.SURNAME.toString()).toString());
 		}
 		return userWithPassword;
 
@@ -75,7 +119,7 @@ public class PFCommonGetter {
 
 
 		for (Entity item: userEntity){
-			return new Season(item.getKey().getName(), item.getKey(), item.getParent(), (String) item.getProperty("GameType"));
+			return new Season(item.getKey().getName(), item.getKey(), item.getParent(), (String) item.getProperty(PropertiesStore.GAMETYPE.toString()));
 		}
 		return null;
 
@@ -90,27 +134,20 @@ public class PFCommonGetter {
 	 * 
 	 * @return all MatchDays, not ordered
 	 */
-	public static List<MatchDay> getAllMatchDays()
-	{
+	public static List<MatchDay> getAllMatchDays(){
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		Query q = new Query(EntityNameStore.GAME.toString());
-		q.addProjection(new PropertyProjection("date", String.class));
-
-
+		q.addProjection(new PropertyProjection(PropertiesStore.DATE.toString(), String.class));
 		q.setDistinct(true);
-		q.addSort("date", Query.SortDirection.DESCENDING);
+		q.addSort(PropertiesStore.DATE.toString(), Query.SortDirection.DESCENDING);
 
 		PreparedQuery getAllMatchDaysPreparedQuery = datastore.prepare(q);
 		List<Entity> matchDaysFromDatastore = getAllMatchDaysPreparedQuery.asList(FetchOptions.Builder.withDefaults());
 		List<MatchDay> matchDays = new ArrayList<MatchDay>();
-		for( Entity currentMatchDayEntity : matchDaysFromDatastore )
-		{
-
-
-			MatchDay currentMatchDay = new MatchDay(currentMatchDayEntity.getProperty("date").toString(), currentMatchDayEntity.getParent());
+		for( Entity currentMatchDayEntity : matchDaysFromDatastore ){
+			MatchDay currentMatchDay = new MatchDay(currentMatchDayEntity.getProperty(PropertiesStore.DATE.toString()).toString(), currentMatchDayEntity.getParent());
 			matchDays.add(currentMatchDay);
 		}
-
 		return matchDays;
 	}
 
@@ -125,23 +162,24 @@ public class PFCommonGetter {
 	public static List<MatchDay> getAllMatchDaysBySeason(Key season)
 	{
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		Query q = new Query(EntityNameStore.GAME.toString()).setAncestor(season);
+		Query q = new Query(EntityNameStore.GAME.toString());
 
-		q.addProjection(new PropertyProjection("date", String.class));
-
-
+		q.addProjection(new PropertyProjection(PropertiesStore.DATE.toString(), String.class));
 		q.setDistinct(true);
-		q.addSort("date", Query.SortDirection.DESCENDING);
+		q.addSort(PropertiesStore.DATE.toString(), Query.SortDirection.ASCENDING);
+
 
 		PreparedQuery getAllMatchDaysPreparedQuery = datastore.prepare(q);
 		List<Entity> matchDaysFromDatastore = getAllMatchDaysPreparedQuery.asList(FetchOptions.Builder.withDefaults());
 		List<MatchDay> matchDays = new ArrayList<MatchDay>();
 		for( Entity currentMatchDayEntity : matchDaysFromDatastore )
 		{
-
-
-			MatchDay currentMatchDay = new MatchDay(currentMatchDayEntity.getProperty("date").toString(), currentMatchDayEntity.getParent());
-			matchDays.add(currentMatchDay);
+			//TODO COS: BIG PROBLEM ... ich gehe alle spiele durch ... ich muss den Ancestor key setzen
+			//Dann hab ich das Problem, dass er index Probleme macht
+			if(currentMatchDayEntity.getParent().equals(season)){
+				MatchDay currentMatchDay = new MatchDay(currentMatchDayEntity.getProperty(PropertiesStore.DATE.toString()).toString(), currentMatchDayEntity.getParent());
+				matchDays.add(currentMatchDay);
+			}
 		}
 
 		return matchDays;
@@ -158,23 +196,19 @@ public class PFCommonGetter {
 
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		Query q = new Query(EntityNameStore.GAME.toString());
-		q.addProjection(new PropertyProjection("date", String.class));
+		q.addProjection(new PropertyProjection(PropertiesStore.DATE.toString(), String.class));
 
 
 		q.setDistinct(true);
-		q.addSort("date", Query.SortDirection.DESCENDING);
+		q.addSort(PropertiesStore.DATE.toString(), Query.SortDirection.DESCENDING);
 
 		PreparedQuery getAllMatchDaysPreparedQuery = datastore.prepare(q);
 		List<Entity> matchDaysFromDatastore = getAllMatchDaysPreparedQuery.asList(FetchOptions.Builder.withLimit(count));
 		List<MatchDay> matchDays = new ArrayList<MatchDay>();
-		for( Entity currentMatchDayEntity : matchDaysFromDatastore )
-		{
-
-
-			MatchDay currentMatchDay = new MatchDay(currentMatchDayEntity.getProperty("date").toString(), currentMatchDayEntity.getParent());
+		for( Entity currentMatchDayEntity : matchDaysFromDatastore ){
+			MatchDay currentMatchDay = new MatchDay(currentMatchDayEntity.getProperty(PropertiesStore.DATE.toString()).toString(), currentMatchDayEntity.getParent());
 			matchDays.add(currentMatchDay);
 		}
-
 		return matchDays;
 	}
 
@@ -194,7 +228,7 @@ public class PFCommonGetter {
 		List<UserWithPassword> users = new ArrayList<UserWithPassword>();
 		for( Entity currentUserEntity : userEntities )
 		{
-			UserWithPassword currentUser = new UserWithPassword(currentUserEntity.getKey().getName(), currentUserEntity.getProperty("passwordMd5").toString(), currentUserEntity.getKey(), currentUserEntity.getProperty("firstname").toString(), currentUserEntity.getProperty("surname").toString());
+			UserWithPassword currentUser = new UserWithPassword(currentUserEntity.getKey().getName(), currentUserEntity.getProperty(PropertiesStore.PASSWORD_MD5.toString()).toString(), currentUserEntity.getKey(), currentUserEntity.getProperty(PropertiesStore.FIRSTNAME.toString()).toString(), currentUserEntity.getProperty(PropertiesStore.SURNAME.toString()).toString());
 			users.add(currentUser);
 		}
 
@@ -207,32 +241,21 @@ public class PFCommonGetter {
 	 * @return a List of {@link MatchDay}.
 	 */
 	public static List<MatchDay> getAllMatchDaysOfUser(Key userKey, String gameType) {
-
 		List<Season> seasons = getAllSeasonsForUserAndGameType(userKey, gameType);
-
 		List<MatchDay> result = new ArrayList<MatchDay>();
-
 		for(Season item :seasons){
 			if(item.getGameType().equals(gameType)){
-				DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();			
-
 				List<MatchDay> allMatchDaysBySeason = getAllMatchDaysBySeason(item.getKey());
 				for (MatchDay matchDay : allMatchDaysBySeason) {
-
 					result.add( new MatchDay(matchDay.getName(), matchDay.getParentKey()));
 				}
 			}	
-
 		}
 		return result;	
 	}
 
 	public  static DisplaySkillGraph getAllGamesInSeason(String gameType, Key season, Key userName){
-
-
 		DisplaySkillGraph dataskillGraph = null;
-		DatastoreService dataStore = DatastoreServiceFactory.getDatastoreService();
-
 		List<MatchDay> allMatchDaysBySeason = getAllMatchDaysBySeason(season);
 
 		int totalGamesPlayed = 0;
@@ -246,7 +269,7 @@ public class PFCommonGetter {
 			int gamesPlayed = 0;
 
 			DatastoreService dataStore2 = DatastoreServiceFactory.getDatastoreService();
-			Query getGamesForMatchDay = new Query("Game");
+			Query getGamesForMatchDay = new Query(EntityNameStore.GAME.toString());
 			PreparedQuery PQGames = dataStore2.prepare(getGamesForMatchDay);
 			List<Entity> games = PQGames.asList(FetchOptions.Builder.withDefaults());	
 
@@ -256,14 +279,15 @@ public class PFCommonGetter {
 
 			List<Game> badmintonSingleGames = new ArrayList<Game>();
 			for(Entity game : games){
-				if(game.getProperty("gameType").equals(gameType) && game.getProperty("date").equals(matchDay.getName())){
+				
+				if(game.getProperty(PropertiesStore.GAMETYPE.toString()).equals(gameType) && game.getProperty(PropertiesStore.DATE.toString()).equals(matchDay.getName()) ){
 					totalNumberGames++;
-					List<Key> playerOne = (List<Key>) game.getProperty("teamOne");
-					List<Key> playerTwo = (List<Key>) game.getProperty("teamTwo");
+					List<Key> playerOne = (List<Key>) game.getProperty(PropertiesStore.TEAM_ONE.toString());
+					List<Key> playerTwo = (List<Key>) game.getProperty(PropertiesStore.TEAM_TWO.toString());
 
-					int resultOne = Integer.parseInt(game.getProperty("resultOne").toString());
-					int resultTwo = Integer.parseInt(game.getProperty("resultTwo").toString());
-					String date =  game.getProperty("date").toString();
+					int resultOne = Integer.parseInt(game.getProperty(PropertiesStore.RESULT_ONE.toString()).toString());
+					int resultTwo = Integer.parseInt(game.getProperty(PropertiesStore.RESULT_TWO.toString()).toString());
+					String date =  game.getProperty(PropertiesStore.DATE.toString()).toString();
 
 					List<User> userTeam1 = new ArrayList<>();
 					List<User> userTeam2 = new ArrayList<>();
@@ -346,11 +370,11 @@ public class PFCommonGetter {
 
 
 		for (Entity item: seasonEntity){
-			List<String> userKeys = (List<String>)  item.getProperty("EditUser");
+			List<String> userKeys = (List<String>)  item.getProperty(PropertiesStore.USERS_ALLOWED_TO_EDIT.toString());
 			for (String key : userKeys) {
 				if( KeyFactory.stringToKey(key).equals(userKey)){
-					if(item.getProperty("GameType").equals(gameType)){
-						seasons.add( new Season(item.getKey().getName(), item.getKey(), item.getParent(), (String) item.getProperty("GameType")));
+					if(item.getProperty(PropertiesStore.GAMETYPE.toString()).equals(gameType)){
+						seasons.add( new Season(item.getKey().getName(), item.getKey(), item.getParent(), (String) item.getProperty(PropertiesStore.GAMETYPE.toString())));
 					}
 				}
 			}
@@ -377,7 +401,7 @@ public class PFCommonGetter {
 
 
 		for (Entity item: seasonEntity){
-			seasons.add( new Season(item.getKey().getName(), item.getKey(), item.getParent(), (String) item.getProperty("GameType")));
+			seasons.add( new Season(item.getKey().getName(), item.getKey(), item.getParent(), (String) item.getProperty(PropertiesStore.GAMETYPE.toString())));
 		}
 
 		return seasons;	
@@ -395,7 +419,7 @@ public class PFCommonGetter {
 		for (Entity matchDay: matchDayEntity){
 
 			DatastoreService dataStore2 = DatastoreServiceFactory.getDatastoreService();
-			Query getGamesForMatchDay = new Query("Game").setAncestor(matchDay.getKey());
+			Query getGamesForMatchDay = new Query(EntityNameStore.GAME.toString()).setAncestor(matchDay.getKey());
 			PreparedQuery PQGames = dataStore2.prepare(getGamesForMatchDay);
 			List<Entity> games = PQGames.asList(FetchOptions.Builder.withDefaults());	
 
@@ -403,9 +427,9 @@ public class PFCommonGetter {
 			List<Game> iGames = new ArrayList<Game>();
 
 			for(Entity game : games){
-				if(game.getProperty("gameType").equals(gameType)){
-					List<Key> team1 = (List<Key>) game.getProperty("teamOne");
-					List<Key> team2 = (List<Key>) game.getProperty("teamTwo");
+				if(game.getProperty(PropertiesStore.GAMETYPE.toString()).equals(gameType)){
+					List<Key> team1 = (List<Key>) game.getProperty(PropertiesStore.TEAM_ONE.toString());
+					List<Key> team2 = (List<Key>) game.getProperty(PropertiesStore.TEAM_TWO.toString());
 
 					List<User> userTeam1 = new ArrayList<User>();
 					List<User> userTeam2 = new ArrayList<User>();
@@ -425,9 +449,9 @@ public class PFCommonGetter {
 					}
 
 
-					int resultOne = Integer.parseInt(game.getProperty("resultOne").toString());
-					int resultTwo = Integer.parseInt(game.getProperty("resultTwo").toString());
-					String date = game.getProperty("date").toString();
+					int resultOne = Integer.parseInt(game.getProperty(PropertiesStore.RESULT_ONE.toString()).toString());
+					int resultTwo = Integer.parseInt(game.getProperty(PropertiesStore.RESULT_TWO.toString()).toString());
+					String date = game.getProperty(PropertiesStore.DATE.toString()).toString();
 
 					//TODO  COS THIS MUST BE GENERIC
 					iGames.add(new Game(userTeam1,userTeam2, date,resultOne,resultTwo,gameType));
@@ -454,10 +478,10 @@ public class PFCommonGetter {
 
 
 		for (Entity item: seasonEntity){
-			List<String> userKeys = (List<String>)  item.getProperty("EditUser");
+			List<String> userKeys = (List<String>)  item.getProperty(PropertiesStore.USERS_ALLOWED_TO_EDIT.toString());
 			for (String key : userKeys) {
 				if( KeyFactory.stringToKey(key).equals(currentUser)){
-						seasons.add( new Season(item.getKey().getName(), item.getKey(), item.getParent(), (String) item.getProperty("GameType")));
+					seasons.add( new Season(item.getKey().getName(), item.getKey(), item.getParent(), (String) item.getProperty(PropertiesStore.GAMETYPE.toString())));
 				}
 			}
 		}

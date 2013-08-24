@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.kupkik.applicationcore.ApplicationCoreFacade;
-import com.kupkik.applicationcore.ApplicationCoreFacade.SaveUserAnswer;
+import com.kupkik.applicationcore.answers.SaveUserAnswer;
 import com.kupkik.messages.HandlerMessagesEnum;
 import com.kupkik.messages.MessageError;
 import com.kupkik.model.UserWithPassword;
@@ -75,14 +75,16 @@ public class RegisterUserHandler
 
         String md5HashForPassword = CredentialsUtils.getMd5HashForText(password1);
        
-        UserWithPassword userWithPasswordByName = pApplicationCoreFacade.getUserWithPasswordByName(userName);
+        UserWithPassword userWithPasswordByName = ApplicationCoreFacade.getUserWithPasswordByName(userName);
+        if(userWithPasswordByName != null){
         UserWithPassword currentUser = new UserWithPassword(userWithPasswordByName.getName(), 
         		userWithPasswordByName.getPasswordMd5(),
         		userWithPasswordByName.getKey(),userWithPasswordByName.getFirstname(), userWithPasswordByName.getSurname());
         
         pSession.setAttribute("currentUser", currentUser);
         pRequest.setAttribute("currentUser", currentUser);
-
+        }
+        
         // show the main view
 
         return "MainView";

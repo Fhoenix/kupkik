@@ -1,11 +1,8 @@
 package com.kupkik.model.game;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.kupkik.model.User;
-import com.kupkik.persistence.EntityNameStore;
 
 public class Game {
 

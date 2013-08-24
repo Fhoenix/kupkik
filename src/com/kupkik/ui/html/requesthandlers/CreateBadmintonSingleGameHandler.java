@@ -3,22 +3,18 @@ package com.kupkik.ui.html.requesthandlers;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.kupkik.applicationcore.ApplicationCoreFacade;
-import com.kupkik.applicationcore.ApplicationCoreFacade.CreateBadmintonSingleGameAnswer;
-import com.kupkik.applicationcore.ApplicationCoreFacade.CreateGameAnswer;
-
+import com.kupkik.applicationcore.answers.CreateBadmintonSingleGameAnswer;
 import com.kupkik.messages.HandlerMessagesEnum;
 import com.kupkik.messages.MessageError;
 import com.kupkik.messages.MessageSuccess;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.persistence.EntityNameStore;
+import com.kupkik.persistence.GameTypStore;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 
@@ -54,18 +50,18 @@ public class CreateBadmintonSingleGameHandler  implements IHtmlRequestHandler{
 		
 		int resultOne = Integer.parseInt(pRequest.getParameter("resultOne"));
 		int resultTwo = Integer.parseInt(pRequest.getParameter("resultTwo"));
-		String pMatchDayKey = pRequest.getParameter("matchDayKey");
+		String seasonKey = pRequest.getParameter("seasonKey");
 
 
 		Date date = new Date();
 
 
-		CreateBadmintonSingleGameAnswer createBadmintonSingleAnswer = pApplicationCoreFacade.createBadmintonSingleGame(KeyFactory.stringToKey(pMatchDayKey), playerOneList, 
+		CreateBadmintonSingleGameAnswer createBadmintonSingleAnswer = pApplicationCoreFacade.createBadmintonSingleGame(KeyFactory.stringToKey(seasonKey), playerOneList, 
 				playerTwoList, 
 				resultOne,
 				resultTwo,
 				date,
-				EntityNameStore.BADMINTON_SINGLE_GAME.toString());
+				GameTypStore.BADMINTON_SINGLE_GAME.toString());
 
 		if( createBadmintonSingleAnswer == CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_MIN_POINTS_NOT_REACHED ){
 			pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.BADMINTON_SINGLE_MIN_POINTS_NOT_REACHED);

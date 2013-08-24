@@ -5,17 +5,19 @@ import java.util.List;
 
 
 import com.google.appengine.api.datastore.Key;
-import com.kupkik.applicationcore.ApplicationCoreFacade.CreateGameAnswer;
+
+import com.kupkik.applicationcore.answers.CreateBadmintonSingleGameAnswer;
+import com.kupkik.applicationcore.answers.CreateGameAnswer;
+import com.kupkik.applicationcore.answers.CreateSeasonAnswer;
+import com.kupkik.applicationcore.answers.SaveUserAnswer;
 import com.kupkik.model.DisplaySkillGraph;
 import com.kupkik.model.Season;
 import com.kupkik.model.MatchDay;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.model.game.Game;
-import com.kupkik.model.ranking.TypedWinLooseRanking;
 import com.kupkik.model.ranking.WinLooseRanking;
 import com.kupkik.persistence.EntityNameStore;
-import com.kupkik.persistence.badminton.PFBadmintonGetters;
-import com.kupkik.persistence.badminton.PFBadmintonSaver;
+import com.kupkik.persistence.GameTypStore;
 import com.kupkik.persistence.common.PFCommonGetter;
 import com.kupkik.persistence.common.PFCommonSaver;
 import com.kupkik.persistence.common.PFCommonTester;
@@ -36,154 +38,102 @@ public class ApplicationCoreFacade
 	public static final int MAX_SURNAME_SIZE       		= 50;
 	public static final int MIN_PASSWORD_SIZE        	= 3;
 
-
-
+	
 	public static final int MAX_SEASON_NAME_SIZE 		= 50;
 	public static final int MIN_SEASON_NAME_SIZE 		= 5;
 
-	// Badminton Validation Rules
+	
 	public static final int	MAX_WINNING_DISTANCE		= 2;
 	public static final int	MIN_END_RESULT				= 21;
 	
 
-	public ApplicationCoreFacade()
-	{
+	public ApplicationCoreFacade(){
 		//TODO COS MAYBE INSTANCES OF THE FACADES
 	}
 
-	/**
-	 * The result of trying to create a new user. Prefix: USER_
-	 */
-	public enum SaveUserAnswer
-	{
-		USER_OK,
-		USER_ALREADY_EXISTS,
-		USER_NAME_TOO_SHORT,
-		USER_NAME_TOO_LONG,
-		USER_NAME_USES_INVALID_CHARACTERS,
-		USER_FIRSTNAME_INVALID,
-		USER_SURNAME_INVALID,
-		USER_PASSWORD_INVALID
-	}
 
 	/**
-	 * The result of trying to create a new matchday. Prefix: MATCHDAY_
+	 * Creates Badminton Single Games
+	 * @param seasonKey key of the parent (Season)
+	 * @param team1	List of team1
+	 * @param team2 List of team2
+	 * @param result1 Result of team1
+	 * @param result2 Result of team2
+	 * @param date date
+	 * @param gameType the gameType
+	 * @return CreateBadmintonSingleGameAnswer
 	 */
-	public enum CreateMatchDayAnswer
-	{
-		MATCHDAY_OK,
-		MATCHDAY_NAME_INVALID,
-		MATCHDAY_ALREADY_EXISTS,
-		MATCHDAY_SEASON_DOES_NOT_EXIST, 
-		MATCHDAY_USER_CREDENTIALS_INVALID,
-		MATCHDAY_DOES_NOT_EXIST
-	}
-
-
-	/**
-	 * The result of trying to create a new Season.
-	 */
-	public enum CreateSeasonAnswer
-	{
-		SEASON_OK,
-		SEASON_NAME_INVALID,
-		SEASON_ALREADY_EXISTS,
-		SEASON_USER_CREDENTIALS_INVALID
-	}
-
-
-	public enum CreateGameAnswer{
-		GAME_OK,
-		GAME_NOK
-	}
-	
-	public enum CreateBadmintonSingleGameAnswer{
-		BADMINTON_SINGLE_OK,
-		BADMINTON_SINGLE_USER_EQUAL_EACH_OTHER,
-		BADMINTON_SINGLE_MIN_POINTS_NOT_REACHED,
-		BADMINTON_SINGLE_RESULTS_INVALID
-	}
-
-
-
-
-	public CreateBadmintonSingleGameAnswer createBadmintonSingleGame(final Key matchDayKey, final List<Key> playerOne, final List<Key> playerTwo, final int resultOne, final int resultTwo, final Date date, String gameType){
-		
-		if(playerOne.equals(playerTwo)){
+	public CreateBadmintonSingleGameAnswer createBadmintonSingleGame(final Key seasonKey, final List<Key> team1, final List<Key> team2, final int result1, final int result2, final Date date, String gameType){
+		if(team1.equals(team2)){
 			return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_USER_EQUAL_EACH_OTHER;
 		}
 		//One result must be at least MIN_END_RESULT
-		if (!(resultOne >= MIN_END_RESULT) && !(resultTwo >= MIN_END_RESULT)){
+		if (!(result1 >= MIN_END_RESULT) && !(result2 >= MIN_END_RESULT)){
 			return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_MIN_POINTS_NOT_REACHED;
 		//Distance must be bigger than MAX_WINNING_DISTANCE
-		}else if (!(Math.abs(resultOne-resultTwo) >= MAX_WINNING_DISTANCE)){
+		}else if (!(Math.abs(result1-result2) >= MAX_WINNING_DISTANCE)){
 			return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_RESULTS_INVALID;
 		//In case one of both results is >= MIN_END_RESULT - abs of difference of both results must be exactly MAX_WINNING_DISTANCE
-		}else if ((resultOne > MIN_END_RESULT || resultTwo > MIN_END_RESULT ) && !(Math.abs(resultOne-resultTwo) == MAX_WINNING_DISTANCE)){
+		}else if ((result1 > MIN_END_RESULT || result2 > MIN_END_RESULT ) && !(Math.abs(result1-result2) == MAX_WINNING_DISTANCE)){
 			return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_RESULTS_INVALID;
 		}
-		PFBadmintonSaver.saveGame(matchDayKey, playerOne, playerTwo, resultOne, resultTwo, date, gameType);
+		PFCommonSaver.saveGame(seasonKey, team1, team2, result1, result2, date, gameType);
 		return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_OK;
 		
 		
 	}
 
+	/**
+	 * Create Badminton Double Game
+	 * @param seasonKey key of the parent (Season)
+	 * @param team1	List of team1
+	 * @param team2 List of team2
+	 * @param result1 Result of team1
+	 * @param result2 Result of team2
+	 * @param date date
+	 * @param gameType the gameType
+	 * @return CreateGameAnswer
+	 */
 	public CreateGameAnswer createBadmintonDoubleGame(final Key seasonKey, final List<Key> team1, final List<Key> team2, final int resultOne, final int resultTwo, final Date date, String gameType){
 	
 		if(GameValidator.anyUserSelectedTwice(team1, team2)){
 			return CreateGameAnswer.GAME_NOK;
 		}
-		PFBadmintonSaver.saveGame(seasonKey, team1, team2, resultOne, resultTwo, date, gameType);
+		PFCommonSaver.saveGame(seasonKey, team1, team2, resultOne, resultTwo, date, gameType);
 		return CreateGameAnswer.GAME_OK;
 	}
 	
 	
 
 	/**
-	 * create a new Season
+	 * Create a new Season
 	 * 
-	 * @param pSeasonName
-	 *            pSeasonName
+	 * @param pSeasonName pSeasonName
 	 * @param pUserName pUserName
 	 * @param pUserPasswordMd5 pUserPasswordMd5
 	 * @return the result of trying to create a Season
 	 */
-	public CreateSeasonAnswer createSeason( final String pSeasonName, final String pUserName, final String pUserPasswordMd5, String gameType,  List<String> usersAllowedToEditSeason )
-	{
-		if( pSeasonName.length() > MAX_SEASON_NAME_SIZE )
-		{
+	public CreateSeasonAnswer createSeason( final String pSeasonName, final String pUserName, final String pUserPasswordMd5, String gameType,  List<String> usersAllowedToEditSeason ){
+		if( pSeasonName.length() > MAX_SEASON_NAME_SIZE ){
 			return CreateSeasonAnswer.SEASON_NAME_INVALID;
 		}
-		if( pSeasonName.length() < MIN_SEASON_NAME_SIZE )
-		{
+		if( pSeasonName.length() < MIN_SEASON_NAME_SIZE ){
 			return CreateSeasonAnswer.SEASON_NAME_INVALID;
 		}
-		if( !pSeasonName.matches("[0-9a-zA-Z_@]*") )
-		{
+		if( !pSeasonName.matches("[0-9a-zA-Z_@]*")){
 			return CreateSeasonAnswer.SEASON_NAME_INVALID;
 		}
-
-		if( PFCommonTester.doesSeasonExist(pSeasonName) )
-		{
+		if( PFCommonTester.doesSeasonExist(pSeasonName)){
 			return CreateSeasonAnswer.SEASON_ALREADY_EXISTS;
 		}
-
-		if( !doesUserExistWithNameAndMd5Password(pUserName, pUserPasswordMd5))
-		{
+		if( !doesUserExistWithNameAndMd5Password(pUserName, pUserPasswordMd5)){
 			return CreateSeasonAnswer.SEASON_USER_CREDENTIALS_INVALID;
 		}
-
 		PFCommonSaver.saveNewSeason(pSeasonName, pUserName, gameType, usersAllowedToEditSeason);
-
 		return CreateSeasonAnswer.SEASON_OK;
 	}
 
 
-	private boolean doesSeasonExists(String seasonName) {
-		// TODO COS IMPLEMENT METHOD
-		return true;
-	}
-
 	/**
 	 * Does the user exist?
 	 * 
@@ -193,25 +143,12 @@ public class ApplicationCoreFacade
 	 *            the password (md5) of the user
 	 * @return 'true', if the user exists, otherwise 'false'
 	 */
-	public boolean doesUserExistWithNameAndMd5Password( final String pUserName, final String pPasswordMd5 )
-	{
+	public boolean doesUserExistWithNameAndMd5Password( final String pUserName, final String pPasswordMd5 ){
 		return PFCommonTester.doesUserExistWithNameAndMd5Password(pUserName, pPasswordMd5);
 	}
 
 
-	/**
-	 * Does the user exist?
-	 * 
-	 * @param pUserName
-	 *            the name of the user
-	 * @param pPasswordMd5
-	 *            the password (md5) of the user
-	 * @return 'true', if the user exists, otherwise 'false'
-	 */
-	public boolean doesSeasonExist( final String seasonName )
-	{
-		return PFCommonTester.doesSeasonExist(seasonName);
-	}
+
 
 
 	/**
@@ -221,8 +158,7 @@ public class ApplicationCoreFacade
 	 *            the name of the user
 	 * @return 'true', if the user exists, otherwise 'false'
 	 */
-	public boolean doesUserExistWithName( final String pUserName )
-	{
+	public boolean doesUserExistWithName( final String pUserName ){
 		return PFCommonTester.doesUserExistWithName(pUserName);
 	}
 
@@ -329,7 +265,7 @@ public class ApplicationCoreFacade
 	 }
 
 	 public List<Game> getLatestBadmintonSingleGames(int count){
-		 return PFBadmintonGetters.getLatestBadmintonSingleGames(count);
+		 return PFCommonGetter.getLatestGamesByCount(count);
 	 }
 
 	 /**
@@ -367,11 +303,11 @@ public class ApplicationCoreFacade
 	 }
 
 	 public  static DisplaySkillGraph getAllBadmintonSingleGamesInSeason(Key season, Key userName){
-		 return PFCommonGetter.getAllGamesInSeason( EntityNameStore.BADMINTON_SINGLE_GAME.toString(), season,  userName);
+		 return PFCommonGetter.getAllGamesInSeason( GameTypStore.BADMINTON_SINGLE_GAME.toString(), season,  userName);
 	 }
 
 	 public  static DisplaySkillGraph getAllBadmintonDoubleGamesInSeason(Key season, Key userName){
-		 return PFCommonGetter.getAllGamesInSeason( EntityNameStore.BADMINTON_DOUBLE_GAME.toString(), season,  userName);
+		 return PFCommonGetter.getAllGamesInSeason( GameTypStore.BADMINTON_DOUBLE_GAME.toString(), season,  userName);
 	 }
 
 	 /** Returns all Seasons in a List<Seasons> */
@@ -390,13 +326,13 @@ public class ApplicationCoreFacade
 		if(GameValidator.anyUserSelectedTwice(team1, team2)){
 			return CreateGameAnswer.GAME_NOK;
 		}
-		PFBadmintonSaver.saveGame(matchDayKey, team1, team2, resultOne, resultTwo, date, gameType);
+		PFCommonSaver.saveGame(matchDayKey, team1, team2, resultOne, resultTwo, date, gameType);
 		return CreateGameAnswer.GAME_OK;
 	}
 
 	public static DisplaySkillGraph getAllKickerGamesInSeason(Key seasonKey,
 			Key userKey) {
-		return PFCommonGetter.getAllGamesInSeason( EntityNameStore.KICKER_GAME.toString(), seasonKey,  userKey);
+		return PFCommonGetter.getAllGamesInSeason( GameTypStore.KICKER_GAME.toString(), seasonKey,  userKey);
 	}
 
 }

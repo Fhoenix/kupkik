@@ -1,0 +1,8 @@
+package com.kupkik.applicationcore.answers;
+
+public enum CreateBadmintonSingleGameAnswer{
+	BADMINTON_SINGLE_OK,
+	BADMINTON_SINGLE_USER_EQUAL_EACH_OTHER,
+	BADMINTON_SINGLE_MIN_POINTS_NOT_REACHED,
+	BADMINTON_SINGLE_RESULTS_INVALID
+}

@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/com/kupkik/applicationcore/ApplicationCoreFacade.java=UTF-8
 encoding//src/com/kupkik/messages/MessageError.java=UTF-8
 encoding//src/com/kupkik/persistence/common/PFCommonTester.java=UTF-8
 encoding//src/com/kupkik/ui/html/HtmlRequestProcessor.java=UTF-8

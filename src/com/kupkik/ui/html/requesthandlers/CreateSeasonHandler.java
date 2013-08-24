@@ -3,15 +3,12 @@ package com.kupkik.ui.html.requesthandlers;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.kupkik.applicationcore.ApplicationCoreFacade;
-import com.kupkik.applicationcore.ApplicationCoreFacade.CreateSeasonAnswer;
-import com.kupkik.applicationcore.ApplicationCoreFacade.CreateMatchDayAnswer;
+import com.kupkik.applicationcore.answers.CreateSeasonAnswer;
 import com.kupkik.messages.HandlerMessagesEnum;
 import com.kupkik.messages.MessageError;
 import com.kupkik.messages.MessageSuccess;
@@ -47,7 +44,9 @@ public class CreateSeasonHandler implements IHtmlRequestHandler
         }
         
         
-
+        if(users == null){
+        	users = new String[0];
+        }
         List<String> usersToEditSeason =  UtilHelper.convertStringArrayToListArray(users);
         usersToEditSeason.add(KeyFactory.keyToString(currentUser.getKey()));
    

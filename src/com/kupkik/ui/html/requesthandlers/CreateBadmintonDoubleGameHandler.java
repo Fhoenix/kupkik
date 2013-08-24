@@ -11,13 +11,14 @@ import javax.servlet.http.HttpSession;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.kupkik.applicationcore.ApplicationCoreFacade;
-import com.kupkik.applicationcore.ApplicationCoreFacade.CreateGameAnswer;
+import com.kupkik.applicationcore.answers.CreateGameAnswer;
 
 import com.kupkik.messages.HandlerMessagesEnum;
 import com.kupkik.messages.MessageError;
 import com.kupkik.messages.MessageSuccess;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.persistence.EntityNameStore;
+import com.kupkik.persistence.GameTypStore;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 
@@ -67,7 +68,7 @@ public class CreateBadmintonDoubleGameHandler  implements IHtmlRequestHandler{
 				team2, 
 				resultOne,
 				resultTwo,
-				date, EntityNameStore.BADMINTON_DOUBLE_GAME.toString());
+				date, GameTypStore.BADMINTON_DOUBLE_GAME.toString());
 
         if( createGameAnswer == CreateGameAnswer.GAME_NOK )
         {

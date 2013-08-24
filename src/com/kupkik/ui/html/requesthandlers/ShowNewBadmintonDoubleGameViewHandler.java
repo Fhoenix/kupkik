@@ -13,6 +13,7 @@ import com.kupkik.model.Season;
 import com.kupkik.model.User;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.persistence.EntityNameStore;
+import com.kupkik.persistence.GameTypStore;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
 import com.kupkik.ui.html.comperators.ComparatorMatchDay;
@@ -32,7 +33,7 @@ public class ShowNewBadmintonDoubleGameViewHandler implements IHtmlRequestHandle
         Collections.sort(users, new ComparatorUser());
         pRequest.setAttribute("users", users);
         
-        List<Season> season = pApplicationCoreFacade.getAllSeasonsForUserAndGameType(currentUser.getKey(), EntityNameStore.BADMINTON_DOUBLE_GAME.toString());
+        List<Season> season = pApplicationCoreFacade.getAllSeasonsForUserAndGameType(currentUser.getKey(), GameTypStore.BADMINTON_DOUBLE_GAME.toString());
         Collections.sort(season, new ComparatorSeason());
         pRequest.setAttribute("seasons", season);
 

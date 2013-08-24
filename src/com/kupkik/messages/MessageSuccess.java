@@ -9,7 +9,7 @@ public final class MessageSuccess {
 	public static final String MATCHDAY_SUCCESSFULLY_ADDED = "Matchday successfully added!";
 	
 	//Badminton Double
-	public static final String BADMINTON_DOUBLE_SUCCESSFULLY_ADDED = "Das Spiel wurde angelegt!";
+	public static final String BADMINTON_DOUBLE_SUCCESSFULLY_ADDED = "Das Badmintonspiel wurde angelegt!";
 
 	//Badminton Single
 	public static final String BADMINTON_SINGLE_SUCCESSFULLY_ADDED = "Das Spiel wurde angelegt!";
