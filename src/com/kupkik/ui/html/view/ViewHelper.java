@@ -241,11 +241,13 @@ public class ViewHelper
 		mainSiteIntroArea.append("<div class=\"row\">");
 		mainSiteIntroArea.append("<div class=\"col-lg-12\">");
 		mainSiteIntroArea.append("<div class=\"row\">");
-		mainSiteIntroArea.append("<div class=\"col-lg-6\">");
+		mainSiteIntroArea.append("<div class=\"col-lg-4\">");
 		mainSiteIntroArea.append("<img src=\"/res/images/logo.png\" style=\"width:100%\"/>");
 		mainSiteIntroArea.append("</div>");
-		mainSiteIntroArea.append("<div class=\"col-lg-6\">");
-		mainSiteIntroArea.append("<h2>"+ MessageCommon.PROJECT_NAME + "</h2>");
+		mainSiteIntroArea.append("<div class=\"col-lg-8\">");
+		mainSiteIntroArea.append("<div class=\"thumbnail\">");
+		mainSiteIntroArea.append("<div class=\"caption\">");
+		//mainSiteIntroArea.append("<h3>"+ MessageCommon.PROJECT_NAME + "</h3>");
 
 		if( currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) ){
 			mainSiteIntroArea.append(MessageHome.WELCOME_GUEST_USER);
@@ -254,24 +256,29 @@ public class ViewHelper
 			mainSiteIntroArea.append("<a href=\"?showView=RegisterView\"><button class=\"btn btn-large btn-primary\" type=\"button\">Register</button></a>");
 			mainSiteIntroArea.append("</div>");
 		}else{
-			mainSiteIntroArea.append("Hi ");
+			mainSiteIntroArea.append("<h3>Hi ");
 			mainSiteIntroArea.append(currentUser.getFirstname());
-			mainSiteIntroArea.append(", <br />");
+			mainSiteIntroArea.append(",</h3> <br />");
 			mainSiteIntroArea.append(MessageHome.WELCOME_REGISTERED_USER);
 			mainSiteIntroArea.append("<div class=\"row\">");
 			mainSiteIntroArea.append("<div class=\"col-lg-12\">");
-			mainSiteIntroArea.append("<a href=\"?showView=NewSeasonView\"><button class=\"btn btn-large btn-primary\" type=\"button\">Create a Season</button></a>");
+			mainSiteIntroArea.append("<a href=\"?showView=NewSeasonView\"><button class=\"btn btn-info form-control\" type=\"button\">Create a Season</button></a>");
 			mainSiteIntroArea.append("</div>");
 
 		}
+		mainSiteIntroArea.append("</div>");
+		mainSiteIntroArea.append("</div>");
 		//Spacer Block
-		mainSiteIntroArea.append("<div class=\"row\"><div class=\"col-lg-12\">&nbsp;</div></div>");
+		
+		mainSiteIntroArea.append("</div>");
+		mainSiteIntroArea.append("</div>");
+
 		
 		mainSiteIntroArea.append("</div>");
 		mainSiteIntroArea.append("</div>");
 		mainSiteIntroArea.append("</div>");
-		mainSiteIntroArea.append("</div>");
-		mainSiteIntroArea.append("</div>");	
+		
+		mainSiteIntroArea.append("<div class=\"row\"><div class=\"col-lg-12\">&nbsp;</div></div>");
 		return mainSiteIntroArea.toString();
 	}
 

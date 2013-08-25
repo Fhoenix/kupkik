@@ -15,34 +15,23 @@ public class MatchDay
 	private List<Game> games = new ArrayList<Game>();
 	private int gamesWon;
 	private int gamesPlayed;
+	private String pictogramPath;
 
-
-
-	public MatchDay(final String pName, final Key pParentKey)
-	{
+	public MatchDay(final String pName, final Key pParentKey){
+		this.pictogramPath = Game.PATH + "MatchDay" + Game.FILE_EXTENSION;
 		name = pName;
 		parentKey = pParentKey;
-
 	}
-
-
 
 	public Key getParentKey() {
 		return parentKey;
 	}
 
-
-
 	public void setParentKey(Key parentKey) {
 		this.parentKey = parentKey;
 	}
 
-
-
-
-
-	public String getName()
-	{
+	public String getName(){
 		return name;
 	}
 
@@ -54,41 +43,28 @@ public class MatchDay
 		return Collections.unmodifiableList(games);
 	}
 
-
-
 	public void setGames(List<Game> games) {
 		this.games = games;
 	}
-
-
 
 	public int getGamesWon() {
 		return gamesWon;
 	}
 
-
-
 	public void setGamesWon(int gamesWon) {
 		this.gamesWon = gamesWon;
 	}
-
-
 
 	public int getGamesPlayed() {
 		return gamesPlayed;
 	}
 
-
-
 	public void setGamesPlayed(int gamesPlayed) {
 		this.gamesPlayed = gamesPlayed;
 	}
 
-
-
 	public String getPictogramPath() {
-		// TODO Auto-generated method stub
-		return null;
+		return pictogramPath;
 	}
 
 }
