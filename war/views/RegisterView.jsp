@@ -1,11 +1,10 @@
 <%@ page import="com.kupkik.model.*" %>
 <%@ page import="com.kupkik.ui.html.view.*" %>
 <%@ page import="com.google.appengine.repackaged.com.google.common.base.StringUtil"%>
-<%@ page import="com.kupkik.messages.HandlerMessagesEnum"%>
-<%@ page import="com.sun.corba.se.impl.protocol.giopmsgheaders.MessageHandler"%>
+<%@ page import="com.kupkik.messages.MessageHandlerEnum"%>
 
-<% 
-    ViewHelper viewHelper = (ViewHelper)request.getAttribute("viewHelper");  
+<%
+	ViewHelper viewHelper = (ViewHelper)request.getAttribute("viewHelper");  
 
     String initializeUserName = "";
     if(request.getParameter("user_name") != null)
@@ -14,17 +13,17 @@
     }
 %> 
 
-<%= viewHelper.createHtmlBegin("Registrieren")  %> 
+<%=viewHelper.createHtmlBegin("Registrieren")%> 
 
 <%
- 	if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(HandlerMessagesEnum.ERROR.toString())))
- 	{
+ 	if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(MessageHandlerEnum.ERROR.toString())))
+  	{
  %> 
-    	<div class="alert alert-danger"><%=viewHelper.convertTextForHtml((String)request.getAttribute(HandlerMessagesEnum.ERROR.toString()))%> </div>
+    	<div class="alert alert-danger"><%=viewHelper.convertTextForHtml((String)request.getAttribute(MessageHandlerEnum.ERROR.toString()))%> </div>
 <%
-	}else if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(HandlerMessagesEnum.SUCCESS.toString()))) {
+	}else if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(MessageHandlerEnum.SUCCESS.toString()))) {
 %>
-		<div class="alert alert-success"><%=viewHelper.convertTextForHtml((String)request.getAttribute(HandlerMessagesEnum.SUCCESS.toString()))%> </div>
+		<div class="alert alert-success"><%=viewHelper.convertTextForHtml((String)request.getAttribute(MessageHandlerEnum.SUCCESS.toString()))%> </div>
 <% 		
 	}
  %> 

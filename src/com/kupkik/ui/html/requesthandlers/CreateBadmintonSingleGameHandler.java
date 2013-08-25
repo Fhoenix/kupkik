@@ -9,7 +9,7 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.kupkik.applicationcore.ApplicationCoreFacade;
 import com.kupkik.applicationcore.answers.CreateBadmintonSingleGameAnswer;
-import com.kupkik.messages.HandlerMessagesEnum;
+import com.kupkik.messages.MessageHandlerEnum;
 import com.kupkik.messages.MessageError;
 import com.kupkik.messages.MessageSuccess;
 import com.kupkik.model.UserWithPassword;
@@ -30,7 +30,7 @@ public class CreateBadmintonSingleGameHandler  implements IHtmlRequestHandler{
 
 		if( currentUser.getName().equals(HtmlRequestProcessor.GUEST_USER.getName()) )
 		{
-			pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.BADMINTON_SINGLE_USER_NOT_LOGGED_IN);
+			pRequest.setAttribute(MessageHandlerEnum.ERROR.toString(), MessageError.BADMINTON_SINGLE_USER_NOT_LOGGED_IN);
 			return "NewBadmintonSingleGameView";
 		}
 
@@ -44,12 +44,12 @@ public class CreateBadmintonSingleGameHandler  implements IHtmlRequestHandler{
 		playerTwoList.add(playerTwo);
 		
 		if (pRequest.getParameter("resultOne").toString().isEmpty() || pRequest.getParameter("resultTwo").toString().isEmpty() ){
-			pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.BADMINTON_RESULT_INVALID);
+			pRequest.setAttribute(MessageHandlerEnum.ERROR.toString(), MessageError.BADMINTON_RESULT_INVALID);
 			return "NewBadmintonSingleGameView";		
 		}
 		
-		int resultOne = Integer.parseInt(pRequest.getParameter("resultOne"));
-		int resultTwo = Integer.parseInt(pRequest.getParameter("resultTwo"));
+		String resultOne = pRequest.getParameter("resultOne");
+		String resultTwo = pRequest.getParameter("resultTwo");
 		String seasonKey = pRequest.getParameter("seasonKey");
 
 
@@ -64,16 +64,16 @@ public class CreateBadmintonSingleGameHandler  implements IHtmlRequestHandler{
 				GameTypStore.BADMINTON_SINGLE_GAME.toString());
 
 		if( createBadmintonSingleAnswer == CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_MIN_POINTS_NOT_REACHED ){
-			pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.BADMINTON_SINGLE_MIN_POINTS_NOT_REACHED);
+			pRequest.setAttribute(MessageHandlerEnum.ERROR.toString(), MessageError.BADMINTON_SINGLE_MIN_POINTS_NOT_REACHED);
 			return "NewBadmintonSingleGameView";
 		}else if(createBadmintonSingleAnswer == CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_RESULTS_INVALID ){
-			pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.BADMINTON_RESULT_INVALID);
+			pRequest.setAttribute(MessageHandlerEnum.ERROR.toString(), MessageError.BADMINTON_RESULT_INVALID);
 			return "NewBadmintonSingleGameView";
 		}else if(createBadmintonSingleAnswer == CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_USER_EQUAL_EACH_OTHER ){
-			pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.BADMINTON_SINGLE_USER_EQUALS_EACH_OTHER);
+			pRequest.setAttribute(MessageHandlerEnum.ERROR.toString(), MessageError.BADMINTON_SINGLE_USER_EQUALS_EACH_OTHER);
 			return "NewBadmintonSingleGameView";
 		}else{
-			pRequest.setAttribute(HandlerMessagesEnum.SUCCESS.toString(), MessageSuccess.BADMINTON_SINGLE_SUCCESSFULLY_ADDED);
+			pRequest.setAttribute(MessageHandlerEnum.SUCCESS.toString(), MessageSuccess.BADMINTON_SINGLE_SUCCESSFULLY_ADDED);
 			return "NewBadmintonSingleGameView";
 		}
 

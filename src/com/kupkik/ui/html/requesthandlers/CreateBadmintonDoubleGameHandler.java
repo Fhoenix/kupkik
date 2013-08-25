@@ -13,11 +13,10 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.kupkik.applicationcore.ApplicationCoreFacade;
 import com.kupkik.applicationcore.answers.CreateGameAnswer;
 
-import com.kupkik.messages.HandlerMessagesEnum;
+import com.kupkik.messages.MessageHandlerEnum;
 import com.kupkik.messages.MessageError;
 import com.kupkik.messages.MessageSuccess;
 import com.kupkik.model.UserWithPassword;
-import com.kupkik.persistence.EntityNameStore;
 import com.kupkik.persistence.GameTypStore;
 import com.kupkik.ui.html.HtmlRequestProcessor;
 import com.kupkik.ui.html.IHtmlRequestHandler;
@@ -34,7 +33,7 @@ public class CreateBadmintonDoubleGameHandler  implements IHtmlRequestHandler{
 
 		if( currentUser.getName().equals(HtmlRequestProcessor.GUEST_USER.getName()) )
 		{
-			pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.BADMINTON_DOUBLE_NOT_LOGGED_IN );
+			pRequest.setAttribute(MessageHandlerEnum.ERROR.toString(), MessageError.BADMINTON_DOUBLE_NOT_LOGGED_IN );
 			return "NewBadmintonDoubleGameView";
 		}
 
@@ -55,8 +54,12 @@ public class CreateBadmintonDoubleGameHandler  implements IHtmlRequestHandler{
 		
 		
 		
-		int resultOne = Integer.parseInt(pRequest.getParameter("resultOne"));
-		int resultTwo = Integer.parseInt(pRequest.getParameter("resultTwo"));
+
+		
+		
+		String resultOne = pRequest.getParameter("resultOne");
+		String resultTwo = pRequest.getParameter("resultTwo");
+		
 		String seasonKey = pRequest.getParameter("seasonKey");
 		
 
@@ -72,10 +75,10 @@ public class CreateBadmintonDoubleGameHandler  implements IHtmlRequestHandler{
 
         if( createGameAnswer == CreateGameAnswer.GAME_NOK )
         {
-            pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.BADMINTON_DOUBLE_ERROR_WHILE_CREATING_GAME);
+            pRequest.setAttribute(MessageHandlerEnum.ERROR.toString(), MessageError.BADMINTON_DOUBLE_ERROR_WHILE_CREATING_GAME);
             return "NewBadmintonDoubleGameView";
         }else{
-        	pRequest.setAttribute(HandlerMessagesEnum.SUCCESS.toString(), MessageSuccess.BADMINTON_DOUBLE_SUCCESSFULLY_ADDED);
+        	pRequest.setAttribute(MessageHandlerEnum.SUCCESS.toString(), MessageSuccess.BADMINTON_DOUBLE_SUCCESSFULLY_ADDED);
         }
 
 

@@ -1,10 +1,12 @@
+<%@page import="com.kupkik.messages.MessageKicker"%>
 <%@ page import="com.google.appengine.api.datastore.KeyFactory"%>
 <%@ page import="com.kupkik.model.*"%>
 <%@ page import="com.kupkik.ui.html.view.*"%>
 <%@ page import="java.util.List"%>
 <%@ page import="com.google.appengine.repackaged.com.google.common.base.StringUtil"%>
-<%@ page import="com.kupkik.messages.HandlerMessagesEnum"%>
-<%@ page import="com.sun.corba.se.impl.protocol.giopmsgheaders.MessageHandler"%>
+<%@ page import="com.kupkik.messages.MessageHandlerEnum"%>
+<%@ page import="com.kupkik.messages.MessageError"%>
+<%@ page import="com.kupkik.messages.MessageKicker"%>
 
 
 <%
@@ -17,14 +19,14 @@
 <%=viewHelper.createHtmlBegin("Turnier Erstellung")%>
 
 <%
-	if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(HandlerMessagesEnum.ERROR.toString())))
+	if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(MessageHandlerEnum.ERROR.toString())))
  	{
 %> 
-    	<div class="alert alert-danger"><%=viewHelper.convertTextForHtml((String)request.getAttribute(HandlerMessagesEnum.ERROR.toString()))%> </div>
+    	<div class="alert alert-danger"><%=viewHelper.convertTextForHtml((String)request.getAttribute(MessageHandlerEnum.ERROR.toString()))%> </div>
 <%
-	}else if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(HandlerMessagesEnum.SUCCESS.toString()))) {
+	}else if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(MessageHandlerEnum.SUCCESS.toString()))) {
 %>
-		<div class="alert alert-success"><%=viewHelper.convertTextForHtml((String)request.getAttribute(HandlerMessagesEnum.SUCCESS.toString()))%> </div>
+		<div class="alert alert-success"><%=viewHelper.convertTextForHtml((String)request.getAttribute(MessageHandlerEnum.SUCCESS.toString()))%> </div>
 <%
 	}
 %> 
@@ -34,7 +36,10 @@
 
 	<div class="row">
 		<div class="col-lg-6">
-		<h1>Score Kicker</h1>
+		<h1><% out.println(""+MessageKicker.HEADLINE_FORM); %></h1>
+			<% 	
+					if(!seasons.isEmpty()){
+						%>
 				<fieldset>
 					
 					
@@ -87,7 +92,7 @@
 							}
 						%>
 					</select>
-					<input class="form-control" class="fillLayout"  id="resultOne" placeholder="Result" name="resultOne" type="text">
+					<input class="form-control" class="fillLayout"  id="resultOne" placeholder="Result" name="resultOne" type="number">
 					</div>
 					
 					
@@ -114,7 +119,7 @@
 							}
 						%>
 					</select>
-				<input class="form-control" id="resultTwo" placeholder="Result" name="resultTwo" type="text">
+				<input class="form-control" id="resultTwo" placeholder="Result" name="resultTwo" type="number">
 			</div>
 				
 			<div class="form-group">
@@ -132,30 +137,16 @@
 
 					
 			</fieldset>
+				<%
+					}else{
+						out.println("<div class=\"alert alert-danger\">"+MessageError.COMMON_NO_SEASONS_AVAILABLE+"</div>");
+					}
+					
+			%>
 		</div>
 		<div class="col-lg-6">
-			<h1>Kicker</h1>
-			
-Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-					v
-					Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-	
-			
-
+			<h1><% out.println(MessageKicker.HEADLINE_DESCRIPTION);  %></h1>
+			<% out.println(MessageKicker.DESCRIPTION); %>
 
 		</div>
 		</div>

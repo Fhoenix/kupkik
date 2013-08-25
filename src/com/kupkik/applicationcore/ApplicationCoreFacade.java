@@ -63,21 +63,39 @@ public class ApplicationCoreFacade
 	 * @param gameType the gameType
 	 * @return CreateBadmintonSingleGameAnswer
 	 */
-	public CreateBadmintonSingleGameAnswer createBadmintonSingleGame(final Key seasonKey, final List<Key> team1, final List<Key> team2, final int result1, final int result2, final Date date, String gameType){
+	public CreateBadmintonSingleGameAnswer createBadmintonSingleGame(final Key seasonKey, final List<Key> team1, final List<Key> team2, final String result1, final String result2, final Date date, String gameType){
 		if(team1.equals(team2)){
 			return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_USER_EQUAL_EACH_OTHER;
 		}
-		//One result must be at least MIN_END_RESULT
-		if (!(result1 >= MIN_END_RESULT) && !(result2 >= MIN_END_RESULT)){
-			return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_MIN_POINTS_NOT_REACHED;
-		//Distance must be bigger than MAX_WINNING_DISTANCE
-		}else if (!(Math.abs(result1-result2) >= MAX_WINNING_DISTANCE)){
-			return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_RESULTS_INVALID;
-		//In case one of both results is >= MIN_END_RESULT - abs of difference of both results must be exactly MAX_WINNING_DISTANCE
-		}else if ((result1 > MIN_END_RESULT || result2 > MIN_END_RESULT ) && !(Math.abs(result1-result2) == MAX_WINNING_DISTANCE)){
+		
+		
+		int parsedResultOne;
+		int parsedResultTwo;
+		
+		try{
+			 parsedResultOne = Integer.parseInt(result1);
+			 parsedResultTwo = Integer.parseInt(result2);
+	
+		}catch (NumberFormatException e) {
 			return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_RESULTS_INVALID;
 		}
-		PFCommonSaver.saveGame(seasonKey, team1, team2, result1, result2, date, gameType);
+		
+		
+		if(parsedResultOne < 0 || parsedResultTwo < 0){
+			return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_RESULTS_INVALID;
+		}
+		
+		//One result must be at least MIN_END_RESULT
+		if (!(parsedResultOne >= MIN_END_RESULT) && !(parsedResultTwo >= MIN_END_RESULT)){
+			return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_MIN_POINTS_NOT_REACHED;
+		//Distance must be bigger than MAX_WINNING_DISTANCE
+		}else if (!(Math.abs(parsedResultOne-parsedResultTwo) >= MAX_WINNING_DISTANCE)){
+			return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_RESULTS_INVALID;
+		//In case one of both results is >= MIN_END_RESULT - abs of difference of both results must be exactly MAX_WINNING_DISTANCE
+		}else if ((parsedResultOne > MIN_END_RESULT || parsedResultTwo > MIN_END_RESULT ) && !(Math.abs(parsedResultOne-parsedResultTwo) == MAX_WINNING_DISTANCE)){
+			return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_RESULTS_INVALID;
+		}
+		PFCommonSaver.saveGame(seasonKey, team1, team2, parsedResultOne, parsedResultTwo, date, gameType);
 		return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_OK;
 		
 		
@@ -94,12 +112,28 @@ public class ApplicationCoreFacade
 	 * @param gameType the gameType
 	 * @return CreateGameAnswer
 	 */
-	public CreateGameAnswer createBadmintonDoubleGame(final Key seasonKey, final List<Key> team1, final List<Key> team2, final int resultOne, final int resultTwo, final Date date, String gameType){
+	public CreateGameAnswer createBadmintonDoubleGame(final Key seasonKey, final List<Key> team1, final List<Key> team2, final String resultOne, final String resultTwo, final Date date, String gameType){
 	
 		if(GameValidator.anyUserSelectedTwice(team1, team2)){
 			return CreateGameAnswer.GAME_NOK;
 		}
-		PFCommonSaver.saveGame(seasonKey, team1, team2, resultOne, resultTwo, date, gameType);
+		int parsedResultOne;
+		int parsedResultTwo;
+		
+		try{
+			 parsedResultOne = Integer.parseInt(resultOne);
+			 parsedResultTwo = Integer.parseInt(resultTwo);
+	
+		}catch (NumberFormatException e) {
+			return CreateGameAnswer.GAME_NOK;
+		}
+		
+		if(parsedResultOne < 0 || parsedResultTwo < 0){
+			return CreateGameAnswer.GAME_NOK;
+		}
+		
+		
+		PFCommonSaver.saveGame(seasonKey, team1, team2, parsedResultOne, parsedResultTwo, date, gameType);
 		return CreateGameAnswer.GAME_OK;
 	}
 	
@@ -322,11 +356,29 @@ public class ApplicationCoreFacade
 	}
 
 	public CreateGameAnswer createKickerGame(Key matchDayKey, List<Key> team1,
-			List<Key> team2, int resultOne, int resultTwo, Date date, String gameType) {
+			List<Key> team2, String result1, String result2, Date date, String gameType) {
 		if(GameValidator.anyUserSelectedTwice(team1, team2)){
 			return CreateGameAnswer.GAME_NOK;
 		}
-		PFCommonSaver.saveGame(matchDayKey, team1, team2, resultOne, resultTwo, date, gameType);
+		
+		int parsedResultOne;
+		int parsedResultTwo;
+		
+		try{
+			 parsedResultOne = Integer.parseInt(result1);
+			 parsedResultTwo = Integer.parseInt(result2);
+	
+		}catch (NumberFormatException e) {
+			return CreateGameAnswer.GAME_NOK;
+		}
+		
+		if(parsedResultOne < 0 || parsedResultTwo < 0){
+			return CreateGameAnswer.GAME_NOK;
+		}
+		
+		
+		
+		PFCommonSaver.saveGame(matchDayKey, team1, team2, parsedResultOne, parsedResultTwo, date, gameType);
 		return CreateGameAnswer.GAME_OK;
 	}
 

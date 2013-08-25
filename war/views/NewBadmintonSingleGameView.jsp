@@ -3,8 +3,9 @@
 <%@ page import="com.kupkik.ui.html.view.*"%>
 <%@ page import="java.util.List"%>
 <%@ page import="com.google.appengine.repackaged.com.google.common.base.StringUtil"%>
-<%@ page import="com.kupkik.messages.HandlerMessagesEnum"%>
-<%@ page import="com.sun.corba.se.impl.protocol.giopmsgheaders.MessageHandler"%>
+<%@ page import="com.kupkik.messages.MessageHandlerEnum"%>
+<%@ page import="com.kupkik.messages.MessageError"%>
+<%@ page import="com.kupkik.messages.MessageBadmintonSingle"%>
 
 
 <%
@@ -17,14 +18,14 @@
 <%=viewHelper.createHtmlBegin("Turnier Erstellung")%>
 
 <%
-	if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(HandlerMessagesEnum.ERROR.toString())))
+	if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(MessageHandlerEnum.ERROR.toString())))
  	{
 %> 
-    	<div class="alert alert-danger"><%=viewHelper.convertTextForHtml((String)request.getAttribute(HandlerMessagesEnum.ERROR.toString()))%> </div>
+    	<div class="alert alert-danger"><%=viewHelper.convertTextForHtml((String)request.getAttribute(MessageHandlerEnum.ERROR.toString()))%> </div>
 <%
-	}else if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(HandlerMessagesEnum.SUCCESS.toString()))) {
+	}else if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(MessageHandlerEnum.SUCCESS.toString()))) {
 %>
-		<div class="alert alert-success"><%=viewHelper.convertTextForHtml((String)request.getAttribute(HandlerMessagesEnum.SUCCESS.toString()))%> </div>
+		<div class="alert alert-success"><%=viewHelper.convertTextForHtml((String)request.getAttribute(MessageHandlerEnum.SUCCESS.toString()))%> </div>
 <%
 	}
 %> 
@@ -36,7 +37,10 @@
 		<div class="col-lg-6">
 		
 		
-			<h1>Score Badminton Single</h1>
+			<h1><% out.println(""+MessageBadmintonSingle.HEADLINE_FORM); %></h1>
+				<% 	
+					if(!seasons.isEmpty()){
+						%>
 				<fieldset>
 					<legend></legend>
 					
@@ -97,30 +101,17 @@
 					
 					
 				</fieldset>
-		
+			<%
+					}else{
+						out.println("<div class=\"alert alert-danger\">"+MessageError.COMMON_NO_SEASONS_AVAILABLE+"</div>");
+					}
+					
+			%>
 		
 		</div>
 		<div class="col-lg-6">
-			<h1>Badminton Single</h1>
-			
-Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-					v
-					Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-	
+		<h1><% out.println(MessageBadmintonSingle.HEADLINE_DESCRIPTION); %></h1>
+			<% out.println(MessageBadmintonSingle.DESCRIPTION); %>
 			
 
 

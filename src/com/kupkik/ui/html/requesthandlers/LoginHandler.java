@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.kupkik.applicationcore.ApplicationCoreFacade;
-import com.kupkik.messages.HandlerMessagesEnum;
+import com.kupkik.messages.MessageHandlerEnum;
 import com.kupkik.messages.MessageError;
 import com.kupkik.model.UserWithPassword;
 import com.kupkik.ui.html.IHtmlRequestHandler;
@@ -32,7 +32,7 @@ implements IHtmlRequestHandler
         {
             // user does not exist
 
-            pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.LOGIN_USER_ALREADY_EXISTS);
+            pRequest.setAttribute(MessageHandlerEnum.ERROR.toString(), MessageError.LOGIN_USER_ALREADY_EXISTS);
             return "RegisterView";
         }
 

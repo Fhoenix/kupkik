@@ -1,13 +1,11 @@
-<%@ page
-	import="com.google.appengine.repackaged.com.google.common.base.StringUtil"%>
-<%@ page import="com.kupkik.messages.HandlerMessagesEnum"%>
+<%@ page import="com.google.appengine.repackaged.com.google.common.base.StringUtil"%>
+<%@ page import="com.kupkik.messages.MessageHandlerEnum"%>
 <%@ page import="com.kupkik.model.*"%>
 <%@ page import="com.kupkik.ui.html.view.*"%>
-<%@ page import="com.kupkik.messages.HandlerMessagesEnum"%>
 <%@ page import="java.util.List" %>
 <%@ page import="com.google.appengine.api.datastore.KeyFactory"%>
-<%@ page
-	import="com.sun.corba.se.impl.protocol.giopmsgheaders.MessageHandler"%>
+<%@ page import="com.kupkik.messages.MessageHandlerEnum"%>
+
 
 
 <%
@@ -18,15 +16,15 @@ List<User> users = (List<User>) request.getAttribute("users");
 
 <%=viewHelper.createHtmlBegin("Saison Erstellung")%>
 <%
- 	if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(HandlerMessagesEnum.ERROR.toString())))
+ 	if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(MessageHandlerEnum.ERROR.toString())))
  	{
  %>
-<div class="alert alert-danger"><%=viewHelper.convertTextForHtml((String)request.getAttribute(HandlerMessagesEnum.ERROR.toString()))%>
+<div class="alert alert-danger"><%=viewHelper.convertTextForHtml((String)request.getAttribute(MessageHandlerEnum.ERROR.toString()))%>
 </div>
 <%
-	}else if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(HandlerMessagesEnum.SUCCESS.toString()))) {
+	}else if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(MessageHandlerEnum.SUCCESS.toString()))) {
 %>
-<div class="alert alert-success"><%=viewHelper.convertTextForHtml((String)request.getAttribute(HandlerMessagesEnum.SUCCESS.toString()))%>
+<div class="alert alert-success"><%=viewHelper.convertTextForHtml((String)request.getAttribute(MessageHandlerEnum.SUCCESS.toString()))%>
 </div>
 <% 		
 	}

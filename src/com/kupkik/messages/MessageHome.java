@@ -1,6 +1,6 @@
 package com.kupkik.messages;
 
-public final class MessagesHome {
+public final class MessageHome {
 
 	
 	/** LANDING PAGE BEGIN */

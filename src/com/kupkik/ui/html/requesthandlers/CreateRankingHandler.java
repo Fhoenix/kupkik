@@ -10,7 +10,7 @@ import org.mortbay.util.StringUtil;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.kupkik.applicationcore.ApplicationCoreFacade;
-import com.kupkik.messages.HandlerMessagesEnum;
+import com.kupkik.messages.MessageHandlerEnum;
 import com.kupkik.messages.MessageError;
 import com.kupkik.model.DisplaySkillGraph;
 import com.kupkik.model.Season;
@@ -33,7 +33,7 @@ public class CreateRankingHandler implements IHtmlRequestHandler
 
         if( currentUser.getName().equals(HtmlRequestProcessor.GUEST_USER.getName()) )
         {
-            pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.STATISTICS_NOT_LOGGED_IN);
+            pRequest.setAttribute(MessageHandlerEnum.ERROR.toString(), MessageError.STATISTICS_NOT_LOGGED_IN);
             return "NewSeasonView";
         }
         

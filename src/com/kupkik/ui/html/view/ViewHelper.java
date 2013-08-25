@@ -11,8 +11,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringEscapeUtils;
 
 import com.kupkik.messages.MessageCommon;
-import com.kupkik.messages.MessagesFooter;
-import com.kupkik.messages.MessagesHome;
+import com.kupkik.messages.MessageFooter;
+import com.kupkik.messages.MessageHome;
 import com.kupkik.model.DisplaySkillGraph;
 import com.kupkik.model.MatchDay;
 import com.kupkik.model.User;
@@ -247,7 +247,7 @@ public class ViewHelper
 		mainSiteIntroArea.append("<h2>"+ MessageCommon.PROJECT_NAME + "</h2>");
 
 		if( currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) ){
-			mainSiteIntroArea.append(MessagesHome.WELCOME_GUEST_USER);
+			mainSiteIntroArea.append(MessageHome.WELCOME_GUEST_USER);
 			mainSiteIntroArea.append("<div class=\"row\">");
 			mainSiteIntroArea.append("<div class=\"col-lg-12\">");
 			mainSiteIntroArea.append("<a href=\"?showView=RegisterView\"><button class=\"btn btn-large btn-primary\" type=\"button\">Register</button></a>");
@@ -256,10 +256,10 @@ public class ViewHelper
 			mainSiteIntroArea.append("Hi ");
 			mainSiteIntroArea.append(currentUser.getFirstname());
 			mainSiteIntroArea.append(", <br />");
-			mainSiteIntroArea.append(MessagesHome.WELCOME_REGISTERED_USER);
+			mainSiteIntroArea.append(MessageHome.WELCOME_REGISTERED_USER);
 			mainSiteIntroArea.append("<div class=\"row\">");
 			mainSiteIntroArea.append("<div class=\"col-lg-12\">");
-			mainSiteIntroArea.append("<a href=\"?showView=NewSeasonView\"><button class=\"btn btn-large btn-primary\" type=\"button\">Create Your First Season</button></a>");
+			mainSiteIntroArea.append("<a href=\"?showView=NewSeasonView\"><button class=\"btn btn-large btn-primary\" type=\"button\">Create a Season</button></a>");
 			mainSiteIntroArea.append("</div>");
 
 		}
@@ -282,7 +282,7 @@ public class ViewHelper
 			newsThumbnails.append("<div class=\"col-lg-4\">");
 				newsThumbnails.append("<div class=\"thumbnail\">");
 						newsThumbnails.append("<div class=\"caption\">");
-							newsThumbnails.append("<h3>"+ MessagesHome.NEWS_BOXES_1 +"</h3>");
+							newsThumbnails.append("<h3>"+ MessageHome.NEWS_BOXES_1 +"</h3>");
 							newsThumbnails.append("<table class=\"table table-striped\">");
 							for (MatchDay item : matchDays){
 							newsThumbnails.append("<tr> <td>");
@@ -299,7 +299,7 @@ public class ViewHelper
 			newsThumbnails.append("<div class=\"col-lg-8\">");
 				newsThumbnails.append("<div class=\"thumbnail\">");
 					newsThumbnails.append("<div class=\"caption\">");
-						newsThumbnails.append("<h3>" + MessagesHome.NEWS_BOXES_2 +"</h3>");
+						newsThumbnails.append("<h3>" + MessageHome.NEWS_BOXES_2 +"</h3>");
 						newsThumbnails.append("<table class=\"table table-striped\">");
 						newsThumbnails.append("<thead> <th> &nbsp; </th> <th> TEAM 1</th> <th> TEAM 2</th>  <th> RESULT</th> <th> RESULT</th>  </thead>");
 			for (Game item : badmintonSingle){
@@ -343,7 +343,7 @@ public class ViewHelper
 		footer.append("</div>");
 		footer.append("<div class=\"row footer custom_footer\">");
 		footer.append("<div style=\"vertical-align: middle; text-align:center;\">");
-		footer.append( MessagesFooter.FOOTER_SIGNITURE);
+		footer.append( MessageFooter.FOOTER_SIGNITURE);
 		footer.append("</div>");
 		footer.append("</div>");
 

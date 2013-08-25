@@ -1,6 +1,6 @@
 package com.kupkik.messages;
 
-public enum HandlerMessagesEnum {
+public enum MessageHandlerEnum {
 
 	   ERROR ("ErrorMessage"),
 	   SUCCESS ("SuccessMessage"),
@@ -8,7 +8,7 @@ public enum HandlerMessagesEnum {
 
 	    private final String httpRequestString;       
 
-	    private HandlerMessagesEnum(String s) {
+	    private MessageHandlerEnum(String s) {
 	    	httpRequestString = s;
 	    }
 

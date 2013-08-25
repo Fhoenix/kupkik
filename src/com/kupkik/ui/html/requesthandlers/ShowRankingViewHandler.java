@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 
 import com.kupkik.applicationcore.ApplicationCoreFacade;
-import com.kupkik.messages.HandlerMessagesEnum;
+import com.kupkik.messages.MessageHandlerEnum;
 import com.kupkik.messages.MessageError;
 import com.kupkik.model.Season;
 
@@ -46,7 +46,7 @@ public class ShowRankingViewHandler implements IHtmlRequestHandler
 			pRequest.setAttribute("seasons", seasons);
 		}else{
 			pRequest.setAttribute("seasons", new ArrayList<Season>());
-			pRequest.setAttribute(HandlerMessagesEnum.ERROR.toString(), MessageError.SEASON_NO_SEASONS_AVAILABLE);
+			pRequest.setAttribute(MessageHandlerEnum.ERROR.toString(), MessageError.SEASON_NO_SEASONS_AVAILABLE);
 		}
 		return null;
 	}

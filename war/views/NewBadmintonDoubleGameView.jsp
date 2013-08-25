@@ -3,8 +3,9 @@
 <%@ page import="com.kupkik.ui.html.view.*"%>
 <%@ page import="java.util.List"%>
 <%@ page import="com.google.appengine.repackaged.com.google.common.base.StringUtil"%>
-<%@ page import="com.kupkik.messages.HandlerMessagesEnum"%>
-<%@ page import="com.sun.corba.se.impl.protocol.giopmsgheaders.MessageHandler"%>
+<%@ page import="com.kupkik.messages.MessageHandlerEnum"%>
+<%@ page import="com.kupkik.messages.MessageError"%>
+<%@ page import="com.kupkik.messages.MessageBadmintonDouble"%>
 
 
 <%
@@ -17,14 +18,14 @@
 <%=viewHelper.createHtmlBegin("Turnier Erstellung")%>
 
 <%
-	if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(HandlerMessagesEnum.ERROR.toString())))
+	if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(MessageHandlerEnum.ERROR.toString())))
  	{
 %> 
-    	<div class="alert alert-danger"><%=viewHelper.convertTextForHtml((String)request.getAttribute(HandlerMessagesEnum.ERROR.toString()))%> </div>
+    	<div class="alert alert-danger"><%=viewHelper.convertTextForHtml((String)request.getAttribute(MessageHandlerEnum.ERROR.toString()))%> </div>
 <%
-	}else if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(HandlerMessagesEnum.SUCCESS.toString()))) {
+	}else if(!StringUtil.isEmptyOrWhitespace((String)request.getAttribute(MessageHandlerEnum.SUCCESS.toString()))) {
 %>
-		<div class="alert alert-success"><%=viewHelper.convertTextForHtml((String)request.getAttribute(HandlerMessagesEnum.SUCCESS.toString()))%> </div>
+		<div class="alert alert-success"><%=viewHelper.convertTextForHtml((String)request.getAttribute(MessageHandlerEnum.SUCCESS.toString()))%> </div>
 <%
 	}
 %> 
@@ -34,11 +35,13 @@
 
 	<div class="row">
 		<div class="col-lg-6">
-	<h1>Score Badminton Double</h1>
-				<fieldset>
+	<h1><% out.println(""+MessageBadmintonDouble.HEADLINE_FORM); %></h1>
+					<% 	
+					if(!seasons.isEmpty()){
 						
 					
-				
+						%>
+				<fieldset>
 					<div class="form-group">
 							<label>Season</label>
 								<select class="form-control" id="seasonKey" name="seasonKey">
@@ -78,7 +81,7 @@
 							}
 						%>
 					</select>
-					<select class="form-control" id="teamOne-Two" name="teamOne-Two">
+					<select class="form-control" id="teamOne-Two" name="teamOne-Two" >
 
 						<%
 							for (User item : users) {
@@ -87,7 +90,7 @@
 							}
 						%>
 					</select>
-					<input class="form-control" class="fillLayout"  id="resultOne" placeholder="Result" name="resultOne" type="text">
+					<input class="form-control" class="fillLayout"  id="resultOne" placeholder="Result" name="resultOne" type="number">
 					</div>
 					
 					
@@ -114,7 +117,7 @@
 							}
 						%>
 					</select>
-				<input class="form-control" id="resultTwo" placeholder="Result" name="resultTwo" type="text">
+				<input class="form-control" id="resultTwo" placeholder="Result" name="resultTwo" type="number">
 			</div>
 				
 			<div class="form-group">
@@ -122,41 +125,17 @@
 				<input class="btn btn-info form-control" type="submit" value=" Absenden">
 			</div>
 					
-
-
-
-
-
-
-			
-
-					
 			</fieldset>
+			<%
+					}else{
+						out.println("<div class=\"alert alert-danger\">"+MessageError.COMMON_NO_SEASONS_AVAILABLE+"</div>");
+					}
+					
+			%>
 		</div>
 		<div class="col-lg-6">
-			<h1>Badminton Double</h1>
-			
-Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-					v
-					Beschreibung Turnier Beschreibung Turnier
-					Beschreibung Turnier Beschreibung Turnier Beschreibung Turnier
-	
-			
-
-
+			<h1><% out.println(MessageBadmintonDouble.HEADLINE_DESCRIPTION);  %></h1>
+			<% out.println(MessageBadmintonDouble.DESCRIPTION); %>
 		</div>
 		</div>
 
