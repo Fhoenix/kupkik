@@ -7,6 +7,7 @@
 <%@ page import="com.kupkik.model.*"%>
 <%@ page import="com.kupkik.ui.html.view.*"%>
 <%@ page import="java.util.List"%>
+<%@ page import="com.kupkik.messages.MessageError"%>
 <%@ page import="java.util.Arrays"%>
 <%@ page import="com.google.appengine.api.datastore.KeyFactory"%>
 
@@ -26,7 +27,12 @@
 <%=viewHelper.createHtmlBegin("Ranking Factory")%>
 <div class="row">
 	<div class="col-lg-12">
-		<h1>Ranking Factory</h1>
+		<h3>Ranking Factory</h3>
+				<% 	
+					if(!seasons.isEmpty()){
+						
+					
+						%>
 		<form action="/" method="post">
 			<input class="form-control" type="hidden" name="action"
 				value="CreateRanking">
@@ -57,7 +63,12 @@
 
 		</form>
 
-
+		<%
+					}else{
+						out.println("<div class=\"alert alert-danger\">"+MessageError.COMMON_NO_SEASONS_AVAILABLE+"</div>");
+					}
+					
+			%>
 <%
 	if (winLooseRanking != null) {
 		

@@ -36,7 +36,7 @@
 
 	<div class="row">
 		<div class="col-lg-6">
-		<h1><% out.println(""+MessageKicker.HEADLINE_FORM); %></h1>
+		<h3><% out.println(""+MessageKicker.HEADLINE_FORM); %></h3>
 			<% 	
 					if(!seasons.isEmpty()){
 						%>
@@ -145,7 +145,7 @@
 			%>
 		</div>
 		<div class="col-lg-6">
-			<h1><% out.println(MessageKicker.HEADLINE_DESCRIPTION);  %></h1>
+			<h3><% out.println(MessageKicker.HEADLINE_DESCRIPTION);  %></h3>
 			<% out.println(MessageKicker.DESCRIPTION); %>
 
 		</div>

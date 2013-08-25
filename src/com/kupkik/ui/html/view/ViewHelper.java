@@ -95,11 +95,11 @@ public class ViewHelper
 		if( currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) ){
 			content.append("			<li><a href=\"/?showView=RegisterView\">REGISTER HERE!</a></li>");
 			content.append(" 		</ul>");
-			content.append("		<form class=\"form-inline pull-right\" action=\"/\" method=\"post\">");
+			content.append("		<form class=\"form-inline pull-right paddingFormIntro\" action=\"/\" method=\"post\" >");
 			content.append("			<input type=\"hidden\" name=\"action\" value=\"Login\">");
 			content.append("			<input class=\"form-control\" style=\"width:200px\" placeholder=\"Your E-Mail\" name=\"user_name\" type=\"email\" size=\"50\" maxlength=\"50\">");
 			content.append("			<input class=\"form-control\" style=\"width:200px\" placeholder=\"Password\" name=\"password\" type=\"password\" size=\"12\" maxlength=\"12\">");
-			content.append("			<input class=\"btn btn-default navbar-btn\" type=\"submit\" value=\"Login\">");
+			content.append("			<input class=\"btn btn-default\" type=\"submit\" value=\"Login\">");
 			content.append("		</form>");
 		}else{
 			content.append("			<li class=\"dropdown\">");
@@ -127,8 +127,8 @@ public class ViewHelper
 		content.append("</div>");
 		pHtmlContent.append(createLiveGridSpan(12, content.toString()));
 		//Live Grid End
-		pHtmlContent.append(" </div>");
-		pHtmlContent.append("	<div class=\"container\">");
+	
+	
 	}
 
 	/**
@@ -205,6 +205,7 @@ public class ViewHelper
 		}
 
 		htmlBegin.append("<div class=\"col-lg-12\">");
+		htmlBegin.append("<div class=\"col-lg-12\">");
 		return htmlBegin.toString();
 	}
 
@@ -263,6 +264,9 @@ public class ViewHelper
 			mainSiteIntroArea.append("</div>");
 
 		}
+		//Spacer Block
+		mainSiteIntroArea.append("<div class=\"row\"><div class=\"col-lg-12\">&nbsp;</div></div>");
+		
 		mainSiteIntroArea.append("</div>");
 		mainSiteIntroArea.append("</div>");
 		mainSiteIntroArea.append("</div>");
@@ -340,12 +344,18 @@ public class ViewHelper
 
 	public String createFooter(){
 		StringBuilder footer = new StringBuilder();
-		footer.append("</div>");
+		footer.append("<div class=\"col-lg-12\">");
 		footer.append("<div class=\"row footer custom_footer\">");
 		footer.append("<div style=\"vertical-align: middle; text-align:center;\">");
 		footer.append( MessageFooter.FOOTER_SIGNITURE);
+		footer.append("</div>");	
+		footer.append("</div>");
+	
 		footer.append("</div>");
 		footer.append("</div>");
+		footer.append("</div>");
+		
+		footer.append(" </div>");
 
 		return footer.toString();
 	}
@@ -359,7 +369,7 @@ public class ViewHelper
 	public String createHtmlEnd(){
 
 		final StringBuilder htmlEnd = new StringBuilder();
-		htmlEnd.append("</div>");
+		htmlEnd.append("  </div>\n");
 		htmlEnd.append(createFooter());
 		//Bootstrap Container Closed
 		htmlEnd.append("  </div>\n");

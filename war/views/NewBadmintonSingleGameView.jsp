@@ -37,7 +37,7 @@
 		<div class="col-lg-6">
 		
 		
-			<h1><% out.println(""+MessageBadmintonSingle.HEADLINE_FORM); %></h1>
+			<h3><% out.println(""+MessageBadmintonSingle.HEADLINE_FORM); %></h3>
 				<% 	
 					if(!seasons.isEmpty()){
 						%>
@@ -110,7 +110,7 @@
 		
 		</div>
 		<div class="col-lg-6">
-		<h1><% out.println(MessageBadmintonSingle.HEADLINE_DESCRIPTION); %></h1>
+		<h3><% out.println(MessageBadmintonSingle.HEADLINE_DESCRIPTION); %></h3>
 			<% out.println(MessageBadmintonSingle.DESCRIPTION); %>
 			
 

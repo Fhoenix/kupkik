@@ -37,7 +37,7 @@ List<User> users = (List<User>) request.getAttribute("users");
 
 			<div class="row">
 				<div class="col-lg-6">
-						<h1>Create a Season</h1>
+						<h3>Create a Season</h3>
 					<fieldset>
 						<div class="form-group">
 							<label>Season Name</label> <input
