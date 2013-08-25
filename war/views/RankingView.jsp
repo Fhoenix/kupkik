@@ -79,17 +79,18 @@
 			
 			rankingTable.append("<h1><img src=\""+ item.getImagePath() + "\" /> "+item.getGameType() + "</h1>");
 			rankingTable.append("<table class=\"table table-striped\">");
-			rankingTable.append("<thead> <th>Name</th> <th>Total Games</th> <th>Total Games Participated</th> <th>Games Won</th><th>Win Loose Rate</th></thead>");
+			rankingTable.append("<thead> <th>Name</th>  <th>Participation rate</th> <th>Games Won</th><th>Win Loose Rate</th></thead>");
 
 			List<WinLooseRows> rank = item.getRanking();
 			for(WinLooseRows row: rank){
+				if( row.getGamesPlayed() != 0){
 				rankingTable.append("<tr>");
 				rankingTable.append("<td>"+ row.getUser().getSurname()+", "+ row.getUser().getFirstname()  +"</td>");
-				rankingTable.append("<td>"+ row.getTotalNumberOfGames() +"</td>");
-				rankingTable.append("<td>"+ row.getGamesPlayed() +"</td>");
+				rankingTable.append("<td>"+ viewHelper.createParticipationBar(row.getGamesPlayed(), row.getTotalNumberOfGames() )  +"</td>");
 				rankingTable.append("<td>"+ row.getGamesWon() +"</td>");
 				rankingTable.append("<td>"+ viewHelper.createSuccessBar(row.getGamesWon(), row.getGamesPlayed()) +"</td>");
 				rankingTable.append("</tr>");
+				}
 			}
 			rankingTable.append("</table>");
 		}

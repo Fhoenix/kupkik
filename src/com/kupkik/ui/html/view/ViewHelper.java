@@ -408,6 +408,29 @@ public class ViewHelper
 		return htmlSuccessBar.toString();
 	}
 
+	
+	/**
+	 * Creates a SuccessBar showing the percentage a user won in green, and the percentage lost in red.
+	 * Percentage lost is calculated.
+	 */
+	public String createParticipationBar(int gamesParticipated, int totalGames){
+		
+		final StringBuilder htmlSuccessBar = new StringBuilder();
+		if(totalGames > 0){
+		double percentageWon = (100.00 / totalGames) *  gamesParticipated;
+		double percentageLost = 100.00 - percentageWon;
+		DecimalFormat decimalFormat = new DecimalFormat("##.##");
+		htmlSuccessBar.append("<div class=\"progress\">");
+		htmlSuccessBar.append("		<div class=\"progress-bar progress-bar-info\" style=\"width:"+ decimalFormat.format(percentageWon) +"%\">"+ decimalFormat.format(percentageWon) +"%</div>");
+		htmlSuccessBar.append("		<div class=\"progress-bar \" style=\"width:"+ decimalFormat.format(percentageLost) +"%\">"+ decimalFormat.format(percentageLost) +"%</div>");
+		htmlSuccessBar.append("</div>");
+		}else{
+			htmlSuccessBar.append("No Games Played");
+		}
+
+		return htmlSuccessBar.toString();
+	}
+	
 	public String createLineChart(String[] games, String[] winRateInPercent, String[] looseRateInPercent, String canvasId, String divId ){
 		StringBuilder lineChart = new StringBuilder();
 
