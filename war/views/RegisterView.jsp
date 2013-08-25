@@ -2,6 +2,7 @@
 <%@ page import="com.kupkik.ui.html.view.*" %>
 <%@ page import="com.google.appengine.repackaged.com.google.common.base.StringUtil"%>
 <%@ page import="com.kupkik.messages.MessageHandlerEnum"%>
+<%@ page import="com.kupkik.messages.MessageRegister"%>
 
 <%
 	ViewHelper viewHelper = (ViewHelper)request.getAttribute("viewHelper");  
@@ -35,7 +36,7 @@
 
 	<div class="row">
 		<div class="col-lg-6">
-			<h1>Register</h1>
+			<h1><% out.println(""+MessageRegister.HEADLINE_FORM); %></h1>
 
 			<div class="row">
 				<div class="col-lg-12">&nbsp;</div>
@@ -69,14 +70,8 @@
 			</div>
 		</div>
 		<div class="col-lg-6">
-			<h1>REGISTER USER </h1>
-			
-			REGISTER USER REGISTER USER REGISTER USER REGISTER USER 
-			REGISTER USER REGISTER USER REGISTER USER REGISTER USER
-			REGISTER USER REGISTER USER REGISTER USER REGISTER USER 
-			REGISTER USER REGISTER USER REGISTER USER REGISTER USER 
-			REGISTER USER 
-			
+			<h1><% out.println(""+MessageRegister.HEADLINE_DESCRIPTION); %></h1>
+			<% out.println(""+MessageRegister.DESCRIPTION); %>
 
 
 		</div>
