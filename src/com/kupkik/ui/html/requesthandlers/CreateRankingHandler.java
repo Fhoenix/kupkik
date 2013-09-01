@@ -40,7 +40,6 @@ public class CreateRankingHandler implements IHtmlRequestHandler
        
     	// the chosen season-name
         Key seasonKey  = KeyFactory.stringToKey(pRequest.getParameter("seasonKey"));
-        Season seasonsByKey = ApplicationCoreFacade.getSeasonsByKey(seasonKey);
         
        WinLooseRanking winLooseRanking = ApplicationCoreFacade.getWinLoosRanking(seasonKey);
  

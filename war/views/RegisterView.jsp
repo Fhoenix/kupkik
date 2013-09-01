@@ -36,7 +36,7 @@
 
 	<div class="row">
 		<div class="col-lg-6">
-			<h1><% out.println(""+MessageRegister.HEADLINE_FORM); %></h1>
+			<h3><% out.println(""+MessageRegister.HEADLINE_FORM); %></h3>
 
 			<div class="row">
 				<div class="col-lg-12">&nbsp;</div>
@@ -70,7 +70,7 @@
 			</div>
 		</div>
 		<div class="col-lg-6">
-			<h1><% out.println(""+MessageRegister.HEADLINE_DESCRIPTION); %></h1>
+			<h3><% out.println(""+MessageRegister.HEADLINE_DESCRIPTION); %></h3>
 			<% out.println(""+MessageRegister.DESCRIPTION); %>
 
 

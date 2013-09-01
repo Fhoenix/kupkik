@@ -12,15 +12,10 @@
 <%@ page import="com.google.appengine.api.datastore.KeyFactory"%>
 
 <%
-	ViewHelper viewHelper = (ViewHelper) request
-			.getAttribute("viewHelper");
-	List<Season> seasons = (List<Season>) request
-			.getAttribute("seasons");
-
+	ViewHelper viewHelper = (ViewHelper) request.getAttribute("viewHelper");
+	List<Season> seasons = (List<Season>) request.getAttribute("seasons");
 	List<User> users = (List<User>) request.getAttribute("users");
-
-	WinLooseRanking winLooseRanking = (WinLooseRanking) request
-			.getAttribute("winLooseRanking");
+	WinLooseRanking winLooseRanking = (WinLooseRanking) request.getAttribute("winLooseRanking");
 	
 %>
 

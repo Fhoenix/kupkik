@@ -22,6 +22,7 @@ public class MessageError {
             + " and maximum " + ApplicationCoreFacade.MAX_SEASON_NAME_SIZE
             + " characters. Only characters, digits and underscores are allowed!";
 	public static final String SEASON_NEEDS_GAMETYPES = "Please select at least one GameType!";
+	public static final String SEASON_UPDATE_NOT_SUCCESSFUL = "Season could not be updated.";
 	
 	//User Registration
 	public static final String REGISTER_PASSWORD_NOT_EUQUAL = "Passwords mismatching!";
@@ -32,7 +33,7 @@ public class MessageError {
 	public static final String REGISTER_USERNAME_INVALID_CHARACTER = "Unzulässige Zeichen im Nutzernamen";
 	public static final String REGISTER_FIRSTNAME_INVALID = "Firstname invalide! " ;
 	public static final String REGISTER_SURNAME_INVALID = "Surname invalid";
-	
+	public static final String REGISTER_PASSWORD_MISMATCH = "Old Password does not match to stored password!";
 
 
 	//Badminton Single

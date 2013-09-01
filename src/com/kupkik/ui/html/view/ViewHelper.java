@@ -34,16 +34,30 @@ public class ViewHelper
 		mSession = pSession;
 	}
 
-	public String createCheckBox(String name, String value, String valueToShow){
+	public String createCheckBox(String name, String value, String valueToShow, boolean checked){
 		StringBuilder checkBox = new StringBuilder();
 		
 		checkBox.append("<div class=\"checkbox\">");
-		checkBox.append("<label> <input type=\"checkbox\" name=\""+name+"\"");
-		checkBox.append("	value=\""+ value + "\">"+ valueToShow+"");
+		checkBox.append("<label> <input type=\"checkbox\" name=\""+name+"\" ");
+		if(checked){
+			checkBox.append("	value=\""+ value + "\" checked>"+ valueToShow+"");
+		}else{
+			checkBox.append("	value=\""+ value + "\">"+ valueToShow+"");
+		}
 		checkBox.append("</label>");
 		checkBox.append("</div>");
 		return  checkBox.toString();
 	}
+	
+	public  boolean checkUserEquality(List<User> editUsers, User user){
+		for (User editUser : editUsers){
+			if(editUser.getKey().equals(user.getKey())){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	/**
 	 * Converts text, so that it can be displayd in a html-site.
 	 * 
@@ -91,7 +105,7 @@ public class ViewHelper
 		content.append(" 			</a>");
 		content.append("		<div class=\"nav-collapse navbar-responsive-collapse collapse\" style=\"height: 0px;\">");
 		content.append(" 			<ul class=\"nav navbar-nav\">");
-		content.append(" 	      		<li class=\"active\"><a href=\"/\">Home</a></li>");
+		content.append(" 	      		<li class=\"active\"><a href=\"/\">HOME</a></li>");
 		if( currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) ){
 			content.append("			<li><a href=\"/?showView=RegisterView\">REGISTER HERE!</a></li>");
 			content.append(" 		</ul>");
@@ -118,6 +132,15 @@ public class ViewHelper
 			content.append(" 					<li><a href=\"/?showView=RankingView\">Ranking</a> </li>");
 			content.append("				</ul>");
 			content.append("			</li>");
+			
+			content.append("			<li class=\"dropdown\">");
+			content.append("				<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">EDIT<b class=\"caret\"></b></a>");
+			content.append("				<ul class=\"dropdown-menu\">");
+			content.append(" 					<li><a href=\"/?showView=EditSeasonView\">Edit My Seasons</a> </li>");
+			content.append(" 					<li><a href=\"/?showView=EditUserView\">Reset Password</a> </li>");
+			content.append("				</ul>");
+			content.append("			</li>");
+			
 			content.append(" 			<li><a href=\"/?action=Logoff\">LOGOUT</a> </li>");
 			content.append(" 		</ul>");
 		}
@@ -504,7 +527,7 @@ public class ViewHelper
 		
 		for (MatchDay  matchDay: matchDays){
 			result.append("<div class=\"row\">");
-			result.append("<div class=\"col-lg-8\">");
+			result.append("<div class=\"col-lg-12\">");
 		
 			result.append("<table class=\"table table-striped\">");
 			result.append("<thead> <th colspan=\"2\" style=\"width:50%\"><div>" + matchDay.getName() + " | Games Played: " +  matchDay.getGamesPlayed()  + " Games Won: "+ matchDay.getGamesWon() + "</div></th> <th colspan=\"2\" style=\"width:50%\"> "+ this.createSuccessBar(matchDay.getGamesWon(), matchDay.getGamesPlayed()) + " </th>  </thead>");
@@ -542,8 +565,7 @@ public class ViewHelper
 			result.append("</table>");
 			result.append("</div>");
 			
-			result.append("<div class=\"col-lg-4\"></div>");
-			result.append("</div>");
+		
 			
 			result.append("<div class=\"row\">");
 			result.append("<div class=\"col-lg-12\">&nbsp;</div>");

@@ -32,9 +32,9 @@ public class ShowMainViewHandler
         Collections.sort(tournaments, new ComparatorMatchDay());
         pRequest.setAttribute("matchDays", tournaments);
 
-        List<Game> badmintonSingle = pApplicationCoreFacade.getLatestBadmintonSingleGames(5);
+        List<Game> games = pApplicationCoreFacade.getLatestGames(5);
        
-        pRequest.setAttribute("badmintonSingle", badmintonSingle);
+        pRequest.setAttribute("latestGames", games);
         
         return null;
     }

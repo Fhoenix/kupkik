@@ -29,17 +29,12 @@ public class PFRankingGetters {
 
 	public static WinLooseRanking getWinLoosRanking(Key seasonKey) {
 
-
-
-
-
 		//Get all Users TODO COS get only Users connected to a season
 		List<UserWithPassword> allUsers = PFCommonGetter.getAllUsers();
 
 		//Get the GameTypes for a Season
 		Season seasonByKey = PFCommonGetter.getSeasonByKey(seasonKey);
 		String gameType = seasonByKey.getGameType();
-
 		List<TypedWinLooseRanking> overallRanking = new ArrayList<TypedWinLooseRanking>();
 
 

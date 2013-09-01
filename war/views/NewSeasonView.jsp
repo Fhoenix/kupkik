@@ -74,7 +74,7 @@ List<User> users = (List<User>) request.getAttribute("users");
 								<%
 							for (User item : users) {
 								String name = item.getSurname() +", "+ item.getFirstname();
-								out.println(viewHelper.createCheckBox("users", KeyFactory.keyToString(item.getKey()), name));
+								out.println(viewHelper.createCheckBox("users", KeyFactory.keyToString(item.getKey()), name, false));
 							}
 							%>
 						

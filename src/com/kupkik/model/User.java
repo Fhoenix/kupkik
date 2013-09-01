@@ -52,5 +52,12 @@ public class User
     {
         name = pName;
     }
+    
+    
+    @Override
+    public boolean equals(Object obj) {
+    	return this.getKey() == ((User) obj).getKey();
+    	
+    }
 
 }

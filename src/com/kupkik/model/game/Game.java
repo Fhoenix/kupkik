@@ -17,13 +17,13 @@ public class Game {
 	public static final String PATH = "/res/images/";
 	public static final String FILE_EXTENSION = ".png";
 
-	public Game(final List<User> team1, final List<User> team2, final String date, final int resultOne, final int resultTwo, String entityNameStore ){
+	public Game(final List<User> team1, final List<User> team2, final String date, final int resultOne, final int resultTwo, String gameType ){
 		this.team1 = team1;
 		this.team2 = team2;
 		this.resultOne = resultOne;
 		this.resultTwo = resultTwo;
 		this.date = date;
-		this.pictogramPath = PATH + entityNameStore + FILE_EXTENSION;
+		this.pictogramPath = PATH + gameType + FILE_EXTENSION;
 		
 	}
 

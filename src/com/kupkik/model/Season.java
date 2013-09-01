@@ -13,16 +13,22 @@ public class Season {
 	private Key parentKey;
 	private List<MatchDay> matchDays = new ArrayList<MatchDay>();
 	private String gameType;
+	private List<User> editUsers = new ArrayList<User>();
 	
 	
-	public Season(String name, Key key, Key parentKey, String gameType){
+	public Season(String name, Key key, Key parentKey, String gameType, ArrayList<User> editUser){
 		this.gameType = gameType;
+		this.editUsers = editUser;
 		this.name = name;
 		this.key = key;
 		this.parentKey = parentKey;
 	}
 
 
+	public List<User> getEditUsers() {
+		return editUsers;
+	}
+	
 	public String getName() {
 		return name;
 	}

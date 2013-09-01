@@ -38,14 +38,14 @@ public class ApplicationCoreFacade
 	public static final int MAX_SURNAME_SIZE       		= 50;
 	public static final int MIN_PASSWORD_SIZE        	= 3;
 
-	
+
 	public static final int MAX_SEASON_NAME_SIZE 		= 50;
 	public static final int MIN_SEASON_NAME_SIZE 		= 5;
 
-	
+
 	public static final int	MAX_WINNING_DISTANCE		= 2;
 	public static final int	MIN_END_RESULT				= 21;
-	
+
 
 	public ApplicationCoreFacade(){
 		//TODO COS MAYBE INSTANCES OF THE FACADES
@@ -67,38 +67,38 @@ public class ApplicationCoreFacade
 		if(team1.equals(team2)){
 			return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_USER_EQUAL_EACH_OTHER;
 		}
-		
-		
+
+
 		int parsedResultOne;
 		int parsedResultTwo;
-		
+
 		try{
-			 parsedResultOne = Integer.parseInt(result1);
-			 parsedResultTwo = Integer.parseInt(result2);
-	
+			parsedResultOne = Integer.parseInt(result1);
+			parsedResultTwo = Integer.parseInt(result2);
+
 		}catch (NumberFormatException e) {
 			return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_RESULTS_INVALID;
 		}
-		
-		
+
+
 		if(parsedResultOne < 0 || parsedResultTwo < 0){
 			return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_RESULTS_INVALID;
 		}
-		
+
 		//One result must be at least MIN_END_RESULT
 		if (!(parsedResultOne >= MIN_END_RESULT) && !(parsedResultTwo >= MIN_END_RESULT)){
 			return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_MIN_POINTS_NOT_REACHED;
-		//Distance must be bigger than MAX_WINNING_DISTANCE
+			//Distance must be bigger than MAX_WINNING_DISTANCE
 		}else if (!(Math.abs(parsedResultOne-parsedResultTwo) >= MAX_WINNING_DISTANCE)){
 			return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_RESULTS_INVALID;
-		//In case one of both results is >= MIN_END_RESULT - abs of difference of both results must be exactly MAX_WINNING_DISTANCE
+			//In case one of both results is >= MIN_END_RESULT - abs of difference of both results must be exactly MAX_WINNING_DISTANCE
 		}else if ((parsedResultOne > MIN_END_RESULT || parsedResultTwo > MIN_END_RESULT ) && !(Math.abs(parsedResultOne-parsedResultTwo) == MAX_WINNING_DISTANCE)){
 			return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_RESULTS_INVALID;
 		}
 		PFCommonSaver.saveGame(seasonKey, team1, team2, parsedResultOne, parsedResultTwo, date, gameType);
 		return CreateBadmintonSingleGameAnswer.BADMINTON_SINGLE_OK;
-		
-		
+
+
 	}
 
 	/**
@@ -113,31 +113,31 @@ public class ApplicationCoreFacade
 	 * @return CreateGameAnswer
 	 */
 	public CreateGameAnswer createBadmintonDoubleGame(final Key seasonKey, final List<Key> team1, final List<Key> team2, final String resultOne, final String resultTwo, final Date date, String gameType){
-	
+
 		if(GameValidator.anyUserSelectedTwice(team1, team2)){
 			return CreateGameAnswer.GAME_NOK;
 		}
 		int parsedResultOne;
 		int parsedResultTwo;
-		
+
 		try{
-			 parsedResultOne = Integer.parseInt(resultOne);
-			 parsedResultTwo = Integer.parseInt(resultTwo);
-	
+			parsedResultOne = Integer.parseInt(resultOne);
+			parsedResultTwo = Integer.parseInt(resultTwo);
+
 		}catch (NumberFormatException e) {
 			return CreateGameAnswer.GAME_NOK;
 		}
-		
+
 		if(parsedResultOne < 0 || parsedResultTwo < 0){
 			return CreateGameAnswer.GAME_NOK;
 		}
-		
-		
+
+
 		PFCommonSaver.saveGame(seasonKey, team1, team2, parsedResultOne, parsedResultTwo, date, gameType);
 		return CreateGameAnswer.GAME_OK;
 	}
-	
-	
+
+
 
 	/**
 	 * Create a new Season
@@ -164,6 +164,20 @@ public class ApplicationCoreFacade
 			return CreateSeasonAnswer.SEASON_USER_CREDENTIALS_INVALID;
 		}
 		PFCommonSaver.saveNewSeason(pSeasonName, pUserName, gameType, usersAllowedToEditSeason);
+		return CreateSeasonAnswer.SEASON_OK;
+	}
+
+	/**
+	 * Create a new Season
+	 * 
+	 * @param pSeasonName pSeasonName
+	 * @param pUserName pUserName
+	 * @param pUserPasswordMd5 pUserPasswordMd5
+	 * @return the result of trying to create a Season
+	 */
+	public CreateSeasonAnswer updateSeason(List<String> usersAllowedToEditSeason, Key season){
+
+		PFCommonSaver.updateNewSeason(usersAllowedToEditSeason, season);
 		return CreateSeasonAnswer.SEASON_OK;
 	}
 
@@ -222,31 +236,31 @@ public class ApplicationCoreFacade
 		}
 
 		// is the user-name valid?
-				if( !isUserNameCharctersValid(pUserName) ){
-					return SaveUserAnswer.USER_NAME_USES_INVALID_CHARACTERS;
-				}
+		if( !isUserNameCharctersValid(pUserName) ){
+			return SaveUserAnswer.USER_NAME_USES_INVALID_CHARACTERS;
+		}
 
-				if( firstname.length() > MAX_FIRSTNAME_SIZE ){
-					return SaveUserAnswer.USER_FIRSTNAME_INVALID ;
-				}
+		if( firstname.length() > MAX_FIRSTNAME_SIZE ){
+			return SaveUserAnswer.USER_FIRSTNAME_INVALID ;
+		}
 
-				if( surname.length() > MAX_SURNAME_SIZE ){
-					return SaveUserAnswer.USER_SURNAME_INVALID ;
-				}
+		if( surname.length() > MAX_SURNAME_SIZE ){
+			return SaveUserAnswer.USER_SURNAME_INVALID ;
+		}
 
-				// is the password valid?
-						if( !isPasswordValid(pUserPassword) )
-						{
-							return SaveUserAnswer.USER_PASSWORD_INVALID;
-						}
+		// is the password valid?
+		if( !isPasswordValid(pUserPassword) )
+		{
+			return SaveUserAnswer.USER_PASSWORD_INVALID;
+		}
 
-						// everything is OK => save the user
+		// everything is OK => save the user
 
-						String passwordMd5 = CredentialsUtils.getMd5HashForText(pUserPassword);
+		String passwordMd5 = CredentialsUtils.getMd5HashForText(pUserPassword);
 
-						PFCommonSaver.saveNewUser(pUserName, passwordMd5, firstname, surname);
+		PFCommonSaver.saveNewUser(pUserName, passwordMd5, firstname, surname);
 
-						return SaveUserAnswer.USER_OK;
+		return SaveUserAnswer.USER_OK;
 	}
 
 
@@ -293,65 +307,64 @@ public class ApplicationCoreFacade
 	 * 
 	 * @return all users, not ordered
 	 */
-	 public List<UserWithPassword> getAllUsers()
-	 {
-		 return PFCommonGetter.getAllUsers();
-	 }
+	public List<UserWithPassword> getAllUsers()
+	{
+		return PFCommonGetter.getAllUsers();
+	}
 
-	 public List<Game> getLatestBadmintonSingleGames(int count){
-		 return PFCommonGetter.getLatestGamesByCount(count);
-	 }
+	public List<Game> getLatestGames(int count){
+		return PFCommonGetter.getLatestGamesByCount(count);
+	}
 
-	 /**
-	  * get all matchday in database
-	  * 
-	  * @return all MatchDays, not ordered
-	  */
-	 public List<MatchDay> getAllMatchDays()
-	 {
-		 return PFCommonGetter.getAllMatchDays();
-	 }
+	/**
+	 * get all matchday in database
+	 * 
+	 * @return all MatchDays, not ordered
+	 */
+	public List<MatchDay> getAllMatchDays()
+	{
+		return PFCommonGetter.getAllMatchDays();
+	}
 
-	 public List<MatchDay> getLatestMatchDays(int count)
-	 {
-		 return PFCommonGetter.getLatestMatchDays(count);
-	 }
-	 
-	 public static List<Season> getAllSeasonsForUserAndGameType(Key currentUser, String gameType) {
-		 return PFCommonGetter.getAllSeasonsForUserAndGameType(currentUser, gameType);
-	 }
-	 public static List<Season> getAllSeasonsForUser(Key currentUser) {
-		 return PFCommonGetter.getAllSeasonsForUser(currentUser);
-	 }
-	 
-	 public static Season getSeasonsByKey(Key season) {
-		 return PFCommonGetter.getSeasonByKey(season);
-	 }
+	public List<MatchDay> getLatestMatchDays(int count)
+	{
+		return PFCommonGetter.getLatestMatchDays(count);
+	}
 
-	 public static UserWithPassword getUserWithPasswordByName(String currentUser) {
-		 return PFCommonGetter.getUserByName(currentUser);
-	 }
+	public static List<Season> getAllSeasonsForUserAndGameType(Key currentUser, String gameType) {
+		return PFCommonGetter.getAllSeasonsForUserAndGameType(currentUser, gameType);
+	}
+	public static List<Season> getAllSeasonsForUser(Key currentUser) {
+		return PFCommonGetter.getAllSeasonsForUser(currentUser);
+	}
 
-	 public static List<MatchDay> getAllMatchDaysOfUser(Key userKey, String gameType) {
-		 return PFCommonGetter.getAllMatchDaysOfUser(userKey, gameType);
-	 }
+	public static Season getSeasonsByKey(Key season) {
+		return PFCommonGetter.getSeasonByKey(season);
+	}
 
-	 public  static DisplaySkillGraph getAllBadmintonSingleGamesInSeason(Key season, Key userName){
-		 return PFCommonGetter.getAllGamesInSeason( GameTypStore.BADMINTON_SINGLE_GAME.toString(), season,  userName);
-	 }
+	public static UserWithPassword getUserWithPasswordByName(String currentUser) {
+		return PFCommonGetter.getUserByName(currentUser);
+	}
 
-	 public  static DisplaySkillGraph getAllBadmintonDoubleGamesInSeason(Key season, Key userName){
-		 return PFCommonGetter.getAllGamesInSeason( GameTypStore.BADMINTON_DOUBLE_GAME.toString(), season,  userName);
-	 }
+	public static List<MatchDay> getAllMatchDaysOfUser(Key userKey, String gameType) {
+		return PFCommonGetter.getAllMatchDaysOfUser(userKey, gameType);
+	}
 
-	 /** Returns all Seasons in a List<Seasons> */
+	public  static DisplaySkillGraph getAllBadmintonSingleGamesInSeason(Key season, Key userName){
+		return PFCommonGetter.getAllGamesInSeason( GameTypStore.BADMINTON_SINGLE_GAME.toString(), season,  userName);
+	}
 
-	 public List<Season> getAllSeasons() {
-		 return PFCommonGetter.getAllSeasons();
-	 }
+	public  static DisplaySkillGraph getAllBadmintonDoubleGamesInSeason(Key season, Key userName){
+		return PFCommonGetter.getAllGamesInSeason( GameTypStore.BADMINTON_DOUBLE_GAME.toString(), season,  userName);
+	}
+
+	/** Returns all Seasons in a List<Seasons> */
+
+	public List<Season> getAllSeasons() {
+		return PFCommonGetter.getAllSeasons();
+	}
 
 	public static WinLooseRanking getWinLoosRanking(Key seasonKey) {
-		
 		return PFRankingGetters.getWinLoosRanking(seasonKey);
 	}
 
@@ -360,24 +373,24 @@ public class ApplicationCoreFacade
 		if(GameValidator.anyUserSelectedTwice(team1, team2)){
 			return CreateGameAnswer.GAME_NOK;
 		}
-		
+
 		int parsedResultOne;
 		int parsedResultTwo;
-		
+
 		try{
-			 parsedResultOne = Integer.parseInt(result1);
-			 parsedResultTwo = Integer.parseInt(result2);
-	
+			parsedResultOne = Integer.parseInt(result1);
+			parsedResultTwo = Integer.parseInt(result2);
+
 		}catch (NumberFormatException e) {
 			return CreateGameAnswer.GAME_NOK;
 		}
-		
+
 		if(parsedResultOne < 0 || parsedResultTwo < 0){
 			return CreateGameAnswer.GAME_NOK;
 		}
-		
-		
-		
+
+
+
 		PFCommonSaver.saveGame(matchDayKey, team1, team2, parsedResultOne, parsedResultTwo, date, gameType);
 		return CreateGameAnswer.GAME_OK;
 	}
@@ -385,6 +398,30 @@ public class ApplicationCoreFacade
 	public static DisplaySkillGraph getAllKickerGamesInSeason(Key seasonKey,
 			Key userKey) {
 		return PFCommonGetter.getAllGamesInSeason( GameTypStore.KICKER_GAME.toString(), seasonKey,  userKey);
+	}
+
+
+	public static List<Season> getAllCreatedSeasonsForUser(Key userKey) {
+		return PFCommonGetter.getAllCreatedSeasonsForUser(userKey);
+	}
+
+
+	public SaveUserAnswer setNewPassword( Key user, String password) {
+		// is the password valid?
+		if( !isPasswordValid(password) )
+		{
+			return SaveUserAnswer.USER_PASSWORD_INVALID;
+		}
+
+		// everything is OK => save the user
+
+		String passwordMd5 = CredentialsUtils.getMd5HashForText(password);
+		PFCommonSaver.setNewUserPassword(user, passwordMd5);
+		return SaveUserAnswer.USER_OK;
+	
+
+
+
 	}
 
 }
