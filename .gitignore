@@ -6,6 +6,7 @@
 scoreit.config
 appengine-java-sdk
 scoreit/target
+.~lock.git.odt#
 
 ######################
 # eclipse files 
