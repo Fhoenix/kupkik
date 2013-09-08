@@ -23,17 +23,16 @@ IF NOT EXIST scoreit.config  (
     ECHO It needs to be in the same folder as this batch file.
     ECHO This file definces some properties. Each property must be defined in an extra line! There must not be empty lines! 
     ECHO A property is defined like this: PROPERTY_NAME=PROPERTY_VALUE
-    ECHO No spaces! This is wrong: "maven_configuration = C:\\mvn\\bin". This is right: "maven_configuration=C:\\mvn\\bin"
+    ECHO No spaces! This is wrong: "maven_home = C:\mvn\bin". This is right: "maven_home=C:\mvn\bin"
     ECHO The following properties must be defined:
-    ECHO * maven_configuration: The path to the folder containing the "mvn.bat".
-    ECHO * java_home: The path to the java sdk ^(the folder which contains the folder "bin" which contains the file "javac.exe"^).
+    ECHO * maven_home: The path to the folder containing the "mvn.bat".
+    ECHO * java_home: The path to the java sdk ^(the folder which contains the folder "bin" which contains the file "javac.exe"^).     ECHO * git_home: The path to the GIT folder which contains "git.exe". 
     ECHO * app_id: The id of the app in the Google App Engine ^(Dynamic, because every devloper may want to deploy on his own URL for testing.^).
-    ECHO Attention: Escape the '\' character with '\\' !
     ECHO Example of the content of "scoreit.config":
     ECHO **********************
-    ECHO maven_configuration=C:\\Program Files ^(x86^)\\maven\\apache-maven-3.1.0\\bin
-    ECHO java_home=C:\\Program Files\\Java\\jdk1.7.0_17
-    ECHO app_id=scoreit
+    ECHO maven_home=C:\Program Files ^(x86^)maven\apache-maven-3.1.0\bin
+    ECHO java_home=C:\Program Files\Java\jdk1.7.0_17
+    ECHO git_home=C:\Program Files ^(x86^)\Git\bin
     ECHO **********************
     ECHO Attention: Needs Java ^>= 1.7 and Maven ^>= 3.1 !
     SET error_message=Please create the configuration file as stated above!
@@ -45,17 +44,27 @@ REM * Read config file.
 REM ******************************************
 
 FOR /F "tokens=1,2 delims==" %%G IN (scoreit.config) DO  (
-    IF "%%G"=="maven_configuration" SET maven_configuration=%%H
+    IF "%%G"=="maven_home" SET maven_home=%%H
     IF "%%G"=="java_home" SET java_home=%%H
     IF "%%G"=="app_id" SET app_id=%%H
+    IF "%%G"=="git_home" SET git_home=%%H
 )
 
 REM ******************************************
-REM * Check if maven file exists
+REM * Check if maven exists
 REM ******************************************
 
-IF NOT EXIST "%maven_configuration%\\mvn.bat"  (
-    SET error_message=The property "maven_configuration" ^(in the configuration file "scoreit.config"^) does not lead to the folder containing the file "mvn.bat"!
+IF NOT EXIST "%git_home%\git.exe"  (
+    SET error_message=The property "git_home" ^(in the configuration file "scoreit.config"^) does not lead to the folder containing the file "git.exe"!
+    GOTO _ERROR
+)
+
+REM ******************************************
+REM * Check if git exists
+REM ******************************************
+
+IF NOT EXIST "%maven_home%\mvn.bat"  (
+    SET error_message=The property "maven_home" ^(in the configuration file "scoreit.config"^) does not lead to the folder containing the file "mvn.bat"!
     GOTO _ERROR
 )
 
@@ -63,7 +72,7 @@ REM ******************************************
 REM * Check if google app engine SDK for java exists
 REM ******************************************
 
-IF NOT EXIST "%~dp0\\appengine-java-sdk\\bin\\appcfg.cmd"  (
+IF NOT EXIST "%~dp0\appengine-java-sdk\bin\appcfg.cmd"  (
     SET error_message=Please download the google app engine SDK for Java ^(https://developers.google.com/appengine/downloads^). It needs to be in the same directory as this batch file in a folder "appengine-java-sdk" ^(This folder then contains the folder "bin" which contains the file "appcfg.cmd".^).
     GOTO _ERROR
 )
@@ -81,7 +90,8 @@ REM ******************************************
 REM * Update the environment variables
 REM ******************************************
 
-SET PATH=%PATH%;%maven_configuration%
+SET PATH=%PATH%;%maven_home%
+SET PATH=%PATH%;%git_home%
 SET PATH=%PATH%;%~dp0
 SET PATH=%PATH%;%~dp0windows
 REM For google app engine sdk: appcfg.cmd just calls "java" and therefore java.exe must be in PATH. It needs to be from a JDK, too (no JRE)!

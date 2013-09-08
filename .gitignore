@@ -1,0 +1,21 @@
+
+######################
+# Score-It files
+######################
+
+scoreit.config
+appengine-java-sdk
+
+######################
+# eclipse files 
+######################
+
+.settings
+.classpath
+.project
+
+######################
+# OS generated files 
+######################
+
+.DS_Store
