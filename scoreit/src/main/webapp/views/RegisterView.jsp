@@ -31,7 +31,7 @@
 
 
 
-<form action="/" method="post">
+<form action="/app/" method="post">
 	<input type="hidden" name="action" value="RegisterUser">
 
 	<div class="row">

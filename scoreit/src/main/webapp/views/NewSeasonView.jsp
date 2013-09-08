@@ -32,7 +32,7 @@ List<User> users = (List<User>) request.getAttribute("users");
 
 
 	<div class="col-lg-12">
-		<form action="/" method="post">
+		<form action="/app/" method="post">
 			<input type="hidden" name="action" value="CreateSeason">
 
 			<div class="row">

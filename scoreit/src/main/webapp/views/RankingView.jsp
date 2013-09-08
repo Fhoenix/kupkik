@@ -28,7 +28,7 @@
 						
 					
 						%>
-		<form action="/" method="post">
+		<form action="/app/" method="post">
 			<input class="form-control" type="hidden" name="action"
 				value="CreateRanking">
 

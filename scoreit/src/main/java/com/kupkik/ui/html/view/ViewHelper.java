@@ -96,19 +96,19 @@ public class ViewHelper
 		content.append("  			</button>");
 
 		if( !currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) ){
-			content.append("		<a class=\"navbar-brand\" href=\"#\"><img src=\"/res/images/logo_icon.png\" alt=\"logo\" />");
+			content.append("		<a class=\"navbar-brand\" href=\"/app/\"><img src=\"/res/images/logo_icon.png\" alt=\"logo\" />");
 			content.append(" " + currentUser.getFirstname());
 		}else{
-			content.append("    	<a class=\"navbar-brand\" href=\"#\"><img src=\"/res/images/logo_icon.png\" alt=\"logo\" />");
+			content.append("    	<a class=\"navbar-brand\" href=\"/app/\"><img src=\"/res/images/logo_icon.png\" alt=\"logo\" />");
 		}
 		content.append(" 			</a>");
 		content.append("		<div class=\"nav-collapse navbar-responsive-collapse collapse\" style=\"height: 0px;\">");
 		content.append(" 			<ul class=\"nav navbar-nav\">");
-		content.append(" 	      		<li class=\"active\"><a href=\"/\">HOME</a></li>");
+		content.append(" 	      		<li class=\"active\"><a href=\"/app/\">HOME</a></li>");
 		if( currentUser.getPasswordMd5().equals(HtmlRequestProcessor.GUEST_USER.getPasswordMd5()) ){
-			content.append("			<li><a href=\"/?showView=RegisterView\">REGISTER HERE!</a></li>");
+			content.append("			<li><a href=\"/app/?showView=RegisterView\">REGISTER HERE!</a></li>");
 			content.append(" 		</ul>");
-			content.append("		<form class=\"form-inline pull-right paddingFormIntro\" action=\"/\" method=\"post\" >");
+			content.append("		<form class=\"form-inline pull-right paddingFormIntro\" action=\"/app/\" method=\"post\" >");
 			content.append("			<input type=\"hidden\" name=\"action\" value=\"Login\">");
 			content.append("			<input class=\"form-control\" style=\"width:200px\" placeholder=\"Your E-Mail\" name=\"user_name\" type=\"email\" size=\"50\" maxlength=\"50\">");
 			content.append("			<input class=\"form-control\" style=\"width:200px\" placeholder=\"Password\" name=\"password\" type=\"password\" size=\"12\" maxlength=\"12\">");
@@ -116,31 +116,31 @@ public class ViewHelper
 			content.append("		</form>");
 		}else{
 			content.append("			<li class=\"dropdown\">");
-			content.append("				<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">"+ MessageCommon.PROJECT_NAME +"<b class=\"caret\"></b></a>");
+			content.append("				<a href=\"/app/\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">"+ MessageCommon.PROJECT_NAME +"<b class=\"caret\"></b></a>");
 			content.append("				<ul class=\"dropdown-menu\">");
-			content.append(" 					<li><a href=\"/?showView=NewSeasonView\">Create Season</a> </li>");
-			content.append("					<li><a href=\"/?showView=NewBadmintonSingleGameView\">Badminton Single</a> </li>");
-			content.append("					<li><a href=\"/?showView=NewBadmintonDoubleGameView\">Badminton Double</a> </li>");
-			content.append("					<li><a href=\"/?showView=NewKickerGameView\">Kicker</a> </li>");
+			content.append(" 					<li><a href=\"/app/?showView=NewSeasonView\">Create Season</a> </li>");
+			content.append("					<li><a href=\"/app/?showView=NewBadmintonSingleGameView\">Badminton Single</a> </li>");
+			content.append("					<li><a href=\"/app/?showView=NewBadmintonDoubleGameView\">Badminton Double</a> </li>");
+			content.append("					<li><a href=\"/app/?showView=NewKickerGameView\">Kicker</a> </li>");
 			content.append("				</ul>");
 			content.append("			</li>");
 			content.append("			<li class=\"dropdown\">");
 			content.append("				<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">STATISTICS<b class=\"caret\"></b></a>");
 			content.append("				<ul class=\"dropdown-menu\">");
-			content.append(" 					<li><a href=\"/?showView=StatisticsView\">Statistics</a> </li>");
-			content.append(" 					<li><a href=\"/?showView=RankingView\">Ranking</a> </li>");
+			content.append(" 					<li><a href=\"/app/?showView=StatisticsView\">Statistics</a> </li>");
+			content.append(" 					<li><a href=\"/app/?showView=RankingView\">Ranking</a> </li>");
 			content.append("				</ul>");
 			content.append("			</li>");
 			
 			content.append("			<li class=\"dropdown\">");
-			content.append("				<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">EDIT<b class=\"caret\"></b></a>");
+			content.append("				<a href=\"/app/\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">EDIT<b class=\"caret\"></b></a>");
 			content.append("				<ul class=\"dropdown-menu\">");
-			content.append(" 					<li><a href=\"/?showView=EditSeasonView\">Edit My Seasons</a> </li>");
-			content.append(" 					<li><a href=\"/?showView=EditUserView\">Reset Password</a> </li>");
+			content.append(" 					<li><a href=\"/app/?showView=EditSeasonView\">Edit My Seasons</a> </li>");
+			content.append(" 					<li><a href=\"/app/?showView=EditUserView\">Reset Password</a> </li>");
 			content.append("				</ul>");
 			content.append("			</li>");
 			
-			content.append(" 			<li><a href=\"/?action=Logoff\">LOGOUT</a> </li>");
+			content.append(" 			<li><a href=\"/app/?action=Logoff\">LOGOUT</a> </li>");
 			content.append(" 		</ul>");
 		}
 		content.append(" 		</div>");

@@ -44,7 +44,7 @@
 				<% 	
 					if(!seasons.isEmpty()){
 						%>
-		<form action="/" method="post">
+		<form action="/app/" method="post">
 			<input class="form-control" type="hidden" name="action"
 				value="EditSeason">
 
@@ -81,7 +81,7 @@
 		%>
 		<% 	if(users != null && editUsers != null && seasonKey != null){  %>
 		<h3><% out.println(seasonName + " - " + seasonType); %> </h3>
-		<form action="/" method="post">
+		<form action="/app/" method="post">
 			<input class="form-control" type="hidden" name="action"
 				value="UpdateSeason">
 		 	<fieldset>
