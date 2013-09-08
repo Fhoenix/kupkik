@@ -115,6 +115,7 @@ REM ******************************************
 ECHO.
 ECHO Please note: 
 ECHO * Build and deploy with "deploy"
+ECHO * Start the development server with "server"
 ECHO * Do read in the folder "documentation" !: 
 ECHO     * "eclipse_tips.txt" 
 ECHO     * "maven_tips.txt" 
