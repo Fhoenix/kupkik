@@ -5,6 +5,7 @@
 
 scoreit.config
 appengine-java-sdk
+scoreit/target
 
 ######################
 # eclipse files 

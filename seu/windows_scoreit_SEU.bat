@@ -28,11 +28,14 @@ IF NOT EXIST scoreit.config  (
     ECHO * maven_home: The path to the folder containing the "mvn.bat".
     ECHO * java_home: The path to the java sdk ^(the folder which contains the folder "bin" which contains the file "javac.exe"^).     ECHO * git_home: The path to the GIT folder which contains "git.exe". 
     ECHO * app_id: The id of the app in the Google App Engine ^(Dynamic, because every devloper may want to deploy on his own URL for testing.^).
+    ECHO * app_id2: OPTIONAL! An alternative "app_id". If defined, you can use "deploy alt" for deploying with this app ID ^(That way, you can have a PRODUCTION and a TEST Environment. for example.^).
     ECHO Example of the content of "scoreit.config":
     ECHO **********************
     ECHO maven_home=C:\Program Files ^(x86^)maven\apache-maven-3.1.0\bin
     ECHO java_home=C:\Program Files\Java\jdk1.7.0_17
     ECHO git_home=C:\Program Files ^(x86^)\Git\bin
+    ECHO app_id=scoreit
+    ECHO app_id2=scoreittest
     ECHO **********************
     ECHO Attention: Needs Java ^>= 1.7 and Maven ^>= 3.1 !
     SET error_message=Please create the configuration file as stated above!
@@ -47,6 +50,7 @@ FOR /F "tokens=1,2 delims==" %%G IN (scoreit.config) DO  (
     IF "%%G"=="maven_home" SET maven_home=%%H
     IF "%%G"=="java_home" SET java_home=%%H
     IF "%%G"=="app_id" SET app_id=%%H
+    IF "%%G"=="app_id2" SET app_id2=%%H
     IF "%%G"=="git_home" SET git_home=%%H
 )
 

@@ -8,6 +8,22 @@ REM ************************
 
 
 REM ******************************************
+REM * Determine, which app-ID to use
+REM ******************************************
+
+SET used_app_id=%app_id%
+
+IF "%1"=="alt" (
+    IF NOT DEFINED app_id2 (
+        ECHO The property "app_id2" ^(in the configuration file "scoreit.config"^) needs to be set, if you want to use the alternative app ID!
+        GOTO _ERROR
+    )
+    
+    ECHO Will use alternative app ID!
+    SET used_app_id=%app_id2%
+)
+
+REM ******************************************
 REM * Maven clean
 REM ******************************************
 
@@ -26,10 +42,10 @@ REM * Replace the placeholder-value for the app ID in "appengine-web.xml" with t
 REM ******************************************
 
 ECHO.
-ECHO Now the value of the app ID in the file "appengine-web.xml" will be replaced with this value from the config file: %app_id%.
+ECHO Now the value of the app ID in the file "appengine-web.xml" will be replaced with this value from the config file: %used_app_id%.
 ECHO.
 
-cscript %~dp0\replace.vbs "%~dp0\..\..\scoreit\target\scoreit-1.0-SNAPSHOT\WEB-INF\appengine-web.xml" DO_NOT_CHANGE_THIS_VALUE %app_id%
+cscript %~dp0\replace.vbs "%~dp0\..\..\scoreit\target\scoreit-1.0-SNAPSHOT\WEB-INF\appengine-web.xml" DO_NOT_CHANGE_THIS_VALUE %used_app_id%
 
 REM ******************************************
 REM * deploy
