@@ -1,0 +1,16 @@
+
+
+  === Score-IT Coding Style ===
+  
+  
+ 
+The coding style is compulsory!
+
+
+ - Prefix for parameters: p
+ - Prefix for class-members: m
+ - Prefix for static class-members: p 
+ 
+ - Get rid of all unused imports!
+  
+  

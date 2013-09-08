@@ -1,0 +1,21 @@
+
+
+  ===  tips for Eclipse  ===
+  
+  
+  - set your Maven "User Settings" in Eclipse: 
+        - "Window"-^>"Preferences"-^>"Maven"-^>"User Settings"
+  - You should enter "mvn eclipse:eclipse" once (in the SEU-console), if you use Eclipse        
+  - hide external libraries from "Project Explorer":
+        - on view "Project Explorer" choose "View Menu" (the icon which is left to "Minimize") ->  "Customize View" -> and chose filter "Libraries from external"
+  - in order to comply to the score-it coding-style, you should use the provided formatter: "scoreit_formatter.xml"
+        - "Window" -> "Preferences" -> "Java" -> "Code Style" -> "Formatter" -> "Import"
+        - then choose "scoreit_formatter.xml"
+        - "Apply"->"OK"
+  - Help with the prefixed in Eclipse:
+        - "Window" -> "Preferences" -> "Java" -> "Code Style"
+        - The value in "Prefix list" for the "Variable type" "Fields" should be: "m" (without the quotes)
+        - The value in "Prefix list" for the "Variable type" "Static Fields" should be: "s" (without the quotes)
+        - The value in "Prefix list" for the "Variable type" "Parameters" should be: "p" (without the quotes)
+  
+  

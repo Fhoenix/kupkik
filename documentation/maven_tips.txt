@@ -1,0 +1,8 @@
+
+
+  ===  tips for Maven  ===
+  
+  
+  - set the directory of your Maven local repository in the Maven-configurations-file: "settings.xml".
+  
+  
