@@ -26,7 +26,8 @@ IF NOT EXIST scoreit.config  (
     ECHO No spaces! This is wrong: "maven_home = C:\mvn\bin". This is right: "maven_home=C:\mvn\bin"
     ECHO The following properties must be defined:
     ECHO * maven_home: The path to the folder containing the "mvn.bat".
-    ECHO * java_home: The path to the java sdk ^(the folder which contains the folder "bin" which contains the file "javac.exe"^).     ECHO * git_home: The path to the GIT folder which contains "git.exe". 
+    ECHO * java_home: The path to the java sdk ^(the folder which contains the folder "bin" which contains the file "javac.exe"^).
+    ECHO * git_home: The path to the GIT folder which contains "git.exe". 
     ECHO * app_id: The id of the app in the Google App Engine ^(Dynamic, because every devloper may want to deploy on his own URL for testing.^).
     ECHO * app_id2: OPTIONAL! An alternative "app_id". If defined, you can use "deploy alt" for deploying with this app ID ^(That way, you can have a PRODUCTION and a TEST Environment. for example.^).
     ECHO Example of the content of "scoreit.config":
