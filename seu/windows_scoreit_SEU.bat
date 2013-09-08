@@ -56,11 +56,20 @@ FOR /F "tokens=1,2 delims==" %%G IN (scoreit.config) DO  (
 )
 
 REM ******************************************
-REM * Check if maven exists
+REM * Check if git exists
 REM ******************************************
 
 IF NOT EXIST "%git_home%\git.exe"  (
     SET error_message=The property "git_home" ^(in the configuration file "scoreit.config"^) does not lead to the folder containing the file "git.exe"!
+    GOTO _ERROR
+)
+
+REM ******************************************
+REM * Check if java exists
+REM ******************************************
+
+IF NOT EXIST "%java_home%\bin\javac.exe"  (
+    SET error_message=The property "java_home" ^(in the configuration file "scoreit.config"^) does not lead to the folder containing the file "javac.exe"!
     GOTO _ERROR
 )
 
