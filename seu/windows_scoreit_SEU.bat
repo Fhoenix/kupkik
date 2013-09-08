@@ -1,17 +1,17 @@
 @ECHO OFF
 
 REM ******************************************
-REM * Change to the directory, which contains this batch-file
-REM ******************************************
-
-cd %~dp0
-
-REM ******************************************
 REM * DO NOT CHANGE THIS BATCH FILE!
 REM * This batch file prepares the command-window, which allows you to build and deploy score-it.
 REM ******************************************
 
 SET error_message=NONE
+
+REM ******************************************
+REM * Change to the directory, which contains this batch-file
+REM ******************************************
+
+cd %~dp0
 
 REM ******************************************
 REM * Check if config file exists
@@ -32,7 +32,7 @@ IF NOT EXIST scoreit.config  (
     ECHO * app_id2: OPTIONAL! An alternative "app_id". If defined, you can use "deploy alt" for deploying with this app ID ^(That way, you can have a PRODUCTION and a TEST Environment. for example.^).
     ECHO Example of the content of "scoreit.config":
     ECHO **********************
-    ECHO maven_home=C:\Program Files ^(x86^)maven\apache-maven-3.1.0\bin
+    ECHO maven_home=C:\Program Files ^(x86^)\maven\apache-maven-3.1.0\bin
     ECHO java_home=C:\Program Files\Java\jdk1.7.0_17
     ECHO git_home=C:\Program Files ^(x86^)\Git\bin
     ECHO app_id=scoreit
@@ -74,7 +74,7 @@ IF NOT EXIST "%java_home%\bin\javac.exe"  (
 )
 
 REM ******************************************
-REM * Check if git exists
+REM * Check if maven exists
 REM ******************************************
 
 IF NOT EXIST "%maven_home%\mvn.bat"  (
