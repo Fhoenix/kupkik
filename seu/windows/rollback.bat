@@ -6,4 +6,4 @@ REM * The folder "scoreit-1.0-SNAPSHOT" has unfortunately the name of the versio
 REM ************************
 
 
-%~dp0\..\appengine-java-sdk\bin\appcfg.cmd rollback %~dp0\..\..\scoreit\target\scoreit-1.0-SNAPSHOT
+"%gae_home%\appcfg.cmd" rollback %~dp0\..\..\scoreit\target\scoreit-1.0-SNAPSHOT

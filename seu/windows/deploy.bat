@@ -55,7 +55,7 @@ ECHO.
 ECHO Deploying now. If this takes too long and you cancel it ^(with CTRL+C)^, then you need to run "rollback" before the next deployment.
 ECHO.
 
-%~dp0\..\appengine-java-sdk\bin\appcfg.cmd update %~dp0\..\..\scoreit\target\scoreit-1.0-SNAPSHOT
+"%gae_home%\appcfg.cmd" update %~dp0\..\..\scoreit\target\scoreit-1.0-SNAPSHOT
 
 GOTO _END
 
